@@ -1,8 +1,12 @@
-import React from "react";
+import ChartPreview from "./chart-preview/ChartPreview";
+import ChartProperties from "./chart-properties/ChartProperties";
 
 const ChartPanel = (): JSX.Element => {
-    return (
-        <div>This is ChartPanel. Coming soon!</div>
-    )
-}
-export default ChartPanel
+  return (
+    <div id="chart-panel">
+      <ChartPreview />
+      <ChartProperties />
+    </div>
+  );
+};
+export default ChartPanel;
