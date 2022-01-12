@@ -1,4 +1,3 @@
-import React from "react";
 import { TopNav } from "govuk-react";
 import Crown from "@govuk-react/icon-crown";
 
