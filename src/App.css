@@ -1,8 +1,36 @@
+/* css reset  */
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
 #app {
   display: flex;
   flex-direction: column;
 }
 
-#content {
+#main-content {
   display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+#chart-builder {
+  display: flex;
+}
+
+#side-panel {
+  height: 73vh;
+  min-width: 20rem;
+  overflow-y: scroll;
+}
+
+#chart-panel {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
