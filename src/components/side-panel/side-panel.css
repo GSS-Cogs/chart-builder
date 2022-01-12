@@ -1,0 +1,5 @@
+#side-panel {
+  height: 77vh;
+  min-width: 25rem;
+  overflow-y: scroll;
+}

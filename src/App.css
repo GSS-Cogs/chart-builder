@@ -32,11 +32,7 @@ body {
   display: flex;
 }
 
-#side-panel {
-  height: 73vh;
-  min-width: 20rem;
-  overflow-y: scroll;
-}
+
 
 #chart-panel {
   flex-grow: 1;
