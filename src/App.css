@@ -1,7 +1,17 @@
+@font-face {
+  font-family: GDSTransportWebsite;
+  src: url(./fonts/GDSTransportWebsite.ttf);
+  font-family: GDSTransportWebsite-Bold;
+  src: url(./fonts/GDSTransportWebsite-Bold.ttf);
+}
 /* css reset  */
-body {
-  margin: 0px;
+* {
   padding: 0px;
+  margin: 0px;
+}
+
+body {
+  font-family: "GDSTransportWebsite", sans-serif;
 }
 
 #app {
