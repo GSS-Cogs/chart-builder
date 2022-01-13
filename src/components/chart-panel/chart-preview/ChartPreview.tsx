@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { ChartContext } from "../../../context/ChartContext";
+
 const Chart = (): JSX.Element => {
+  const { parsedCsvData }: any = useContext(ChartContext);
+  console.table(parsedCsvData);
+
   return (
     <div id="chart-preview">
       <h1>Preview</h1>
