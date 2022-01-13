@@ -1,10 +1,11 @@
 import { FileUpload } from "govuk-react";
 import Papa from "papaparse";
-import { useState } from "react";
 import "./side-panel.css";
+import { useContext } from "react";
+import { ChartContext } from "../../context/ChartContext";
 
 const SidePanel = (): JSX.Element => {
-  const [parsedCsvData, setParsedCsvData] = useState([]);
+  const { setParsedCsvData }: any = useContext(ChartContext);
 
   const handleUpload = (files: FileList | null) => {
     files && files.length
@@ -23,7 +24,7 @@ const SidePanel = (): JSX.Element => {
           onFailure(results.errors[0].message);
         } else {
           console.log("Finished:", results.data);
-          setParsedCsvData(parsedCsvData);
+          setParsedCsvData(results.data);
         }
       },
     });
