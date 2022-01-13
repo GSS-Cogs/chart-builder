@@ -1,7 +1,18 @@
+@font-face {
+  font-family: GDSTransportWebsite;
+  src: url(./fonts/GDSTransportWebsite.ttf);
+  font-family: GDSTransportWebsite-Bold;
+  src: url(./fonts/GDSTransportWebsite-Bold.ttf);
+}
 /* css reset  */
-body {
-  margin: 0px;
+* {
   padding: 0px;
+  margin: 0px;
+}
+
+body {
+  font-family: "GDSTransportWebsite", sans-serif;
+  font-size: 0.8rem;
 }
 
 #app {
@@ -19,18 +30,4 @@ body {
 
 #chart-builder {
   display: flex;
-}
-
-#side-panel {
-  height: 73vh;
-  min-width: 20rem;
-  overflow-y: scroll;
-}
-
-#chart-panel {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
