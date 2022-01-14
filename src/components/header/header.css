@@ -1,0 +1,25 @@
+#header {    
+    background-color: black;
+    border-bottom: 10px solid rgb(29, 112, 184);
+    min-width: 40rem;
+}
+
+#header-content {
+    display: flex;
+    align-items: center;
+    margin: 0.7rem 3rem;
+    color: white;
+}
+
+#header-gov-uk {
+    margin-left: 0.8rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+#header-text{
+    margin-left: 2rem;
+    font-size: 1.3rem;
+}
+
+
