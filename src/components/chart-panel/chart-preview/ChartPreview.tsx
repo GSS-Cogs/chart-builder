@@ -3,72 +3,48 @@ import { ChartContext } from "../../../context/ChartContext";
 import Plot from "react-plotly.js";
 import "./chart-preview.css";
 
+// function to extract a vector from a matrix (i.e. an array column from 2D array))
+const arrayColumn = (arr: [], key: string) => arr.map((x) => x[key]);
+
+function titleCase(str: string) {
+  return str
+    .toLowerCase()
+    .split("_")
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
+// array of colors for each series
+const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
+
 const Chart = (): JSX.Element => {
-  const { parsedCsvData }: any = useContext(ChartContext);
+  const { parsedCsvData: data }: any = useContext(ChartContext);
 
-  if (parsedCsvData.length === 0)
-    return <div id="no-data">No data to show</div>;
+  if (data.length === 0) return <div id="no-data">No data to show</div>;
 
-  const arrayColumn = (arr: [], key: string) => arr.map((x) => x[key]);
+  let chartData = [{}];
 
-  let xTime = arrayColumn(parsedCsvData, "week_starting");
+  const colNames = Object.keys(data[0]);
+  const xValues = arrayColumn(data, colNames[0]);
 
-  const yEngland = arrayColumn(parsedCsvData, "england");
-  const yScotland = arrayColumn(parsedCsvData, "scotland");
-  const yWales = arrayColumn(parsedCsvData, "wales");
-  const yNI = arrayColumn(parsedCsvData, "northern_ireland");
+  // iterate over the data columns to build up the traces (series) for the chart.
+  // we ignore the first column which is for the x-axis values
+  for (let index = 1; index < colNames.length; index++) {
+    chartData.push({
+      x: xValues,
+      y: arrayColumn(data, colNames[index]),
+      name: titleCase(colNames[index]),
+      type: "scatter",
+      mode: "lines",
+      line: {
+        color: colors[index - 1],
+      },
+    });
+  }
 
-  let trace1 = {};
-  let trace2 = {};
-  let trace3 = {};
-  let trace4 = {};
-
-  trace1 = {
-    y: yEngland,
-    x: xTime,
-    name: "England",
-    type: "scatter",
-    mode: "lines",
-    line: {
-      color: "#a05195",
-    },
-  };
-
-  trace2 = {
-    y: yWales,
-    x: xTime,
-    name: "Wales",
-    type: "scatter",
-    mode: "lines",
-    line: {
-      color: "#f95d6a",
-    },
-  };
-
-  trace3 = {
-    y: yScotland,
-    x: xTime,
-    name: "Scotland",
-    type: "scatter",
-    mode: "lines",
-    line: {
-      color: "#ffa600",
-    },
-  };
-
-  trace4 = {
-    y: yNI,
-    x: xTime,
-    name: "NI",
-    type: "scatter",
-    mode: "lines",
-    line: {
-      color: "#003f5c",
-    },
-  };
-
-  const data = [trace1, trace2, trace3, trace4];
-
+  // in later iterations these hard-coded values will be defined in the properties inspector or CSV metadata
   const layout = {
     title: "Covid-19 Triple Vaccination by UK Nation",
     xaxis: {
@@ -84,7 +60,7 @@ const Chart = (): JSX.Element => {
       <h1>Preview</h1>
       <h2>View in full screen</h2>
 
-      <Plot data={data} layout={layout} />
+      <Plot data={chartData} layout={layout} />
     </div>
   );
 };
