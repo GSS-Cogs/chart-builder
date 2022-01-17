@@ -1,12 +1,16 @@
 import { ChartContext } from "./ChartContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { titleCase } from "../helper-functions/string-helpers";
 import { arrayColumn } from "../helper-functions/array-helpers";
+
+interface Props {
+  children: ReactNode;
+}
 
 // array of colors for each series
 const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
 
-const ChartContextProvider = ({ children }: any): JSX.Element => {
+const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const [data, setData] = useState([]);
   const [chartDefinition, setChartDefinition] = useState({});
 
@@ -19,7 +23,7 @@ const ChartContextProvider = ({ children }: any): JSX.Element => {
   }, [data]);
 
   const updateChartDefinition = (data: any) => {
-    let chartData = [{}];
+    const chartData = [];
     const colNames = Object.keys(data[0]);
     const xValues = arrayColumn(data, colNames[0]);
 
