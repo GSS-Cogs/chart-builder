@@ -15,7 +15,7 @@
   margin-bottom: 0.5rem;
 }
 
-div[id*='chartProperty'] {
+div[id*="chartProperty"] {
   margin-top: 2rem;
   vertical-align: text-bottom;
 }

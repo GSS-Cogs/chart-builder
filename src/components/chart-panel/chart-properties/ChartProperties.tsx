@@ -1,3 +1,4 @@
+import "./chart-properties.css";
 const ChartProperties = (): JSX.Element => {
   return (
     <div id="chart-properties">
@@ -5,4 +6,5 @@ const ChartProperties = (): JSX.Element => {
     </div>
   );
 };
+
 export default ChartProperties;

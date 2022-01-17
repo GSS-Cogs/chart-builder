@@ -1,4 +1,5 @@
 #chart-preview {
+  flex-grow: 1;
   padding: 1rem;
   background-color: rgb(220, 220, 220);
 }
