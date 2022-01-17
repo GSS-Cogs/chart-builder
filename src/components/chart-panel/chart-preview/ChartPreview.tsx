@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ChartContext } from "../../../context/ChartContext";
 import Plot from "react-plotly.js";
 import "./chart-preview.css";
@@ -19,7 +19,7 @@ function titleCase(str: string) {
 // array of colors for each series
 const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
 
-const Chart = (): JSX.Element => {
+const ChartPreview = (): JSX.Element => {
   const { parsedCsvData: data }: any = useContext(ChartContext);
 
   if (data.length === 0) return <div id="no-data">No data to show</div>;
@@ -53,15 +53,17 @@ const Chart = (): JSX.Element => {
     yaxis: {
       title: "Percentage of people vaccinated",
     },
+    paper_bgcolor: "rgb(220, 220, 220)",
+    plot_bgcolor: "rgb(220, 220, 220)",
   };
 
   return (
     <div id="chart-preview">
-      <h1>Preview</h1>
-      <h2>View in full screen</h2>
+      <h1 id="preview-heading">Preview</h1>
+      <h3 id="preview-fullscreen-link">View in full screen</h3>
 
       <Plot data={chartData} layout={layout} />
     </div>
   );
 };
-export default Chart;
+export default ChartPreview;
