@@ -3,3 +3,14 @@
   min-width: 25rem;
   overflow-y: scroll;
 }
+
+div[id*='chartProperty'] {
+  margin-top: 2rem;
+  vertical-align: text-bottom;
+}
+
+#data-source {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
