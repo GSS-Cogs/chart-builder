@@ -4,7 +4,7 @@
   overflow-y: scroll;
 }
 
-div[id*='chartProperty'] {
+.property-checkbox {
   margin-top: 2rem;
   vertical-align: text-bottom;
 }
