@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { ChartContext } from "../../context/ChartContext";
 
 const SidePanel = (): JSX.Element => {
-  const { setParsedCsvData }: any = useContext(ChartContext);
+  const { setData }: any = useContext(ChartContext);
 
   const handleUpload = (files: FileList | null) => {
     files && files.length
@@ -24,7 +24,7 @@ const SidePanel = (): JSX.Element => {
           onFailure(results.errors[0].message);
         } else {
           console.log("Finished:", results.data);
-          setParsedCsvData(results.data);
+          setData(results.data);
         }
       },
     });

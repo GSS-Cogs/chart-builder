@@ -1,3 +1,22 @@
+#chart-preview {
+  padding: 1rem;
+  background-color: rgb(220, 220, 220);
+}
+
 #no-data {
   margin-bottom: 1rem;
+}
+
+#chart-preview-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+#preview-heading {
+  margin-bottom: 0.4rem;
+}
+
+#preview-fullscreen-link {
+  color: rgb(29, 112, 184);
 }

@@ -1,9 +1,10 @@
 #intro-text {
+  font-size: 0.9rem;
   margin-top: 1rem;
   margin-bottom: 0.4rem;
   color: rgb(126, 126, 126);
 }
 
 #intro-heading {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
