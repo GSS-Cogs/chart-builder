@@ -1,20 +1,25 @@
-#csv-uploader
-{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    align-items: flex-start;
-    min-height: 11rem;
+#csv-uploader {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 10rem;
+  margin-bottom: 2rem;
 }
 
 #dropzone {
-    background: rgb(238,238,238);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    height: 5rem;
-    min-width: 21rem;
-    border: 2px dashed rgb(0,255,255);
-    outline: none;
-  }
+  min-width: 21rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 5rem;
+  background: rgb(238, 238, 238);
+  border: 2px dashed rgb(29, 112, 184);
+  outline: none;
+  opacity: 0.9;
+}
+
+#selected-filename {
+  font-weight: 600;
+}

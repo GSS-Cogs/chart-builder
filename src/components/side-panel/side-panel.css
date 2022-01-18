@@ -4,7 +4,7 @@
   overflow-y: scroll;
 }
 
-div[id*='chartProperty'] {
+.property-checkbox {
   margin-top: 2rem;
   vertical-align: text-bottom;
 }
@@ -15,7 +15,7 @@ div[id*='chartProperty'] {
   margin-bottom: 0.5rem;
 }
 
-div[id*='chartProperty'] {
+div[id*="chartProperty"] {
   margin-top: 2rem;
   vertical-align: text-bottom;
 }
