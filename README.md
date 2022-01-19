@@ -27,3 +27,45 @@ To build the app locally:
     yarn build
 
 The output directory is build. You can copy the build assets from there to the wwwroot of your webserver
+
+
+
+## Automated build
+
+A CI/CD pipeline is configured using Google Cloud Build and deploys the containerised app to this URL:
+
+https://chart-builder-no4vxskx7a-nw.a.run.app/
+
+
+
+#### Build trigger
+
+Automated build is triggered by changes to the main branch of the `chart-builder` source code
+
+
+
+#### The automated build configuration is managed in two places:
+
+1. **Dockerfile and nginx.conf files in the chart-builder repo**
+
+   These files are both located in the root of the `chart-builder` repository.
+
+   The `Dockerfile` specifies a multistage docker image build. The first stage builds the source code and the second stage copies this build output (without the source code and node modules) into a new container image. The resultant image (approx. 45Mb) is then deployed.
+
+   The `nginx.conf` file is used to configure the nginx web server that runs inside the container.
+
+
+
+2. **In the GCP Cloud Run web console **
+
+   The GCP console can be used to configure the build trigger and container specification
+
+   1. Browse to the `GSSCOGS/idpd-platform project`
+   2. Open the `chart-builder` service
+   3. Go to **Edit and Deploy New Revision**
+   4. Adjust the configurations for: *Container Port, CPU allocation, Capacity (memory and CPU), Request timeout, Max requests per container and Auto-Scaling*
+   5. To adjust the build trigger follow the link under the General section to **Cloud Build trigger**
+   6. Click **Deploy** to finalise the changes 
+
+
+
