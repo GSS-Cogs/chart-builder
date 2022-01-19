@@ -48,11 +48,11 @@ Automated build is triggered by changes to the main branch of the `chart-builder
 
 1. **Dockerfile and nginx.conf files in the chart-builder repo**
 
-   These files are both located in the root of the chart-builder repository.
+   These files are both located in the root of the `chart-builder` repository.
 
-   The Dockerfile specifies a multistage docker image build. The first stage builds the source code and the second stage copies the build output (without the source code and node modules) into a new container image. The resultant image is around 45Mb.
+   The `Dockerfile` specifies a multistage docker image build. The first stage builds the source code and the second stage copies this build output (without the source code and node modules) into a new container image. The resultant image (approx. 45Mb) is then deployed.
 
-   The nginx.conf file is used to configure the nginx web server that runs inside the container.
+   The `nginx.conf` file is used to configure the nginx web server that runs inside the container.
 
 
 
@@ -60,11 +60,12 @@ Automated build is triggered by changes to the main branch of the `chart-builder
 
    The GCP console can be used to configure the build trigger and container specification
 
-   1. Browse to the GSSCOGS/idpd-platform project
-   2. Open the chart-builder service
-   3. Go to Edit and Deploy New Revision
-   4. Adjust the configuration for Container Port, CPU allocation, Capacity (memory and CPU), Request timeout, Max requests per container and Auto-Scaling
-   5. Click **Deploy** to finalise the changes 
+   1. Browse to the `GSSCOGS/idpd-platform project`
+   2. Open the `chart-builder` service
+   3. Go to **Edit and Deploy New Revision**
+   4. Adjust the configurations for: *Container Port, CPU allocation, Capacity (memory and CPU), Request timeout, Max requests per container and Auto-Scaling*
+   5. To adjust the build trigger follow the link under the General section to **Cloud Build trigger**
+   6. Click **Deploy** to finalise the changes 
 
 
 
