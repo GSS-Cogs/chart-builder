@@ -39,6 +39,7 @@ const SidePanel = (): JSX.Element => {
         <div className="property-checkbox" key={item}>
           <input
             type="checkbox"
+            className="checkbox"
             id={"chartProperty" + index}
             name={item}
             value={item}
@@ -51,7 +52,9 @@ const SidePanel = (): JSX.Element => {
             }
             onChange={handleOnChange}
           />{" "}
-          {item}
+          <label className="label"
+          htmlFor={"chartProperty" + index}
+          >{item}</label>
           <br />
         </div>
       ))}
