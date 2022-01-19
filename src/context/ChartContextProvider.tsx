@@ -10,11 +10,16 @@ interface Props {
 // array of colors for each series
 const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
 
+export const initialState = {  
+  showTitle: false,
+  showGridLines: true,
+  title: "Covid-19 Triple Vaccination by UK Nation"
+}
+
 const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const [data, setData] = useState([]);
   const [chartDefinition, setChartDefinition] = useState({});
-  const [showTitle, setShowTitle] = useState(true);
-  const [showGridLines, setShowGridLines] = useState(true);
+  const [chartPropertyState, setChartPropertyState] = useState(initialState);
 
   useEffect(() => {
     if (data.length === 0) {
@@ -22,7 +27,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       return;
     }
     updateChartDefinition(data);
-  }, [data, showGridLines, showTitle]);
+  }, [data, chartPropertyState]);
 
   const updateChartDefinition = (data: any) => {
     const chartData = [];
@@ -46,13 +51,13 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
 
     // in future these hard-coded values will be defined in the properties inspector or CSV metadata
     const layout = {
-      title: showTitle ? "Covid-19 Triple Vaccination by UK Nation" : "",
+      title: chartPropertyState.showTitle ? chartPropertyState.title : "",
       xaxis: {
-        showgrid: showGridLines,
+        showgrid: chartPropertyState.showGridLines,
         title: "Week beginning",
       },
       yaxis: {
-        showgrid: showGridLines,
+        showgrid: chartPropertyState.showGridLines,
         title: "Percentage of people vaccinated",
       },
       paper_bgcolor: "rgb(220, 220, 220)",
@@ -69,10 +74,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       value={{
         setData,
         chartDefinition,
-        showTitle,
-        setShowTitle,
-        showGridLines,
-        setShowGridLines,
+        chartPropertyState,
+        setChartPropertyState
       }}
     >
       {children}
