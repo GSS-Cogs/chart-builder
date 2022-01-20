@@ -10,16 +10,30 @@ interface Props {
 // array of colors for each series
 const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
 
-export const initialChartProperties = {
-    showTitle: true,
-    showGridLines: true,
-    showLegend: true,
-    title: "Covid-19 Triple Vaccination by UK Nation",
-    xAxisTitle: "Week beginning",
-    yAxisTitle: "Percentage of people vaccinated",
-    xAxisTickAngle: "45",
-    chartBackgroundColour: "rgb(220, 220, 220)",
+const section1 = {
+    name: "section1",
+    properties: [
+        {
+            name: "showTitle",
+            displayname: "Show Title",
+            displayType: "checkbox",
+            value: true,
+        },
+        {
+            name: "showGridLines",
+            displayname: "Show Grid Lines",
+            displayType: "checkbox",
+            value: true,
+        },
+    ],
 };
+export const initialChartProperties = [section1];
+console.log(initialChartProperties);
+// export const initialChartProperties = {
+//     showTitle: true,
+//     title: "Covid-19 Triple Vaccination by UK Nation",
+//     xAxisTickAngle: ["0", "45", "90", "?"],
+// };
 
 const ChartContextProvider = ({ children }: Props): JSX.Element => {
     const [data, setData] = useState([]);
@@ -57,19 +71,19 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         }
 
         const layout = {
-            title: chartProperties.showTitle ? chartProperties.title : "",
+            //title: chartProperties.showTitle ? chartProperties.title : "",
             xaxis: {
-                showgrid: chartProperties.showGridLines,
-                title: chartProperties.xAxisTitle,
-                tickangle: chartProperties.xAxisTickAngle,
+                //showgrid: chartProperties.showGridLines,
+                //title: chartProperties.xAxisTitle,
+                // tickangle: chartProperties.xAxisTickAngle,
             },
             yaxis: {
-                showgrid: chartProperties.showGridLines,
-                title: chartProperties.yAxisTitle,
+                // showgrid: chartProperties.showGridLines,
+                // title: chartProperties.yAxisTitle,
             },
-            paper_bgcolor: chartProperties.chartBackgroundColour,
-            plot_bgcolor: chartProperties.chartBackgroundColour,
-            showlegend: chartProperties.showLegend,
+            // paper_bgcolor: chartProperties.chartBackgroundColour,
+            //plot_bgcolor: chartProperties.chartBackgroundColour,
+            //showlegend: chartProperties.showLegend,
         };
 
         const config = { responsive: true };

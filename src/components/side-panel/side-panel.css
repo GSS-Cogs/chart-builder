@@ -42,3 +42,30 @@
     border-style: none;
     background-color: aliceblue;
 }
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.radio {
+    height: 1rem;
+    width: 1rem;
+    margin-right: 0.3rem;
+    cursor: pointer;
+}
+
+.property-section {
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: rgba(50, 115, 220, 0.3);
+}
+
+.section-heading {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
