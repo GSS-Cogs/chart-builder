@@ -4,80 +4,91 @@ import { titleCase } from "../helper-functions/string-helpers";
 import { arrayColumn } from "../helper-functions/array-helpers";
 
 interface Props {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 // array of colors for each series
 const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
 
+export const initialChartProperties = {
+    showTitle: true,
+    showGridLines: true,
+    showLegend: true,
+    title: "Covid-19 Triple Vaccination by UK Nation",
+    xAxisTitle: "Week beginning",
+    yAxisTitle: "Percentage of people vaccinated",
+    xAxisTickAngle: "45",
+    chartBackgroundColour: "rgb(220, 220, 220)",
+};
+
 const ChartContextProvider = ({ children }: Props): JSX.Element => {
-  const [data, setData] = useState([]);
-  const [chartDefinition, setChartDefinition] = useState({});
-  const [showTitle, setShowTitle] = useState(true);
-  const [showGridLines, setShowGridLines] = useState(true);
+    const [data, setData] = useState([]);
+    const [chartDefinition, setChartDefinition] = useState({});
+    const [chartProperties, setChartProperties] = useState(
+        initialChartProperties,
+    );
 
-  useEffect(() => {
-    if (data.length === 0) {
-      setChartDefinition({});
-      return;
-    }
-    updateChartDefinition(data);
-  }, [data, showGridLines, showTitle]);
+    useEffect(() => {
+        if (data.length === 0) {
+            setChartDefinition({});
+            return;
+        }
+        updateChartDefinition(data);
+    }, [data, chartProperties]);
 
-  const updateChartDefinition = (data: any) => {
-    const chartData = [];
-    const colNames = Object.keys(data[0]);
-    const xValues = arrayColumn(data, colNames[0]);
+    const updateChartDefinition = (data: any) => {
+        const chartData = [];
+        const colNames = Object.keys(data[0]);
+        const xValues = arrayColumn(data, colNames[0]);
 
-    // iterate over the data columns to build up the traces (series) for the chart.
-    // we ignore the first column which is for the x-axis values
-    for (let index = 1; index < colNames.length; index++) {
-      chartData.push({
-        x: xValues,
-        y: arrayColumn(data, colNames[index]),
-        name: titleCase(colNames[index]),
-        type: "scatter",
-        mode: "lines",
-        line: {
-          color: colors[index - 1],
-        },
-      });
-    }
+        // iterate over the data columns to build up the traces (series) for the chart.
+        // we ignore the first column which is for the x-axis values
+        for (let index = 1; index < colNames.length; index++) {
+            chartData.push({
+                x: xValues,
+                y: arrayColumn(data, colNames[index]),
+                name: titleCase(colNames[index]),
+                type: "scatter",
+                mode: "lines",
+                line: {
+                    color: colors[index - 1],
+                },
+            });
+        }
 
-    // in future these hard-coded values will be defined in the properties inspector or CSV metadata
-    const layout = {
-      title: showTitle ? "Covid-19 Triple Vaccination by UK Nation" : "",
-      xaxis: {
-        showgrid: showGridLines,
-        title: "Week beginning",
-      },
-      yaxis: {
-        showgrid: showGridLines,
-        title: "Percentage of people vaccinated",
-      },
-      paper_bgcolor: "rgb(220, 220, 220)",
-      plot_bgcolor: "rgb(220, 220, 220)",
+        const layout = {
+            title: chartProperties.showTitle ? chartProperties.title : "",
+            xaxis: {
+                showgrid: chartProperties.showGridLines,
+                title: chartProperties.xAxisTitle,
+                tickangle: chartProperties.xAxisTickAngle,
+            },
+            yaxis: {
+                showgrid: chartProperties.showGridLines,
+                title: chartProperties.yAxisTitle,
+            },
+            paper_bgcolor: chartProperties.chartBackgroundColour,
+            plot_bgcolor: chartProperties.chartBackgroundColour,
+            showlegend: chartProperties.showLegend,
+        };
+
+        const config = { responsive: true };
+
+        setChartDefinition({ data: chartData, layout, config });
     };
 
-    const config = { responsive: true };
-
-    setChartDefinition({ data: chartData, layout, config });
-  };
-
-  return (
-    <ChartContext.Provider
-      value={{
-        setData,
-        chartDefinition,
-        showTitle,
-        setShowTitle,
-        showGridLines,
-        setShowGridLines,
-      }}
-    >
-      {children}
-    </ChartContext.Provider>
-  );
+    return (
+        <ChartContext.Provider
+            value={{
+                setData,
+                chartDefinition,
+                chartProperties,
+                setChartProperties,
+            }}
+        >
+            {children}
+        </ChartContext.Provider>
+    );
 };
 
 export default ChartContextProvider;

@@ -1,43 +1,44 @@
 #side-panel {
-  height: 77vh;
-  min-width: 25rem;
-  overflow-y: scroll;
+    height: 77vh;
+    min-width: 25rem;
+    overflow-y: scroll;
 }
 
-.property-checkbox {
-  display: flex;
-  align-items: center;
-  margin-top: 2rem;
-  vertical-align: text-bottom;
+.chart-property {
+    display: flex;
+    align-items: center;
+    margin-top: 0.7rem;
 }
 
 #data-source {
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
-div[id*="chartProperty"] {
-  margin-top: 2rem;
-  vertical-align: text-bottom;
-}
-
-.checkbox{
-  height: 1rem;
-  width: 1rem;
-  margin-right: 0.3rem;
-  cursor: pointer;
+.checkbox {
+    height: 1rem;
+    width: 1rem;
+    margin-right: 0.3rem;
+    cursor: pointer;
 }
 
 .label {
-  cursor: pointer;
+    cursor: pointer;
 
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
+}
 
+.textbox {
+    padding: 0.2rem;
+    width: 16rem;
+    margin-right: 2rem;
+    border-style: none;
+    background-color: aliceblue;
 }

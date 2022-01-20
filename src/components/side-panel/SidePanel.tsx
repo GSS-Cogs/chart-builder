@@ -1,64 +1,91 @@
 import { useContext } from "react";
 import { ChartContext } from "../../context/ChartContext";
 import CSVUploader from "./csv-uploader/CSVUploader";
+import { camelToSentenceCase } from "../../helper-functions/string-helpers";
 import "./side-panel.css";
 
-const chartProperties: string[] = [
-  "Show gridlines",
-  "Show title",
-  "Show legend",
-  "Show x-axis",
-  "Show y-axis",
-  "Show x-axis title",
-  "Show y-axis title",
-];
-
 const SidePanel = (): JSX.Element => {
-  const { showTitle, setShowTitle, showGridLines, setShowGridLines }: any =
-    useContext(ChartContext);
+    const { chartProperties, setChartProperties }: any =
+        useContext(ChartContext);
 
-  const handleOnChange = (e: any) => {
-    const value = e.target.checked;
-    const property = e.target.value;
-    if (property === "Show gridlines") {
-      setShowGridLines(value);
-    }
-    if (property === "Show title") {
-      setShowTitle(value);
-    }
-  };
+    const onCheckboxChange = (e: any) => {
+        const { value: property, checked: value } = e.target;
+        setChartProperties({
+            ...chartProperties,
+            [property]: value,
+        });
+    };
 
-  return (
-    <div id="side-panel">
-      <p id="data-source">Data Source</p>
-      <CSVUploader />
+    const onTextChange = (e: any) => {
+        const { name: property, value } = e.target;
+        setChartProperties({
+            ...chartProperties,
+            [property]: value,
+        });
+    };
 
-      <h3>Configure the Chart</h3>
+    const getCheckbox = (
+        key: string,
+        value: boolean,
+        index: number,
+        onCheckboxChange: any,
+    ) => {
+        return (
+            <div className="chart-property" key={key}>
+                <input
+                    type="checkbox"
+                    className="checkbox"
+                    id={"chartProperty" + index}
+                    name={key}
+                    value={key}
+                    checked={value}
+                    onChange={onCheckboxChange}
+                />
+                <label className="label" htmlFor={"chartProperty" + index}>
+                    {camelToSentenceCase(key)}
+                </label>
+            </div>
+        );
+    };
 
-      {chartProperties.map((item, index) => (
-        <div className="property-checkbox" key={item}>
-          <input
-            type="checkbox"
-            className="checkbox"
-            id={"chartProperty" + index}
-            name={item}
-            value={item}
-            checked={
-              item === "Show gridlines"
-                ? showGridLines
-                : item === "Show title"
-                ? showTitle
-                : false
-            }
-            onChange={handleOnChange}
-          />{" "}
-          <label className="label"
-          htmlFor={"chartProperty" + index}
-          >{item}</label>
-          <br />
+    const getTextbox = (
+        key: string,
+        value: string,
+        index: number,
+        handleOnTextChange: any,
+    ) => {
+        return (
+            <div className="chart-property" key={key}>
+                <label className="label" htmlFor={"chartProperty" + index}>
+                    {camelToSentenceCase(key)}:&nbsp;
+                </label>
+                <div className="property-textbox" key={key}>
+                    <input
+                        className="textbox"
+                        id={"chartProperty" + index}
+                        name={key}
+                        value={value}
+                        onChange={handleOnTextChange}
+                    />
+                </div>
+            </div>
+        );
+    };
+
+    return (
+        <div id="side-panel">
+            <p id="data-source">Data Source</p>
+            <CSVUploader />
+
+            <h3>Configure the Chart</h3>
+            {Object.entries(chartProperties).map(([key, value], index) => {
+                if (typeof value === "boolean") {
+                    return getCheckbox(key, value, index, onCheckboxChange);
+                } else if (typeof value === "string") {
+                    return getTextbox(key, value, index, onTextChange);
+                }
+            })}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 export default SidePanel;
