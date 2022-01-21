@@ -7,12 +7,8 @@ import "./side-panel.css";
 const SidePanel = (): JSX.Element => {
   const { chartProperties, setChartProperties }: any = useContext(ChartContext);
 
-  const onCheckboxChange = (e: any) => {
-    const { value: property, checked: value } = e.target;
-
-    const sectionName = e.target.id.split("-")[0];
-
-    let section = chartProperties.find(
+  const updateProperty = (sectionName: string, property: any, value: any) => {
+    const section = chartProperties.find(
       (item: any) => item.name === sectionName,
     );
 
@@ -40,17 +36,20 @@ const SidePanel = (): JSX.Element => {
     setChartProperties(updatedChartProperties);
   };
 
+  const onCheckboxChange = (e: any) => {
+    const { value: property, checked: value } = e.target;
+    const sectionName = e.target.id.split("-")[0];
+    updateProperty(sectionName, property, value);
+  };
+
   const onTextChange = (e: any) => {
     const { name: property, value } = e.target;
-    setChartProperties({
-      ...chartProperties,
-      [property]: value,
-    });
+    const sectionName = e.target.id.split("-")[0];
+    updateProperty(sectionName, property, value);
   };
 
   const onRadioButtonChange = (e: any) => {};
   const getCheckbox = (
-    index: number,
     property: any,
     sectionName: string,
     onCheckboxChange: any,
@@ -67,29 +66,28 @@ const SidePanel = (): JSX.Element => {
           onChange={onCheckboxChange}
         />
         <label className="label" htmlFor={sectionName + "-" + property.name}>
-          {camelToSentenceCase(property.displayname)}
+          {property.displayName}
         </label>
       </div>
     );
   };
 
   const getTextbox = (
-    key: string,
-    value: string,
-    index: number,
+    property: any,
+    sectionName: string,
     onTextChange: any,
   ) => {
     return (
-      <div className="chart-property" key={key}>
-        <label className="label" htmlFor={"chartProperty" + index}>
-          {camelToSentenceCase(key)}:&nbsp;
+      <div className="chart-property" key={property.name}>
+        <label className="label" htmlFor={sectionName + "-" + property.name}>
+          {property.displayName}:&nbsp;
         </label>
-        <div className="property-textbox" key={key}>
+        <div className="property-textbox" key={property.name}>
           <input
             className="textbox"
-            id={"chartProperty" + index}
-            name={key}
-            value={value}
+            id={sectionName + "-" + property.name}
+            name={property.name}
+            value={property.value}
             onChange={onTextChange}
           />
         </div>
@@ -132,9 +130,14 @@ const SidePanel = (): JSX.Element => {
       <h3>Configure the Chart</h3>
       {chartProperties.map((section: any, index: number) => (
         <div className="property-section" key={section.name}>
-          <div className="section-heading"> {section.name}</div>
+          <div className="section-heading"> {section.displayName}</div>
           {section.properties.map((property: any, index: number) => {
-            return getCheckbox(index, property, section.name, onCheckboxChange);
+            if (property.displayType === "checkbox") {
+              return getCheckbox(property, section.name, onCheckboxChange);
+            }
+            if (property.displayType === "text") {
+              return getTextbox(property, section.name, onTextChange);
+            }
           })}
         </div>
       ))}

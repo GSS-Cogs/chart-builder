@@ -57,7 +57,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     const chartProps: any = flattenChartProperties();
 
     const layout = {
-      title: chartProps.showTitle ? chartProps.title : "",
+      title: chartProps.showTitle ? chartProps.chartTitle : "",
       xaxis: {
         showgrid: chartProps.showGridLines,
         title: chartProps.xAxisTitle,
