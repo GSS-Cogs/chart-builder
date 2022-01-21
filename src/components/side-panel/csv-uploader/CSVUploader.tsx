@@ -6,7 +6,7 @@ import { ChartContext } from "../../../context/ChartContext";
 import Button from "../../button/Button";
 
 const CSVUploader = (): JSX.Element => {
-  const { setData }: any = useContext(ChartContext);
+  const { setTidyData }: any = useContext(ChartContext);
   const [selectedFilename, setSelectedFilename] = useState("No file selected");
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -34,7 +34,7 @@ const CSVUploader = (): JSX.Element => {
         } else {
           console.log("Finished:", results.data);
           setSelectedFilename(data.name);
-          setData(results.data);
+          setTidyData(results.data);
         }
       },
     });
