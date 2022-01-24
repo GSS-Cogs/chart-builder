@@ -54,7 +54,8 @@ const axisPropsSection = {
     {
       name: "xAxisTickAngle",
       displayName: "X axis tick angle",
-      displayType: "text",
+      displayType: "radio",
+      options: ["0", "45", "90", "135"],
       value: "45",
     },
   ],

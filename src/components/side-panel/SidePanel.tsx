@@ -22,6 +22,7 @@ const SidePanel = (): JSX.Element => {
 
     const updatedSection = {
       name: section.name,
+      displayName: section.displayName,
       properties: updatedProperties,
     };
 
@@ -48,7 +49,12 @@ const SidePanel = (): JSX.Element => {
     updateProperty(sectionName, property, value);
   };
 
-  const onRadioButtonChange = (e: any) => {};
+  const onRadioButtonChange = (e: any) => {
+    const { name: property, value } = e.target;
+    const sectionName = e.target.id.split("-")[0];
+    updateProperty(sectionName, property, value);
+  };
+
   const getCheckbox = (
     property: any,
     sectionName: string,
@@ -96,25 +102,29 @@ const SidePanel = (): JSX.Element => {
   };
 
   const getRadioButtonGroup = (
-    key: string,
-    value: string[],
-    index: number,
+    property: any,
+    sectionName: string,
     onRadioButtonChange: any,
   ) => {
     return (
-      <div className="radio-group" key={key}>
-        {value.map((option, index) => (
-          <div className="chart-property" key={option}>
+      <div className="radio-group" key={property.name}>
+        <label>{property.displayName}:</label>
+        {property.options.map((option: string, index: number) => (
+          <div className="chart-property" key={`${option}${index}`}>
             <input
               type="radio"
               className="radio"
-              id={"chartProperty" + index}
-              name={option}
-              value={key}
+              id={sectionName + "-" + property.name + option}
+              name={property.name}
+              value={option}
+              checked={property.value === option}
               onChange={onRadioButtonChange}
             />
-            <label className="label" htmlFor={"chartProperty" + index}>
-              {camelToSentenceCase(option)}
+            <label
+              className="label"
+              htmlFor={sectionName + "-" + property.name + option}
+            >
+              {option}
             </label>
           </div>
         ))}
@@ -134,9 +144,14 @@ const SidePanel = (): JSX.Element => {
           {section.properties.map((property: any, index: number) => {
             if (property.displayType === "checkbox") {
               return getCheckbox(property, section.name, onCheckboxChange);
-            }
-            if (property.displayType === "text") {
+            } else if (property.displayType === "text") {
               return getTextbox(property, section.name, onTextChange);
+            } else if (property.displayType === "radio") {
+              return getRadioButtonGroup(
+                property,
+                section.name,
+                onRadioButtonChange,
+              );
             }
           })}
         </div>
