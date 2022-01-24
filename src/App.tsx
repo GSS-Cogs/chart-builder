@@ -1,9 +1,8 @@
 import "./App.css";
 import Header from "./components/header/Header";
-import ChartPanel from "./components/chart-panel/ChartPanel";
-import SidePanel from "./components/side-panel/SidePanel";
 import PageIntro from "./components/page-intro/PageIntro";
 import ChartContextProvider from "./context/ChartContextProvider";
+import ChartBuilder from "./components/chart-builder/ChartBuilder";
 
 function App() {
   return (
@@ -11,12 +10,9 @@ function App() {
       <Header />
       <div id="main-content">
         <PageIntro />
-        <div id="chart-builder">
-          <ChartContextProvider>
-            <SidePanel />
-            <ChartPanel />
-          </ChartContextProvider>
-        </div>
+        <ChartContextProvider>
+          <ChartBuilder/>
+        </ChartContextProvider>
       </div>
     </div>
   );

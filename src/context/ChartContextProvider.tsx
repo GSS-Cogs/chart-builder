@@ -3,6 +3,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { titleCase } from "../helper-functions/string-helpers";
 import { arrayColumn } from "../helper-functions/array-helpers";
 import initialChartState from "./initialChartState";
+import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 
 interface Props {
   children: ReactNode;
@@ -26,6 +27,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const [chartData, setChartData] = useState<ChartData>();
   const [chartDefinition, setChartDefinition] = useState({});
   const [chartProperties, setChartProperties] = useState(initialChartState);
+  const [selectedFilename, setSelectedFilename] = useState(NO_FILE_SELECTED_TEXT);
+  const [previewMode, setPreviewMode] = useState<boolean>(false);
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();
@@ -48,12 +51,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     });
     return flatProps;
   };
-
-  //Step1: Find column names from the data.
-  //Step2: Present user with all column names to select single x-axis dimension such as week_starting
-  //Step3: Present user with remaining column names to select single measure  such as infection_rate
-  //Step4: Present user with remaining column names to select y-axis dimensions such as country_name
-  //Step5: Present the user distinct values for that column such as england, scotland, wales and norther_ireland
 
 
   const transformTidyData = () => {
@@ -96,12 +93,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
 
  
     setChartData(newChartData);
-    // //based on example get distinct values from the country column //4 countries
-    // //Map through these 4 distinct values for country column
-    // // filter the all rows by on the current country column
-    // // [countryname: England
-    //     Weekr_Starting:{12/01},{17/01},{}
-    //     infeactionrate: {1}, {2}, {3}]
   };
 
   const getDistinctValues = (columnName: string) => {
@@ -151,6 +142,10 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         chartDefinition,
         chartProperties,
         setChartProperties,
+        selectedFilename,
+        setSelectedFilename,
+        previewMode,
+        setPreviewMode
       }}
     >
       {children}

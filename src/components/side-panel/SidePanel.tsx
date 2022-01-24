@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { ChartContext } from "../../context/ChartContext";
-import CSVUploader from "./csv-uploader/CSVUploader";
-import { camelToSentenceCase } from "../../helper-functions/string-helpers";
+import { NO_FILE_SELECTED_TEXT } from "../constants/Common-constants";
 import "./side-panel.css";
 
 const SidePanel = (): JSX.Element => {
   const { chartProperties, setChartProperties }: any = useContext(ChartContext);
+  const { selectedFilename, setSelectedFilename }: any = useContext(ChartContext);
+  const { previewMode, setPreviewMode }: any = useContext(ChartContext);
 
   const updateProperty = (sectionName: string, property: any, value: any) => {
     const section = chartProperties.find(
@@ -101,6 +102,12 @@ const SidePanel = (): JSX.Element => {
     );
   };
 
+  const resetChartState = () =>
+  {
+    setPreviewMode(false);
+    setSelectedFilename(NO_FILE_SELECTED_TEXT);
+  }
+
   const getRadioButtonGroup = (
     property: any,
     sectionName: string,
@@ -135,9 +142,10 @@ const SidePanel = (): JSX.Element => {
   return (
     <div id="side-panel">
       <p id="data-source">Data Source</p>
-      <CSVUploader />
+      <label id="selected-filename">{selectedFilename}</label>
+      {previewMode && <button className="close-button" onClick={()=>resetChartState()}>{"X"}</button>}
+      {/* <CSVUploader /> */}
 
-      <h3>Configure the Chart</h3>
       {chartProperties.map((section: any, index: number) => (
         <div className="property-section" key={section.name}>
           <div className="section-heading"> {section.displayName}</div>
