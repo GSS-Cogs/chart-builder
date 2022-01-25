@@ -1,9 +1,9 @@
-.button{
-    padding: 0.5rem;
-    margin: 0.3rem;
-    background-color: rgb(29, 112, 184);
-    color: white;
-    border-style: none;
-    border-radius: 0.3rem;
-    cursor: pointer;
+.button {
+  padding: 0.5rem;
+  margin: 0.4rem;
+  background-color: rgb(29, 112, 184);
+  color: white;
+  border-style: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
 }
