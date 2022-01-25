@@ -9,9 +9,9 @@ function App() {
     <div id="app">
       <Header />
       <div id="main-content">
-        <PageIntro />
+        {/* <PageIntro /> */}
         <ChartContextProvider>
-          <ChartBuilder/>
+          <ChartBuilder />
         </ChartContextProvider>
       </div>
     </div>
