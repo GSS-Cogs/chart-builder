@@ -8,7 +8,7 @@ import Button from "../../button/Button";
 const CSVUploader = (): JSX.Element => {
   const { setTidyData }: any = useContext(ChartContext);
   const { setSelectedFilename }: any = useContext(ChartContext);
-  const { setPreviewMode }: any = useContext(ChartContext);  
+  const { setPreviewMode }: any = useContext(ChartContext);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
@@ -33,7 +33,7 @@ const CSVUploader = (): JSX.Element => {
         if (results.errors && results.errors.length > 0) {
           onFailure(results.errors[0].message);
         } else {
-          console.log("Finished:", results.data);
+          // console.log("Finished:", results.data);
           setSelectedFilename(data.name);
           setPreviewMode(true);
           setTidyData(results.data);
@@ -47,7 +47,7 @@ const CSVUploader = (): JSX.Element => {
   };
 
   return (
-    <div id="csv-uploader">      
+    <div id="csv-uploader">
       <div {...getRootProps({ id: "dropzone" })}>
         <input {...getInputProps()} />
         <span>Drag a csv file here or </span>
