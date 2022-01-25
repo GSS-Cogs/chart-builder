@@ -1,66 +1,117 @@
-const basicPropsSection = {
+const basicSection = {
   name: "BasicChartProperties",
-  displayName: "Basic chart properties",
+  displayName: "Title",
   properties: [
     {
       name: "chartTitle",
       displayName: "Chart title",
-      displayType: "text",
+      type: "text",
       value: "Covid-19 Triple Vaccination by UK Nation",
     },
     {
       name: "showTitle",
-      displayName: "Show Title",
-      displayType: "checkbox",
+      displayName: "Show title",
+      type: "checkbox",
       value: true,
-    },
-    {
-      name: "showGridLines",
-      displayName: "Show Grid Lines",
-      displayType: "checkbox",
-      value: true,
-    },
-    {
-      name: "showLegend",
-      displayName: "Show Legend",
-      displayType: "checkbox",
-      value: true,
-    },
-    {
-      name: "chartBackgroundColour",
-      displayName: "Background colour",
-      displayType: "text",
-      value: "rgb(220, 220, 220)",
     },
   ],
 };
 
-const axisPropsSection = {
-  name: "AxisProperties",
-  displayName: "X and Y axis properties",
+const legendSection = {
+  name: "LegendSection",
+  displayName: "Legend",
+  properties: [
+    {
+      name: "showLegend",
+      displayName: "Show legend",
+      type: "checkbox",
+      value: true,
+    },
+  ],
+};
+
+const GridlinesSection = {
+  name: "Gridlines",
+  displayName: "Gridlines",
+  properties: [
+    {
+      name: "showGridLines",
+      displayName: "Show gridlines",
+      type: "checkbox",
+      value: true,
+    },
+  ],
+};
+
+const chartTypesSection = {
+  name: "ChartTypes",
+  displayName: "Chart type",
+  properties: [
+    {
+      name: "chartType",
+      displayName: "Chart type",
+      type: "radio",
+      options: ["Line", "Bar", "Stacked Bar"],
+      value: "Line",
+    },
+  ],
+};
+
+const interactivitySection = {
+  name: "Interactivity",
+  displayName: "Interactivity",
+  properties: [
+    {
+      name: "interactivity",
+      displayName: "Interactivity",
+      type: "radio",
+      options: ["Enabled", "Disabled"],
+      value: "Enabled",
+    },
+  ],
+};
+
+const xAxisSection = {
+  name: "xAxisProperties",
+  displayName: "X axis",
   properties: [
     {
       name: "xAxisTitle",
-      displayName: "X axis title",
-      displayType: "text",
+      displayName: "Title",
+      type: "text",
       value: "Week beginning",
     },
     {
-      name: "yAxisTitle",
-      displayName: "Y axis title",
-      displayType: "text",
-      value: "Percentage of people vaccinated",
-    },
-    {
       name: "xAxisTickAngle",
-      displayName: "X axis tick angle",
-      displayType: "radio",
-      options: ["0", "45", "90", "135"],
-      value: "45",
+      displayName: "Tick angle (degrees)",
+      type: "radio",
+      options: ["0", "45", "-45", "-90"],
+      value: "-45",
     },
   ],
 };
 
-const initialChartState = [basicPropsSection, axisPropsSection];
+const yAxisSection = {
+  name: "yAxisProperties",
+  displayName: "Y axis",
+  properties: [
+    {
+      name: "yAxisTitle",
+      displayName: "Title",
+      type: "text",
+      value: "Percentage of people vaccinated",
+    },
+  ],
+};
+
+const initialChartState = [
+  basicSection,
+  chartTypesSection,
+  xAxisSection,
+  yAxisSection,
+  interactivitySection,
+  GridlinesSection,
+  legendSection,
+];
 
 export default initialChartState;

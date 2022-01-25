@@ -1,6 +1,5 @@
 import { ChartContext } from "./ChartContext";
 import { useState, useEffect, ReactNode } from "react";
-import { titleCase } from "../helper-functions/string-helpers";
 import { arrayColumn } from "../helper-functions/array-helpers";
 import initialChartState from "./initialChartState";
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
@@ -27,7 +26,9 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const [chartData, setChartData] = useState<ChartData>();
   const [chartDefinition, setChartDefinition] = useState({});
   const [chartProperties, setChartProperties] = useState(initialChartState);
-  const [selectedFilename, setSelectedFilename] = useState(NO_FILE_SELECTED_TEXT);
+  const [selectedFilename, setSelectedFilename] = useState(
+    NO_FILE_SELECTED_TEXT,
+  );
   const [previewMode, setPreviewMode] = useState<boolean>(false);
 
   useEffect(() => {
@@ -52,7 +53,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     return flatProps;
   };
 
-
   const transformTidyData = () => {
     //step1
     let columnNames = Object.keys(tidyData[0]);
@@ -60,7 +60,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     //step2
     const userSelectedXAxis = "week_starting";
     const xSeries = getDistinctValues(userSelectedXAxis);
-    const newXSeries : Series = {name: userSelectedXAxis, values: xSeries}
+    const newXSeries: Series = { name: userSelectedXAxis, values: xSeries };
 
     //step3
     columnNames = columnNames.filter((item) => item !== userSelectedXAxis);
@@ -75,6 +75,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     const userSelectedYSeries = [
       ySeries_all[0],
       ySeries_all[1],
+      ySeries_all[2],
       ySeries_all[3],
     ];
 
@@ -82,16 +83,18 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       const filteredDataBySeries = tidyData.filter(
         (item: any) => item[userSelectedYAxis] === series,
       );
-      const currentSeries = arrayColumn(filteredDataBySeries, userSelectedMeasure);
-      return {name: series, values: currentSeries} as Series;
+      const currentSeries = arrayColumn(
+        filteredDataBySeries,
+        userSelectedMeasure,
+      );
+      return { name: series, values: currentSeries } as Series;
     });
 
-    let newChartData : ChartData = {
-      xSeries : newXSeries, 
-      ySeries : result
+    let newChartData: ChartData = {
+      xSeries: newXSeries,
+      ySeries: result,
     };
 
- 
     setChartData(newChartData);
   };
 
@@ -101,7 +104,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   };
 
   const updateChartDefinition = () => {
-    const traces:any = [];
+    const traces: any = [];
     chartData?.ySeries.map((series, index) => {
       traces.push({
         x: chartData!.xSeries.values,
@@ -110,15 +113,23 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         type: "scatter",
         mode: "lines",
         line: {
-          color: colors[index - 1],
+          color: colors[index],
         },
       });
-    }) 
-
+    });
 
     const chartProps: any = flattenChartProperties();
     const layout = {
-      title: chartProps.showTitle ? chartProps.chartTitle : "",
+      autosize: false,
+      width: 950,
+      height: 600,
+      title: {
+        text: chartProps.showTitle ? chartProps.chartTitle : "",
+        font: {
+          size: "21",
+        },
+      },
+
       xaxis: {
         showgrid: chartProps.showGridLines,
         title: chartProps.xAxisTitle,
@@ -127,9 +138,10 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       yaxis: {
         showgrid: chartProps.showGridLines,
         title: chartProps.yAxisTitle,
+        type: "linear",
       },
-      paper_bgcolor: chartProps.chartBackgroundColour,
-      plot_bgcolor: chartProps.chartBackgroundColour,
+      paper_bgcolor: "rgb(255,255,255)",
+      plot_bgcolor: "rgb(255,255,255)",
       showlegend: chartProps.showLegend,
     };
     setChartDefinition({ data: traces, layout });
@@ -145,7 +157,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         selectedFilename,
         setSelectedFilename,
         previewMode,
-        setPreviewMode
+        setPreviewMode,
       }}
     >
       {children}

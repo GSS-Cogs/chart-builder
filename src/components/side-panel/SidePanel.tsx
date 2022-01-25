@@ -5,7 +5,8 @@ import "./side-panel.css";
 
 const SidePanel = (): JSX.Element => {
   const { chartProperties, setChartProperties }: any = useContext(ChartContext);
-  const { selectedFilename, setSelectedFilename }: any = useContext(ChartContext);
+  const { selectedFilename, setSelectedFilename }: any =
+    useContext(ChartContext);
   const { previewMode, setPreviewMode }: any = useContext(ChartContext);
 
   const updateProperty = (sectionName: string, property: any, value: any) => {
@@ -102,11 +103,10 @@ const SidePanel = (): JSX.Element => {
     );
   };
 
-  const resetChartState = () =>
-  {
+  const resetChartState = () => {
     setPreviewMode(false);
     setSelectedFilename(NO_FILE_SELECTED_TEXT);
-  }
+  };
 
   const getRadioButtonGroup = (
     property: any,
@@ -143,18 +143,21 @@ const SidePanel = (): JSX.Element => {
     <div id="side-panel">
       <p id="data-source">Data Source</p>
       <label id="selected-filename">{selectedFilename}</label>
-      {previewMode && <button className="close-button" onClick={()=>resetChartState()}>{"X"}</button>}
-      {/* <CSVUploader /> */}
+      {previewMode && (
+        <button className="close-button" onClick={() => resetChartState()}>
+          {"Reset"}
+        </button>
+      )}
 
       {chartProperties.map((section: any, index: number) => (
         <div className="property-section" key={section.name}>
           <div className="section-heading"> {section.displayName}</div>
           {section.properties.map((property: any, index: number) => {
-            if (property.displayType === "checkbox") {
+            if (property.type === "checkbox") {
               return getCheckbox(property, section.name, onCheckboxChange);
-            } else if (property.displayType === "text") {
+            } else if (property.type === "text") {
               return getTextbox(property, section.name, onTextChange);
-            } else if (property.displayType === "radio") {
+            } else if (property.type === "radio") {
               return getRadioButtonGroup(
                 property,
                 section.name,
