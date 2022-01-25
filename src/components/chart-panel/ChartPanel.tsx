@@ -6,7 +6,7 @@ const ChartPanel = (): JSX.Element => {
   return (
     <div id="chart-panel">
       <ChartPreview />
-      <ChartProperties />
+      {/* <ChartProperties /> */}
     </div>
   );
 };
