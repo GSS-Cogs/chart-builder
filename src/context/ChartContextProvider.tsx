@@ -1,6 +1,6 @@
 import { ChartContext } from "./ChartContext";
 import { useState, useEffect, ReactNode } from "react";
-import { arrayColumn } from "../helper-functions/array-helpers";
+import { arrayColumn, getDistinctValues } from "../helper-functions/array-helpers";
 import initialChartState from "./initialChartState";
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 import { extent } from "d3-array";
@@ -19,6 +19,18 @@ interface ChartData {
   ySeries: Series[];
 }
 
+export interface SelectedDimension {
+  Name: string;
+  DisplayName: string;
+}
+
+interface DataSelection {
+  xSeries: string;
+  measure: string;
+  dimension: string;
+  ySeries: SelectedDimension[];
+}
+
 // array of colors for each series
 const colors = ["#a05195", "#f95d6a", "#ffa600", "#003f5c"];
 
@@ -31,6 +43,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     NO_FILE_SELECTED_TEXT,
   );
   const [previewMode, setPreviewMode] = useState<boolean>(false);
+  const [columnNames, setColumnNames] = useState<string[]>([]);
+  const [dataSelection, setDataSelection] = useState<DataSelection>();
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();
@@ -43,6 +57,18 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     }
     updateChartDefinition();
   }, [chartData, chartProperties]);
+
+  //setChartData
+  useEffect(() => {
+    if (
+      dataSelection &&
+      dataSelection.xSeries &&
+      dataSelection.measure &&
+      dataSelection.dimension
+    ) {
+      sanitizeChartData();
+    }
+  }, [dataSelection]);
 
   const flattenChartProperties = (): any => {
     let flatProps: any = {};
@@ -57,51 +83,62 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const transformTidyData = () => {
     //step1
     let columnNames = Object.keys(tidyData[0]);
+    setColumnNames(columnNames);
+  };
 
-    //step2
-    const userSelectedXAxis = "week_starting";
-    const xSeries = getDistinctValues(userSelectedXAxis);
-    const newXSeries: Series = { name: userSelectedXAxis, values: xSeries };
+  const sanitizeChartData = () => {
+    // //step2
+    // const userSelectedXAxis = "week_starting";
+    if (!dataSelection) return;
+    const xSeries = getDistinctValues(dataSelection.xSeries, tidyData);
+    const newXSeries: Series = {
+      name: dataSelection.xSeries,
+      values: xSeries,
+    };
 
     //step3
-    columnNames = columnNames.filter((item) => item !== userSelectedXAxis);
-    const userSelectedMeasure = "infection_rate";
+    // if (userPreferences.xSeriesColumnName) {
+    //   columnNames = columnNames.filter(
+    //     (item) => item !== userPreferences.xSeriesColumnName,
+    //   );
+    // }
+    // const userSelectedMeasure = "infection_rate";
 
     //step4
-    columnNames = columnNames.filter((item) => item !== userSelectedMeasure);
-    const userSelectedYAxis = "country_name";
+    // columnNames = columnNames.filter((item) => item !== userPreferences.measure);
+    // const userSelectedYAxis = "country_name";
 
     //step5
-    const ySeries_all = getDistinctValues(userSelectedYAxis);
-    const userSelectedYSeries = [
-      ySeries_all[0],
-      ySeries_all[1],
-      ySeries_all[2],
-      ySeries_all[3],
-    ];
+    // const ySeries_all = getDistinctValues(dataSelection.dimension, tidyData);
+    // setAvailableDimensions(ySeries_all);
+    // const userSelectedYSeries = [
+    //   ySeries_all[0],
+    //   ySeries_all[1],
+    //   ySeries_all[2],
+    //   ySeries_all[3],
+    // ];
 
-    const result = userSelectedYSeries.map((series, index) => {
-      const filteredDataBySeries = tidyData.filter(
-        (item: any) => item[userSelectedYAxis] === series,
-      );
-      const currentSeries = arrayColumn(
-        filteredDataBySeries,
-        userSelectedMeasure,
-      );
-      return { name: series, values: currentSeries } as Series;
-    });
+    if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
+      const result = dataSelection.ySeries.map((series, index) => {
+        const filteredDataBySeries = tidyData.filter(
+          (item: any) => item[dataSelection.dimension] === series.Name,
+        );
+        const currentSeries = arrayColumn(
+          filteredDataBySeries,
+          dataSelection.measure,
+        );
+        return { name: series.DisplayName, values: currentSeries } as Series;
+      });
 
-    let newChartData: ChartData = {
-      xSeries: newXSeries,
-      ySeries: result,
-    };
-    setChartData(newChartData);
+      let newChartData: ChartData = {
+        xSeries: newXSeries,
+        ySeries: result,
+      };
+      setChartData(newChartData);
+    }
   };
 
-  const getDistinctValues = (columnName: string) => {
-    const allSeries = arrayColumn(tidyData, columnName);
-    return Array.from(new Set(allSeries));
-  };
+
 
   const calculateYRange = (ySeries: Series[]): any => {
     let globalYMin = Number.MAX_SAFE_INTEGER;
@@ -168,6 +205,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   return (
     <ChartContext.Provider
       value={{
+        tidyData,
         setTidyData,
         chartDefinition,
         chartProperties,
@@ -176,6 +214,9 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         setSelectedFilename,
         previewMode,
         setPreviewMode,
+        columnNames,
+        dataSelection,
+        setDataSelection
       }}
     >
       {children}

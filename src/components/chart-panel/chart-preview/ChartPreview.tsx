@@ -11,6 +11,8 @@ const ChartPreview = (): JSX.Element => {
 
   const { data, layout } = chartDefinition;
 
+  console.log(chartDefinition);
+  
   return (
     <div id="chart-preview">
       <h1 id="preview-heading">Preview</h1>
