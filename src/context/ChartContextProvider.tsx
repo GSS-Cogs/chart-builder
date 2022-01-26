@@ -185,12 +185,14 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       },
       xaxis: {
         range: [0, chartData!.xSeries.values.length],
+        fixedrange: true, // prevents the user from zooming in/out
         showgrid: chartProps.showGridLines,
         title: chartProps.xAxisTitle,
         tickangle: chartProps.xAxisTickAngle,
       },
       yaxis: {
         range: calculateYRange(chartData!.ySeries),
+        fixedrange: true, // prevents the user from zooming in/out
         showgrid: chartProps.showGridLines,
         title: chartProps.yAxisTitle,
         type: "linear",
