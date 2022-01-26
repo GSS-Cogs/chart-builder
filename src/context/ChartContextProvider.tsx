@@ -66,7 +66,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     updateChartDefinition();
   }, [chartData, chartProperties]);
 
-  //setChartData
   useEffect(() => {
     if (
       dataSelection &&
@@ -79,42 +78,17 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   }, [dataSelection]);
 
   const transformTidyData = () => {
-    //step1
     let columnNames = Object.keys(tidyData[0]);
     setColumnNames(columnNames);
   };
 
   const sanitizeChartData = () => {
-    // //step2
-    // const userSelectedXAxis = "week_starting";
     if (!dataSelection) return;
     const xSeries = getDistinctValues(dataSelection.xSeries, tidyData);
     const newXSeries: Series = {
       name: dataSelection.xSeries,
       values: xSeries,
     };
-
-    //step3
-    // if (userPreferences.xSeriesColumnName) {
-    //   columnNames = columnNames.filter(
-    //     (item) => item !== userPreferences.xSeriesColumnName,
-    //   );
-    // }
-    // const userSelectedMeasure = "infection_rate";
-
-    //step4
-    // columnNames = columnNames.filter((item) => item !== userPreferences.measure);
-    // const userSelectedYAxis = "country_name";
-
-    //step5
-    // const ySeries_all = getDistinctValues(dataSelection.dimension, tidyData);
-    // setAvailableDimensions(ySeries_all);
-    // const userSelectedYSeries = [
-    //   ySeries_all[0],
-    //   ySeries_all[1],
-    //   ySeries_all[2],
-    //   ySeries_all[3],
-    // ];
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
       const result = dataSelection.ySeries.map((series, index) => {
