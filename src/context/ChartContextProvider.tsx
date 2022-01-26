@@ -1,6 +1,9 @@
 import { ChartContext } from "./ChartContext";
 import { useState, useEffect, ReactNode } from "react";
-import { arrayColumn, getDistinctValues } from "../helper-functions/array-helpers";
+import {
+  arrayColumn,
+  getDistinctValues,
+} from "../helper-functions/array-helpers";
 import initialChartState from "./initialChartState";
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 import { extent } from "d3-array";
@@ -138,8 +141,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     }
   };
 
-
-
   const calculateYRange = (ySeries: Series[]): any => {
     let globalYMin = Number.MAX_SAFE_INTEGER;
     let globalYMax = Number.MIN_SAFE_INTEGER;
@@ -199,7 +200,9 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       showlegend: chartProps.showLegend,
     };
 
-    setChartDefinition({ data: traces, layout });
+    const config = { displayModeBar: false };
+
+    setChartDefinition({ data: traces, layout, config });
   };
 
   return (
@@ -216,7 +219,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         setPreviewMode,
         columnNames,
         dataSelection,
-        setDataSelection
+        setDataSelection,
       }}
     >
       {children}
