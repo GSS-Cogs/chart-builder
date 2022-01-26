@@ -3,6 +3,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { arrayColumn } from "../helper-functions/array-helpers";
 import initialChartState from "./initialChartState";
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
+import { extent } from "d3-array";
 
 interface Props {
   children: ReactNode;
@@ -94,7 +95,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       xSeries: newXSeries,
       ySeries: result,
     };
-
     setChartData(newChartData);
   };
 
@@ -103,8 +103,24 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     return Array.from(new Set(allSeries));
   };
 
+  const calculateYRange = (ySeries: Series[]): any => {
+    let globalYMin = Number.MAX_SAFE_INTEGER;
+    let globalYMax = Number.MIN_SAFE_INTEGER;
+    const yRange = ySeries.forEach((series: Series) => {
+      // convert string values to numbers
+      const yValues = series.values.map(Number);
+      const yExtent = extent(yValues);
+
+      globalYMin = Math.min(globalYMin, yExtent[0]!);
+      globalYMax = Math.max(globalYMax, yExtent[1]!);
+    });
+    return [globalYMin, globalYMax];
+  };
+
   const updateChartDefinition = () => {
     const traces: any = [];
+
+    if (chartData) calculateYRange(chartData.ySeries);
     chartData?.ySeries.map((series, index) => {
       traces.push({
         x: chartData!.xSeries.values,
@@ -129,13 +145,14 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
           size: "21",
         },
       },
-
       xaxis: {
+        range: [0, chartData!.xSeries.values.length],
         showgrid: chartProps.showGridLines,
         title: chartProps.xAxisTitle,
         tickangle: chartProps.xAxisTickAngle,
       },
       yaxis: {
+        range: calculateYRange(chartData!.ySeries),
         showgrid: chartProps.showGridLines,
         title: chartProps.yAxisTitle,
         type: "linear",
@@ -144,6 +161,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       plot_bgcolor: "rgb(255,255,255)",
       showlegend: chartProps.showLegend,
     };
+
     setChartDefinition({ data: traces, layout });
   };
 
