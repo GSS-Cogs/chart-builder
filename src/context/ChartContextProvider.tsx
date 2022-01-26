@@ -10,6 +10,7 @@ import {
 import {
   colors,
   calculateYRange,
+  calculateXRange,
   flattenChartProperties,
 } from "../helper-functions/chart-helpers";
 
@@ -165,7 +166,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         },
       },
       xaxis: {
-        range: [0, chartData!.xSeries.values.length],
+        range: calculateXRange(chartData),
         fixedrange: true, // prevents the user from zooming in/out
         showgrid: chartProps.showGridLines,
         title: chartProps.xAxisTitle,

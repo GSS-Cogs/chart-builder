@@ -31,4 +31,8 @@ const flattenChartProperties = (chartProperties: any): any => {
   return flatProps;
 };
 
-export { colors, calculateYRange, flattenChartProperties };
+const calculateXRange = (chartData: any): any => {
+  return [0, chartData!.xSeries.values.length];
+};
+
+export { colors, calculateYRange, calculateXRange, flattenChartProperties };
