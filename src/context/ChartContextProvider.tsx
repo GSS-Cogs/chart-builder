@@ -110,6 +110,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     }
   };
 
+  const chartProps: any = flattenChartProperties(chartProperties);
   const updateChartDefinition = () => {
     const traces: any = [];
 
@@ -121,13 +122,12 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         name: series.name,
         type: "scatter",
         mode: "lines",
+        hoverinfo: chartProps.interactivity,
         line: {
           color: colors[index],
         },
       });
     });
-
-    const chartProps: any = flattenChartProperties(chartProperties);
 
     const layout = {
       autosize: false,
