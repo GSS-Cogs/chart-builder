@@ -10,11 +10,12 @@ import {
 import {
   colors,
   calculateYRange,
-  calculateXRange,
   flattenChartProperties,
 } from "../helper-functions/chart-helpers";
 
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
+import { getConfig } from "@testing-library/react";
+import getLayout from "../plotly/layout";
 
 interface Props {
   children: ReactNode;
@@ -111,6 +112,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   };
 
   const chartProps: any = flattenChartProperties(chartProperties);
+
   const updateChartDefinition = () => {
     const traces: any = [];
 
@@ -129,36 +131,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
       });
     });
 
-    const layout = {
-      autosize: false,
-      width: 950,
-      height: 600,
-      title: {
-        text: chartProps.showTitle ? chartProps.chartTitle : "",
-        font: {
-          size: "21",
-        },
-      },
-      xaxis: {
-        range: calculateXRange(chartData),
-        fixedrange: true, // prevents the user from zooming in/out
-        showgrid: chartProps.showGridLines,
-        title: chartProps.xAxisTitle,
-        tickangle: chartProps.xAxisTickAngle,
-      },
-      yaxis: {
-        range: calculateYRange(chartData!.ySeries),
-        fixedrange: true, // prevents the user from zooming in/out
-        showgrid: chartProps.showGridLines,
-        title: chartProps.yAxisTitle,
-        type: "linear",
-      },
-      paper_bgcolor: "rgb(255,255,255)",
-      plot_bgcolor: "rgb(255,255,255)",
-      showlegend: chartProps.showLegend,
-    };
-
-    const config = { displayModeBar: false };
+    const layout: any = getLayout(chartProps, chartData);
+    const config: any = getConfig();
 
     setChartDefinition({ data: traces, layout, config });
   };
