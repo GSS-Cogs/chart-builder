@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ChartContext } from "../../../context/ChartContext";
+import ChartContext  from "../../../context/ChartContext";
 import Plot from "react-plotly.js";
 import "./chart-preview.css";
 

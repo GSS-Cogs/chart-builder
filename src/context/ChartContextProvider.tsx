@@ -1,4 +1,4 @@
-import { ChartContext } from "./ChartContext";
+import ChartContext from "./ChartContext";
 import { useState, useEffect, ReactNode } from "react";
 import initialChartState from "./initialChartState";
 
@@ -21,12 +21,12 @@ interface Props {
   children: ReactNode;
 }
 
-interface Series {
+export interface Series {
   name: string;
   values: string[];
 }
 
-interface ChartData {
+export interface ChartData {
   xSeries: Series;
   ySeries: Series[];
 }
@@ -36,7 +36,7 @@ export interface SelectedDimension {
   DisplayName: string;
 }
 
-interface DataSelection {
+export interface DataSelection {
   xSeries: string;
   measure: string;
   dimension: string;
@@ -53,7 +53,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   );
   const [previewMode, setPreviewMode] = useState<boolean>(false);
   const [columnNames, setColumnNames] = useState<string[]>([]);
-  const [dataSelection, setDataSelection] = useState<DataSelection>();
+  const [dataSelection, setDataSelection] = useState<DataSelection | undefined>();
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();

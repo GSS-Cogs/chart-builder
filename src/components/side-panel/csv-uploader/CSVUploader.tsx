@@ -2,7 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import "./csv-uploader.css";
-import { ChartContext } from "../../../context/ChartContext";
+import ChartContext from "../../../context/ChartContext";
 import Button from "../../button/Button";
 
 const CSVUploader = (): JSX.Element => {
@@ -33,7 +33,6 @@ const CSVUploader = (): JSX.Element => {
         if (results.errors && results.errors.length > 0) {
           onFailure(results.errors[0].message);
         } else {
-          // console.log("Finished:", results.data);
           setSelectedFilename(data.name);
           setPreviewMode(true);
           setTidyData(results.data);

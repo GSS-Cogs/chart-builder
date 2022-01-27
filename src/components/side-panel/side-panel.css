@@ -93,13 +93,3 @@
 #remove-data-source-button {
   height: 1rem;
 }
-
-.chart-dimension-select {
-  width: 10rem;
-}
-
-.y-series-select {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  margin-right: 0.5rem;
-}
