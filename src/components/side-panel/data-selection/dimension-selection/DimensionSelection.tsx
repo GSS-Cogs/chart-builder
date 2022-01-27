@@ -48,7 +48,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
             className="remove-dimension"
             onClick={handleRemoveDimensionClick}
           >
-            {""}
+            {"   -   "}
           </button>
         </div>
       );
