@@ -113,6 +113,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
 
   const chartProps: any = flattenChartProperties(chartProperties);
 
+  const chartType = chartProps.chartType.toLowerCase();
+
   const updateChartDefinition = () => {
     const traces: any = [];
 
@@ -122,7 +124,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         x: chartData!.xSeries.values,
         y: series.values,
         name: series.name,
-        type: "scatter",
+        type: chartType,
         mode: "lines",
         hoverinfo: chartProps.interactivity,
         line: {
