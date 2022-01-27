@@ -65,8 +65,8 @@ const interactivitySection = {
       name: "interactivity",
       displayName: "Interactivity",
       type: "radio",
-      options: ["Enabled", "Disabled"],
-      value: "Enabled",
+      options: ["x+y", "none"],
+      value: "none",
     },
   ],
 };
