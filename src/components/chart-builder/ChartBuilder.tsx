@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ChartContext } from "../../context/ChartContext";
+import ChartContext from "../../context/ChartContext";
 import ChartPanel from "../chart-panel/ChartPanel";
 import CSVUploader from "../side-panel/csv-uploader/CSVUploader";
 import SidePanel from "../side-panel/SidePanel";
