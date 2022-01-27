@@ -3,9 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { ChartContext } from "../../context/ChartContext";
 import { SelectedDimension } from "../../context/ChartContextProvider";
 import { getDistinctValues } from "../../helper-functions/array-helpers";
-import {
-  NO_FILE_SELECTED_TEXT
-} from "../constants/Common-constants";
+import { NO_FILE_SELECTED_TEXT } from "../constants/Common-constants";
 import "./side-panel.css";
 
 const SidePanel = (): JSX.Element => {
@@ -23,15 +21,12 @@ const SidePanel = (): JSX.Element => {
     SelectedDimension[]
   >([]);
 
-
   useEffect(() => {
     setDataSelection((prevState: any) => ({
       ...prevState,
       ySeries: selectedDimensions,
     }));
-  
   }, [selectedDimensions]);
-
 
   const updateProperty = (sectionName: string, property: any, value: any) => {
     const section = chartProperties.find(
@@ -143,11 +138,16 @@ const SidePanel = (): JSX.Element => {
     } else {
       const nonSelectedAvailableDimensions = availableDimensions.filter(
         (possibleDimension: string) =>
-          !(selectedDimensions.map((item) => item.Name).includes(possibleDimension)),
+          !selectedDimensions
+            .map((item) => item.Name)
+            .includes(possibleDimension),
       );
       setSelectedDimensions([
         ...selectedDimensions,
-        { Name: nonSelectedAvailableDimensions[0], DisplayName: nonSelectedAvailableDimensions[0] },
+        {
+          Name: nonSelectedAvailableDimensions[0],
+          DisplayName: nonSelectedAvailableDimensions[0],
+        },
       ]);
     }
   };
@@ -177,13 +177,11 @@ const SidePanel = (): JSX.Element => {
       return (
         <div key={index}>
           <select
+            className="y-series-select"
             name={dimension.Name}
             value={dimension.Name}
             onChange={handleSelectedDimensionChange}
           >
-            {/* <option key="defaultDimensionOption" value="">
-              {dimension.Name}
-            </option> */}
             {availableDimensions.map((columnName: string, index: number) => (
               <option key={columnName} value={columnName}>
                 {columnName}
@@ -268,8 +266,7 @@ const SidePanel = (): JSX.Element => {
       }));
     }
 
-    if(e.target.name === "dimension" && e.target.value !== "")
-    {
+    if (e.target.name === "dimension" && e.target.value !== "") {
       setAvailableDimensions(getDistinctValues(e.target.value, tidyData));
     }
   };
@@ -285,8 +282,9 @@ const SidePanel = (): JSX.Element => {
       )}
 
       <div className="chart-property">
-        <label>xSeries:</label>
+        <label>Category Axis:&nbsp;</label>
         <select
+          className="chart-dimension-select"
           name="xSeries"
           value={dataSelection ? dataSelection.xSeries : ""}
           onChange={onHandleChange}
@@ -303,8 +301,9 @@ const SidePanel = (): JSX.Element => {
       </div>
 
       <div className="chart-property">
-        <label>Measure:</label>
+        <label>Measure:&nbsp;</label>
         <select
+          className="chart-dimension-select"
           name="measure"
           value={dataSelection ? dataSelection.measure : ""}
           onChange={onHandleChange}
@@ -321,8 +320,9 @@ const SidePanel = (): JSX.Element => {
       </div>
 
       <div className="chart-property">
-        <label>Dimension:</label>
+        <label>Dimension:&nbsp;</label>
         <select
+          className="chart-dimension-select"
           name="dimension"
           value={dataSelection ? dataSelection.dimension : ""}
           onChange={onHandleChange}
