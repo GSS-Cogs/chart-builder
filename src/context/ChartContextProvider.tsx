@@ -53,7 +53,9 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   );
   const [previewMode, setPreviewMode] = useState<boolean>(false);
   const [columnNames, setColumnNames] = useState<string[]>([]);
-  const [dataSelection, setDataSelection] = useState<DataSelection | undefined>();
+  const [dataSelection, setDataSelection] = useState<
+    DataSelection | undefined
+  >();
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();
@@ -108,6 +110,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         ySeries: result,
       };
       setChartData(newChartData);
+    } else {
+      setChartData(undefined);
     }
   };
 

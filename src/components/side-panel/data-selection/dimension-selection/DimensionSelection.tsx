@@ -23,6 +23,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   }, [selectedDimensions]);
 
   const createDimensionList = () => {
+    const nonSelectedAvailableDimensions: string[] =
+      getNonSelectedAvailableDimensions();
     return selectedDimensions.map((dimension, index) => {
       return (
         <div key={index}>
@@ -32,23 +34,30 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
             value={dimension.Name}
             onChange={handleSelectedDimensionChange}
           >
-            {availableDimensions.map((columnName: string, index: number) => (
-              <option key={columnName} value={columnName}>
-                {columnName}
-              </option>
-            ))}
+            <option key={dimension.Name} value={dimension.Name}>
+              {dimension.Name}
+            </option>
+            {nonSelectedAvailableDimensions.map(
+              (columnName: string, index: number) => (
+                <option key={columnName} value={columnName}>
+                  {columnName}
+                </option>
+              ),
+            )}
           </select>
           <input
+            className="y-series-text"
             type="text"
             name={dimension.Name}
             value={dimension.DisplayName}
             onChange={(e) => handleInputChange(e, index)}
           />
           <button
+            name={dimension.Name}
             className="remove-dimension"
-            onClick={handleRemoveDimensionClick}
+            onClick={(e) => handleRemoveDimensionClick(e)}
           >
-            {"   -   "}
+            {"Remove Trace"}
           </button>
         </div>
       );
@@ -67,12 +76,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         },
       ]);
     } else {
-      const nonSelectedAvailableDimensions = availableDimensions.filter(
-        (possibleDimension: string) =>
-          !selectedDimensions
-            .map((item) => item.Name)
-            .includes(possibleDimension),
-      );
+      const nonSelectedAvailableDimensions =
+        getNonSelectedAvailableDimensions();
       setSelectedDimensions([
         ...selectedDimensions,
         {
@@ -83,11 +88,28 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     }
   };
 
+  const getNonSelectedAvailableDimensions = () => {
+    return availableDimensions.filter(
+      (possibleDimension: string) =>
+        !selectedDimensions
+          .map((item) => item.Name)
+          .includes(possibleDimension),
+    );
+  };
+
   const handleSelectedDimensionChange = (e: any) => {
-    setSelectedDimensions([
-      ...selectedDimensions,
-      { Name: e.target.value, DisplayName: e.target.value },
-    ]);
+    // const newSelectedDimension: SelectedDimension = {
+    //   Name: e.target.value,
+    //   DisplayName: e.target.value,
+    // }; //TBC
+    const alreadyOtherSelectedDimension = selectedDimensions.filter(
+      (item) => item.Name !== e.target.name,
+    );
+    alreadyOtherSelectedDimension.push({
+      Name: e.target.value,
+      DisplayName: e.target.value,
+    });
+    setSelectedDimensions(alreadyOtherSelectedDimension);
   };
 
   const handleInputChange = (e: any, index: number) => {
@@ -103,13 +125,18 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     setSelectedDimensions(updatedDimensions);
   };
 
-  const handleRemoveDimensionClick = () => {};
+  const handleRemoveDimensionClick = (e: any) => {
+    const alreadyOtherSelectedDimension = selectedDimensions.filter(
+      (item) => item.Name !== e.target.name,
+    );
+    setSelectedDimensions(alreadyOtherSelectedDimension);
+  };
 
   return (
     <div className="dimension-preference">
       {createDimensionList()}
       <button className="add-dimension" onClick={handleAddDimensionClick}>
-        {"+"}
+        {"Add Trace"}
       </button>
     </div>
   );
