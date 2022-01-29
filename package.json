@@ -14,6 +14,7 @@
     "@types/react-dom": "^17.0.11",
     "axios": "^0.24.0",
     "d3": "^7.3.0",
+    "html-to-image": "^1.9.0",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.1",
     "plotly.js": "^2.8.3",
