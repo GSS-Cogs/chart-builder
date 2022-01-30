@@ -68,7 +68,7 @@ const SidePanel = (): JSX.Element => {
     onCheckboxChange: any,
   ) => {
     return (
-      <div className="chart-property" key={property.name}>
+      <div className="inline-chart-property" key={property.name}>
         <input
           type="checkbox"
           className="checkbox"
@@ -78,7 +78,10 @@ const SidePanel = (): JSX.Element => {
           checked={property.value}
           onChange={onCheckboxChange}
         />
-        <label className="label" htmlFor={sectionName + "-" + property.name}>
+        <label
+          className="inline-chart-property-label"
+          htmlFor={sectionName + "-" + property.name}
+        >
           {property.displayName}
         </label>
       </div>
@@ -92,7 +95,10 @@ const SidePanel = (): JSX.Element => {
   ) => {
     return (
       <div className="chart-property" key={property.name}>
-        <label className="label" htmlFor={sectionName + "-" + property.name}>
+        <label
+          className="chart-property-label"
+          htmlFor={sectionName + "-" + property.name}
+        >
           {property.displayName}:&nbsp;
         </label>
         <div className="property-textbox" key={property.name}>
@@ -120,9 +126,9 @@ const SidePanel = (): JSX.Element => {
   ) => {
     return (
       <div className="radio-group" key={property.name}>
-        <label>{property.displayName}:</label>
+        <label className="chart-property-label">{property.displayName}:</label>
         {property.options.map((option: string, index: number) => (
-          <div className="chart-property" key={`${option}${index}`}>
+          <div className="property-option" key={`${option}${index}`}>
             <input
               type="radio"
               className="radio"
@@ -132,10 +138,7 @@ const SidePanel = (): JSX.Element => {
               checked={property.value === option}
               onChange={onRadioButtonChange}
             />
-            <label
-              className="label"
-              htmlFor={sectionName + "-" + property.name + option}
-            >
+            <label htmlFor={sectionName + "-" + property.name + option}>
               {option}
             </label>
           </div>
