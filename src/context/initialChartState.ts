@@ -83,7 +83,7 @@ const xAxisSection = {
     },
     {
       name: "xAxisTickAngle",
-      displayName: "Tick angle (degrees)",
+      displayName: "X axis label rotation",
       type: "radio",
       options: ["0", "45", "-45", "-90"],
       value: "-45",
