@@ -1,7 +1,32 @@
+/* Wrapper around the chart preview to allow scroll bars to work and to create the white-smoke margin around the preview */
+#preview-wrapper {
+  /* margin:auto prevents issue where flexbox fails to show centered content with small viewports and scroll activated 
+  for overflow. More info: https://www.stefanjudis.com/today-i-learned/safe-unsafe-alignment-in-css-flexbox/ */
+  margin: auto;
+  background-color: rgb(245, 245, 245);
+}
+
+/* The heading area and the actual chart preview */
+#chart-preview-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-right: 1.9rem;
+  margin-bottom: 1.9rem;
+  margin-left: 1.9rem;
+}
+
+/* The 'Preview' heading and the 'View in full screen' link located above the chart */
+#preview-heading-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.28rem 0rem;
+}
+
+/* The actual chart preview */
 #chart-preview {
   flex-grow: 1;
-  padding: 1rem;
-  background-color: rgb(255, 255, 255);
 }
 
 #no-data {
@@ -11,11 +36,10 @@
 #chart-preview-title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
 }
 
 #preview-heading {
-  margin-bottom: 0.4rem;
+  margin: 0.4rem 0rem;
 }
 
 #preview-fullscreen-link {
