@@ -19,3 +19,25 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(245, 245, 245);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(204, 204, 204);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(153, 153, 153);
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0.2rem rgba(153, 153, 153, 0.4);
+}
