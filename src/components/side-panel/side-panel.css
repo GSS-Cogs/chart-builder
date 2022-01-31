@@ -1,11 +1,22 @@
 #side-panel {
-  height: 90vh;
+  /* The 3.2rem in calc below is the height of the header plus its border-bottom */
+  height: calc(100vh - 3.2rem);
   min-width: 30rem;
   overflow-y: scroll;
+  margin-left: 2rem;
 }
 
 .chart-property {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 0.7rem;
+}
+
+.inline-chart-property {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 0.7rem;
 }
@@ -24,24 +35,25 @@
   cursor: pointer;
 }
 
-.label {
+.chart-property-label {
   cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
 
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome, Edge, Opera and Firefox */
+.inline-chart-property-label {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .textbox {
-  padding: 0.2rem;
-  width: 16rem;
+  padding: 0.35rem 0.2rem;
+  width: 24.5rem;
   margin-right: 2rem;
-  border-style: none;
-  background-color: aliceblue;
+  border-style: solid;
+  border-width: 0.08rem;
+  border-color: rgb(105, 105, 105);
+  outline: none;
 }
 
 .radio-group {
@@ -92,4 +104,8 @@
 
 #remove-data-source-button {
   height: 1rem;
+}
+
+.property-option {
+  margin-top: 0.2rem;
 }

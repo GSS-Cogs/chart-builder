@@ -20,10 +20,36 @@ body {
   flex-direction: column;
 }
 
-#main-content {
-  display: flex;
-  flex-direction: column;
-  margin-left: 3rem;
-  margin-right: 3rem;
-  margin-bottom: 1rem;
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(245, 245, 245);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(204, 204, 204);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(153, 153, 153);
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0.2rem rgba(153, 153, 153, 0.4);
+}
+
+label {
+  /* Set label text as not selectable so that users do not accidentally make a text selection 
+  when using label-for behavior of the labels to access the associated chart properties */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
 }
