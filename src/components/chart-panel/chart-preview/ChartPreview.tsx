@@ -2,6 +2,7 @@ import { useContext } from "react";
 import ChartContext from "../../../context/ChartContext";
 import Plot from "react-plotly.js";
 import "./chart-preview.css";
+import { PublishButton } from "../../publish-chart/PublishButton";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
@@ -21,6 +22,9 @@ const ChartPreview = (): JSX.Element => {
 
         <div id="chart-preview">
           <Plot data={data} layout={layout} config={config} />
+        </div>
+        <div id="publish">
+          <PublishButton />
         </div>
       </div>
     </div>
