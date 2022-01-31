@@ -14,7 +14,8 @@
     "@types/react-dom": "^17.0.11",
     "axios": "^0.24.0",
     "d3": "^7.3.0",
-    "html-to-image": "^1.9.0",
+    "dom-to-image": "^2.6.0",
+    "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.1",
     "plotly.js": "^2.8.3",
@@ -52,6 +53,8 @@
     ]
   },
   "devDependencies": {
+    "@types/dom-to-image": "^2.6.4",
+    "@types/file-saver": "^2.0.5",
     "@types/react-plotly.js": "^2.5.0",
     "eslint": "^8.6.0",
     "prettier": "2.5.1"
