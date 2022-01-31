@@ -107,13 +107,6 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     const updatedDimensions = selectedDimensions.map((item, index) => {
       return item.Name === e.target.name ? newSelectedDimension : item;
     });
-    // const alreadyOtherSelectedDimension = selectedDimensions.filter(
-    //   (item) => item.Name !== e.target.name,
-    // );
-    // alreadyOtherSelectedDimension.push({
-    //   Name: e.target.value,
-    //   DisplayName: e.target.value,
-    // });
     setSelectedDimensions(updatedDimensions);
   };
 
