@@ -50,10 +50,9 @@ const DataSelection = (): JSX.Element => {
         ...prevState,
         [e.target.name]: e.target.value,
       }));
-    }
-
-    if (e.target.name === "dimension" && e.target.value !== "") {
-      setAvailableDimensions(getDistinctValues(e.target.value, tidyData));
+      if (e.target.name === "dimension" && e.target.value !== "") {
+        setAvailableDimensions(getDistinctValues(e.target.value, tidyData));
+      }
     }
   };
   return (

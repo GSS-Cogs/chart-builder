@@ -3,12 +3,19 @@ import ChartContext from "../../../context/ChartContext";
 import Plot from "react-plotly.js";
 import "./chart-preview.css";
 import { PublishButton } from "../../publish-chart/PublishButton";
+import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
 
   if (Object.keys(chartDefinition).length === 0)
-    return <div id="no-data">No data to show</div>;
+    return (
+      <div id="no-data-container">
+        <div id="no-data">
+          <NoDataIcon />
+        </div>
+      </div>
+    );
 
   const { data, layout, config } = chartDefinition;
 
