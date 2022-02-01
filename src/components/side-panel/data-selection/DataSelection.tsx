@@ -72,7 +72,7 @@ const DataSelection = (): JSX.Element => {
   return (
     <>
       <div className="chart-property">
-        <label>Category Axis:&nbsp;</label>
+        <label className="column-label">Category axis:</label>
         <select
           className="chart-dimension-select"
           name="xSeries"
@@ -91,7 +91,7 @@ const DataSelection = (): JSX.Element => {
       </div>
 
       <div className="chart-property">
-        <label>Measure:&nbsp;</label>
+        <label className="column-label">Measure:</label>
         <select
           className="chart-dimension-select"
           name="measure"
@@ -110,7 +110,7 @@ const DataSelection = (): JSX.Element => {
       </div>
 
       <div className="chart-property">
-        <label>Dimension:&nbsp;</label>
+        <label className="column-label">Dimension:&nbsp;</label>
         <select
           className="chart-dimension-select"
           name="dimension"
