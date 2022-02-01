@@ -8,11 +8,12 @@ const getLayout = (chartProps: any, chartData: any) => {
     autosize: false,
     width: 950,
     height: 600,
-    title: {
-      text: chartProps.showTitle ? chartProps.chartTitle : "",
-      font: {
-        size: "21",
-      },
+    margin: {
+      l: 70,
+      r: 70,
+      b: 100,
+      t: 50,
+      pad: 4,
     },
     xaxis: {
       range: calculateXRange(chartData),

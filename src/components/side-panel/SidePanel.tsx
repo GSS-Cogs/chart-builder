@@ -62,11 +62,7 @@ const SidePanel = (): JSX.Element => {
     updateProperty(sectionName, property, value);
   };
 
-  const getCheckbox = (
-    property: any,
-    sectionName: string,
-    onCheckboxChange: any,
-  ) => {
+  const getCheckbox = (property: any, sectionName: string) => {
     return (
       <div className="inline-chart-property" key={property.name}>
         <input
@@ -88,11 +84,7 @@ const SidePanel = (): JSX.Element => {
     );
   };
 
-  const getTextbox = (
-    property: any,
-    sectionName: string,
-    onTextChange: any,
-  ) => {
+  const getTextbox = (property: any, sectionName: string) => {
     return (
       <div className="chart-property" key={property.name}>
         <label
@@ -119,11 +111,7 @@ const SidePanel = (): JSX.Element => {
     setSelectedFilename(NO_FILE_SELECTED_TEXT);
   };
 
-  const getRadioButtonGroup = (
-    property: any,
-    sectionName: string,
-    onRadioButtonChange: any,
-  ) => {
+  const getRadioButtonGroup = (property: any, sectionName: string) => {
     return (
       <div className="radio-group" key={property.name}>
         <label className="chart-property-label">{property.displayName}:</label>
@@ -159,20 +147,16 @@ const SidePanel = (): JSX.Element => {
 
       <DataSelection />
 
-      {chartProperties.map((section: any, index: number) => (
+      {chartProperties.map((section: any) => (
         <div className="property-section" key={section.name}>
           <div className="section-heading"> {section.displayName}</div>
-          {section.properties.map((property: any, index: number) => {
+          {section.properties.map((property: any) => {
             if (property.type === "checkbox") {
-              return getCheckbox(property, section.name, onCheckboxChange);
+              return getCheckbox(property, section.name);
             } else if (property.type === "text") {
-              return getTextbox(property, section.name, onTextChange);
+              return getTextbox(property, section.name);
             } else if (property.type === "radio") {
-              return getRadioButtonGroup(
-                property,
-                section.name,
-                onRadioButtonChange,
-              );
+              return getRadioButtonGroup(property, section.name);
             }
           })}
         </div>

@@ -31,13 +31,19 @@ const calculateYRange = (ySeries: Series[]): any => {
 };
 
 const flattenChartProperties = (chartProperties: any): any => {
-  let flatProps: any = {};
+  let htmlProps: any = {};
+  let chartProps: any = {};
+
   chartProperties.forEach((section: any) => {
     section.properties.forEach((property: any) => {
-      flatProps = { ...flatProps, [property.name]: property.value };
+      if (property.output === "html") {
+        htmlProps = { ...htmlProps, [property.name]: property.value };
+      } else {
+        chartProps = { ...chartProps, [property.name]: property.value };
+      }
     });
   });
-  return flatProps;
+  return [htmlProps, chartProps];
 };
 
 const calculateXRange = (chartData: any): any => {

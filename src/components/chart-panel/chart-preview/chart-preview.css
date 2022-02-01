@@ -27,6 +27,7 @@
 /* The actual chart preview */
 #chart-preview {
   flex-grow: 1;
+  padding: 1.4rem;
   background-color: rgb(255, 255, 255);
 }
 

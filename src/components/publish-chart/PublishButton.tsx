@@ -6,13 +6,13 @@ import { toSafeFilename } from "../../helper-functions/string-helpers";
 
 const PublishButton = (props: any): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
-  const { layout } = chartDefinition;
+  const { htmlProps } = chartDefinition;
 
   let filename = "published-chart";
 
   // if there's a title with content, use that as the filename
-  if (layout && layout.title.text !== "") {
-    filename = toSafeFilename(layout.title.text);
+  if (htmlProps && htmlProps.title !== "") {
+    filename = toSafeFilename(htmlProps.chartTitle);
   }
 
   const onPublishClick = (): void => {

@@ -6,13 +6,15 @@ const basicSection = {
       name: "chartTitle",
       displayName: "Chart title",
       type: "text",
-      value: "Covid-19 Triple Vaccination by UK Nation",
+      value: "Figure 1: Covid-19 Triple Vaccination by UK Nation",
+      output: "html",
     },
     {
       name: "showTitle",
       displayName: "Show title",
       type: "checkbox",
       value: true,
+      output: "html",
     },
   ],
 };
@@ -26,6 +28,7 @@ const legendSection = {
       displayName: "Show legend",
       type: "checkbox",
       value: true,
+      output: "svg",
     },
   ],
 };
@@ -39,6 +42,7 @@ const GridlinesSection = {
       displayName: "Show gridlines",
       type: "checkbox",
       value: true,
+      output: "svg",
     },
   ],
 };
@@ -53,6 +57,7 @@ const chartTypesSection = {
       type: "radio",
       options: ["Line", "Bar", "Stacked Bar"],
       value: "Line",
+      output: "svg",
     },
   ],
 };
@@ -67,6 +72,7 @@ const interactivitySection = {
       type: "radio",
       options: ["x+y", "none"],
       value: "none",
+      output: "svg",
     },
   ],
 };
@@ -80,6 +86,7 @@ const xAxisSection = {
       displayName: "Title",
       type: "text",
       value: "Week beginning",
+      output: "svg",
     },
     {
       name: "xAxisTickAngle",
@@ -87,6 +94,7 @@ const xAxisSection = {
       type: "radio",
       options: ["0", "45", "-45", "-90"],
       value: "-45",
+      output: "svg",
     },
   ],
 };
@@ -100,6 +108,7 @@ const yAxisSection = {
       displayName: "Title",
       type: "text",
       value: "Percentage of people vaccinated",
+      output: "svg",
     },
   ],
 };
