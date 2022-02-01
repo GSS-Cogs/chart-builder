@@ -14,7 +14,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   const [selectedDimensions, setSelectedDimensions] = useState<
     SelectedDimension[]
   >([]);
-  const { setDataSelection }: ChartContextProps = useContext(ChartContext);
+  const { dataSelection, setDataSelection }: ChartContextProps =
+    useContext(ChartContext);
 
   useEffect(() => {
     setDataSelection((prevState: any) => ({
@@ -58,7 +59,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
             className="remove-dimension"
             onClick={(e) => handleRemoveDimensionClick(e)}
           >
-            {"-"}
+            &nbsp;{"-"}&nbsp;
           </button>
         </div>
       );
@@ -133,9 +134,13 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   return (
     <div className="dimension-preference">
       {createDimensionList()}
-      <button className="add-dimension" onClick={handleAddDimensionClick}>
-        {"+"}
-      </button>
+      {availableDimensions.length > selectedDimensions.length &&
+        dataSelection &&
+        dataSelection.dimension && (
+          <button className="add-dimension" onClick={handleAddDimensionClick}>
+            &nbsp;{"+"}&nbsp;
+          </button>
+        )}
     </div>
   );
 };
