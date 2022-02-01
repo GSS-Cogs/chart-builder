@@ -53,7 +53,8 @@ const chartTypesSection = {
   properties: [
     {
       name: "chartType",
-      displayName: "Chart type",
+      displayName: "",
+      showPropertyLabel: false,
       type: "radio",
       options: ["Line", "Bar", "Stacked Bar"],
       value: "Line",

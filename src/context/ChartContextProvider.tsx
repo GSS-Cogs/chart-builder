@@ -110,6 +110,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         ySeries: result,
       };
       setChartData(newChartData);
+    } else {
+      setChartData(undefined);
     }
   };
 

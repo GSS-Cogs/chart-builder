@@ -74,12 +74,14 @@ const SidePanel = (): JSX.Element => {
           checked={property.value}
           onChange={onCheckboxChange}
         />
-        <label
-          className="inline-chart-property-label"
-          htmlFor={sectionName + "-" + property.name}
-        >
-          {property.displayName}
-        </label>
+        {showDisplayName(property.displayName) && (
+          <label
+            className="inline-chart-property-label"
+            htmlFor={sectionName + "-" + property.name}
+          >
+            {property.displayName}
+          </label>
+        )}
       </div>
     );
   };
@@ -87,12 +89,14 @@ const SidePanel = (): JSX.Element => {
   const getTextbox = (property: any, sectionName: string) => {
     return (
       <div className="chart-property" key={property.name}>
-        <label
-          className="chart-property-label"
-          htmlFor={sectionName + "-" + property.name}
-        >
-          {property.displayName}:&nbsp;
-        </label>
+        {showDisplayName(property.displayName) && (
+          <label
+            className="chart-property-label"
+            htmlFor={sectionName + "-" + property.name}
+          >
+            {property.displayName}:&nbsp;
+          </label>
+        )}
         <div className="property-textbox" key={property.name}>
           <input
             className="textbox"
@@ -110,11 +114,23 @@ const SidePanel = (): JSX.Element => {
     setPreviewMode(false);
     setSelectedFilename(NO_FILE_SELECTED_TEXT);
   };
-
-  const getRadioButtonGroup = (property: any, sectionName: string) => {
+  
+  const showDisplayName = (displayName: string | undefined) => {
+    return displayName != "";
+  };
+  
+  const getRadioButtonGroup = (
+    property: any,
+    sectionName: string,
+    onRadioButtonChange: any,
+  ) => {
     return (
       <div className="radio-group" key={property.name}>
-        <label className="chart-property-label">{property.displayName}:</label>
+        {showDisplayName(property.displayName) && (
+          <label className="chart-property-label">
+            {property.displayName}:
+          </label>
+        )}
         {property.options.map((option: string, index: number) => (
           <div className="property-option" key={`${option}${index}`}>
             <input

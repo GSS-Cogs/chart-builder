@@ -31,8 +31,17 @@
   background-color: rgb(255, 255, 255);
 }
 
+#no-data-container {
+  height: calc(100vh - 3.2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.2;
+}
+
 #no-data {
-  margin-bottom: 1rem;
+  width: 10rem;
+  height: 10rem;
 }
 
 #chart-preview-title {
