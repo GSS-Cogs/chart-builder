@@ -1,3 +1,9 @@
 .chart-dimension-select {
-  width: 10rem;
+  width: 12rem;
+  padding: 0.35rem 0.2rem;
+  margin-right: 2rem;
+  border-style: solid;
+  border-width: 0.08rem;
+  border-color: rgb(105, 105, 105);
+  outline: none;
 }
