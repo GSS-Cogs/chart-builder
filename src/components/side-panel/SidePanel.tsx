@@ -114,16 +114,12 @@ const SidePanel = (): JSX.Element => {
     setPreviewMode(false);
     setSelectedFilename(NO_FILE_SELECTED_TEXT);
   };
-  
+
   const showDisplayName = (displayName: string | undefined) => {
     return displayName != "";
   };
-  
-  const getRadioButtonGroup = (
-    property: any,
-    sectionName: string,
-    onRadioButtonChange: any,
-  ) => {
+
+  const getRadioButtonGroup = (property: any, sectionName: string) => {
     return (
       <div className="radio-group" key={property.name}>
         {showDisplayName(property.displayName) && (
