@@ -86,7 +86,7 @@ const xAxisSection = {
       name: "xAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Week beginning",
+      value: "Week starting",
       output: "svg",
     },
     {
