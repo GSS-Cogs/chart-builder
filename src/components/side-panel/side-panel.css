@@ -22,9 +22,8 @@
 }
 
 #data-source {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
@@ -87,8 +86,8 @@
 }
 
 #selected-filename {
-  font-weight: 600;
   margin-right: 0.5rem;
+  font-weight: 600;
 }
 
 .close-button {
