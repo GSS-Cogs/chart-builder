@@ -94,7 +94,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     };
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
-      const result = dataSelection.ySeries.map((series, index) => {
+      const result = dataSelection.ySeries.map((series) => {
         const filteredDataBySeries = tidyData.filter(
           (item: any) => item[dataSelection.dimension] === series.Name,
         );
@@ -115,8 +115,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     }
   };
 
-  const chartProps: any = flattenChartProperties(chartProperties);
-
+  const [htmlProps, chartProps] = flattenChartProperties(chartProperties);
   const chartType = chartProps.chartType.toLowerCase();
 
   const updateChartDefinition = () => {
@@ -140,7 +139,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     const layout: any = getLayout(chartProps, chartData);
     const config: any = getConfig();
 
-    setChartDefinition({ data: traces, layout, config });
+    setChartDefinition({ data: traces, layout, config, htmlProps });
   };
 
   return (

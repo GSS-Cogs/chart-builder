@@ -17,7 +17,7 @@ const ChartPreview = (): JSX.Element => {
       </div>
     );
 
-  const { data, layout, config } = chartDefinition;
+  const { data, layout, config, htmlProps } = chartDefinition;
 
   return (
     <div id="preview-wrapper">
@@ -28,6 +28,7 @@ const ChartPreview = (): JSX.Element => {
         </div>
 
         <div id="chart-preview">
+          <h2>{htmlProps.chartTitle}</h2>
           <Plot data={data} layout={layout} config={config} />
         </div>
         <div id="publish">
