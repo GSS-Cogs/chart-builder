@@ -30,7 +30,6 @@ const DataSelection = (): JSX.Element => {
   }, [tidyData]);
 
   const onHandleChange = (e: any) => {
-    console.log(columnNames);
     if (
       e.target.value === "" ||
       selectedColumns.some((item) => item === e.target.value)
