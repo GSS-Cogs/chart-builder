@@ -149,14 +149,15 @@ const SidePanel = (): JSX.Element => {
 
   return (
     <div id="side-panel">
-      <p id="data-source">Data Source</p>
-      <label id="selected-filename">{selectedFilename}</label>
-      {previewMode && (
-        <button className="close-button" onClick={() => resetChartState()}>
-          {"Reset"}
-        </button>
-      )}
-
+      <div className="property-section">
+        <div id="data-source"> Data source</div>
+        <label id="selected-filename">{selectedFilename}</label>
+        {previewMode && (
+          <button className="close-button" onClick={() => resetChartState()}>
+            {"Reset"}
+          </button>
+        )}
+      </div>
       <DataSelection />
 
       {chartProperties.map((section: any) => (

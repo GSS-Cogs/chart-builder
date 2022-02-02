@@ -1,6 +1,6 @@
 const basicSection = {
   name: "BasicChartProperties",
-  displayName: "Title",
+  displayName: "Title and summary",
   properties: [
     {
       name: "chartTitle",
@@ -14,6 +14,14 @@ const basicSection = {
       displayName: "Show title",
       type: "checkbox",
       value: true,
+      output: "html",
+    },
+    {
+      name: "statisticalSummary",
+      displayName: "Statistical summary",
+      type: "text",
+      value:
+        "The data show that over 50% of the population in all four UK nations were triple vaccinated by December 2021.",
       output: "html",
     },
   ],
@@ -86,7 +94,7 @@ const xAxisSection = {
       name: "xAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Week beginning",
+      value: "Week starting",
       output: "svg",
     },
     {

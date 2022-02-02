@@ -22,9 +22,8 @@
 }
 
 #data-source {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
@@ -87,15 +86,14 @@
 }
 
 #selected-filename {
-  font-weight: 600;
   margin-right: 0.5rem;
+  font-weight: 600;
 }
 
 .close-button {
   font-size: 0.7rem;
   height: 1.4rem;
   width: 3.5rem;
-  border-radius: 0.2rem;
   border-style: none;
   color: rgba(255, 255, 255, 1);
   background-color: rgb(29, 112, 184);
@@ -107,5 +105,7 @@
 }
 
 .property-option {
-  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
 }

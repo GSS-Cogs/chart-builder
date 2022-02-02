@@ -19,7 +19,6 @@
   border: rgb(105, 105, 105);
   border-width: 1px;
   border-style: dashed;
-  border-radius: 0.2rem;
 
   cursor: pointer;
   -webkit-touch-callout: none; /* iOS Safari */

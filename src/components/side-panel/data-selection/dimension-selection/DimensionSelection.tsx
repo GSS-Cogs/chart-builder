@@ -132,15 +132,18 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   };
 
   return (
-    <div className="dimension-preference">
-      {createDimensionList()}
-      {availableDimensions.length > selectedDimensions.length &&
-        dataSelection &&
-        dataSelection.dimension && (
-          <button className="add-dimension" onClick={handleAddDimensionClick}>
-            &nbsp;{"+"}&nbsp;
-          </button>
-        )}
+    <div className="property-section">
+      <div className="section-heading"> Data series</div>
+      <div className="dimension-preference">
+        {createDimensionList()}
+        {availableDimensions.length > selectedDimensions.length &&
+          dataSelection &&
+          dataSelection.dimension && (
+            <button className="add-dimension" onClick={handleAddDimensionClick}>
+              &nbsp;{"+"}&nbsp;
+            </button>
+          )}
+      </div>
     </div>
   );
 };

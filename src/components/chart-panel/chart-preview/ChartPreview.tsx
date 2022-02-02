@@ -28,7 +28,8 @@ const ChartPreview = (): JSX.Element => {
         </div>
 
         <div id="chart-preview">
-          <h2>{htmlProps.chartTitle}</h2>
+          {htmlProps.showTitle && <h2>{htmlProps.chartTitle}</h2>}
+          <p id="statistical-summary">{htmlProps.statisticalSummary}</p>
           <Plot data={data} layout={layout} config={config} />
         </div>
         <div id="publish">
