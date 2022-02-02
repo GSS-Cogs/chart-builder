@@ -35,7 +35,7 @@ const getLayout = (chartProps: any, chartData: any) => {
     },
     paper_bgcolor: "rgb(255,255,255)",
     plot_bgcolor: "rgb(255,255,255)",
-    legend: { orientation: "h", y: -0.28 },
+    legend: { orientation: "h", y: -0.38 },
     showlegend: chartProps.showLegend,
   };
 };
