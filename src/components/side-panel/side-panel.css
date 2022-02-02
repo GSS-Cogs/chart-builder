@@ -2,6 +2,7 @@
   /* The 3.2rem in calc below is the height of the header plus its border-bottom */
   height: calc(100vh - 3.2rem);
   min-width: 30rem;
+  max-width: 30rem;
   overflow-y: scroll;
   margin-left: 2rem;
 }
