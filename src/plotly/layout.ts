@@ -7,7 +7,7 @@ const getLayout = (chartProps: any, chartData: any) => {
   return {
     autosize: false,
     width: 900,
-    height: 550,
+    height: 450,
     margin: {
       l: 70,
       r: 20,
