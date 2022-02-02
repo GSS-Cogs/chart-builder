@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 import { useContext } from "react";
 import ChartContext from "../../context/ChartContext";
 import { toSafeFilename } from "../../helper-functions/string-helpers";
+import "./publish-button.css";
 
 const PublishButton = (props: any): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
