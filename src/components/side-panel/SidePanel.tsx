@@ -103,6 +103,7 @@ const SidePanel = (): JSX.Element => {
             id={sectionName + "-" + property.name}
             name={property.name}
             value={property.value}
+            autoComplete="off"
             onChange={onTextChange}
           />
         </div>
