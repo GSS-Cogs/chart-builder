@@ -5,8 +5,9 @@ const basicSection = {
     {
       name: "chartTitle",
       displayName: "Chart title",
-      type: "text",
-      value: "Figure 1: Covid-19 Triple Vaccination by UK Nation",
+      type: "text-multi",
+      value:
+        "Greenhouse gas emissions on a territorial, residence and carbon footprint basis: UK, 1990 to 2019 and provisional 2020 (million tonnes of carbon dioxide equivalent)",
       output: "html",
     },
     {
@@ -19,9 +20,9 @@ const basicSection = {
     {
       name: "statisticalSummary",
       displayName: "Statistical summary",
-      type: "text",
+      type: "text-multi",
       value:
-        "The data show that over 50% of the population in all four UK nations were triple vaccinated by December 2021.",
+        "There are three key official measures of UK greenhouse gas (GHG) emissions. In 2018, the latest year that all three measures are available, territorial emissions were 468 million tonnes of carbon dioxide equivalent (Mt CO2e), residence emissions 569 Mt CO2e and footprint emissions 703 Mt CO2e.",
       output: "html",
     },
   ],
@@ -77,7 +78,7 @@ const interactivitySection = {
   properties: [
     {
       name: "interactivity",
-      displayName: "Interactivity",
+      displayName: "Series tooltip",
       type: "radio",
       options: ["x+y", "none"],
       value: "none",
@@ -116,8 +117,46 @@ const yAxisSection = {
       name: "yAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Percentage of people vaccinated",
+      value: "Mt CO2e",
       output: "svg",
+    },
+  ],
+};
+
+const chartDimensionsSection = {
+  name: "chartDimensionProperties",
+  displayName: "Chart dimensions",
+  properties: [
+    {
+      name: "height",
+      displayName: "Height",
+      type: "text",
+      value: "450",
+      output: "svg",
+    },
+    {
+      name: "width",
+      displayName: "Width",
+      type: "text",
+      value: "700",
+      output: "svg",
+    },
+  ],
+};
+
+const footnotesSection = {
+  name: "footnoteProperties",
+  displayName: "Footnotes",
+  properties: [
+    {
+      name: "footnotes",
+      displayName: "Footnotes",
+      type: "text-multi",
+      value: `Territorial estimates are published by the Department for Business, Energy and Industrial Strategy (BEIS), are used to monitor net zero and other UK-wide targets. These estimates include emissions produced within the UK’s geographical borders.
+
+In accordance with international reporting protocols, each of these gases are weighted by their global warming potential (GWP), so that total greenhouse gas emissions can be reported on a consistent basis (in CO2 equivalent units).`,
+
+      output: "html",
     },
   ],
 };
@@ -125,11 +164,13 @@ const yAxisSection = {
 const initialChartState = [
   basicSection,
   chartTypesSection,
+  chartDimensionsSection,
   xAxisSection,
   yAxisSection,
   interactivitySection,
   GridlinesSection,
   legendSection,
+  footnotesSection,
 ];
 
 export default initialChartState;

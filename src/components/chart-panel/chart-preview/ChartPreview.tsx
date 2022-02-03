@@ -19,6 +19,7 @@ const ChartPreview = (): JSX.Element => {
 
   const { data, layout, config, htmlProps } = chartDefinition;
 
+  console.log(layout.width);
   return (
     <div id="preview-wrapper">
       <div id="chart-preview-container">
@@ -28,9 +29,24 @@ const ChartPreview = (): JSX.Element => {
         </div>
 
         <div id="chart-preview">
-          {htmlProps.showTitle && <h2>{htmlProps.chartTitle}</h2>}
-          <p id="statistical-summary">{htmlProps.statisticalSummary}</p>
+          {htmlProps.showTitle && (
+            <h2 id="chart-title" style={{ width: `${layout.width}px` }}>
+              {htmlProps.chartTitle}
+            </h2>
+          )}
+          <p
+            style={{ width: `${layout.width}px` }}
+            className="chart-detail-text"
+          >
+            {htmlProps.statisticalSummary}
+          </p>
           <Plot data={data} layout={layout} config={config} />
+          <p
+            style={{ width: `${layout.width}px` }}
+            className="chart-detail-text"
+          >
+            {htmlProps.footnotes}
+          </p>
         </div>
         <div id="publish">
           <PublishButton />

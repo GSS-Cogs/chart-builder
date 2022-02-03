@@ -99,10 +99,36 @@ const SidePanel = (): JSX.Element => {
         )}
         <div className="property-textbox" key={property.name}>
           <input
-            className="textbox"
+            className={"textbox"}
             id={sectionName + "-" + property.name}
             name={property.name}
             value={property.value}
+            autoComplete="off"
+            onChange={onTextChange}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const getTextArea = (property: any, sectionName: string) => {
+    return (
+      <div className="chart-property" key={property.name}>
+        {showDisplayName(property.displayName) && (
+          <label
+            className="chart-property-label"
+            htmlFor={sectionName + "-" + property.name}
+          >
+            {property.displayName}:&nbsp;
+          </label>
+        )}
+        <div className="property-textbox" key={property.name}>
+          <textarea
+            id={sectionName + "-" + property.name}
+            name={property.name}
+            value={property.value}
+            cols={55}
+            rows={9}
             autoComplete="off"
             onChange={onTextChange}
           />
@@ -169,6 +195,8 @@ const SidePanel = (): JSX.Element => {
               return getCheckbox(property, section.name);
             } else if (property.type === "text") {
               return getTextbox(property, section.name);
+            } else if (property.type === "text-multi") {
+              return getTextArea(property, section.name);
             } else if (property.type === "radio") {
               return getRadioButtonGroup(property, section.name);
             }
