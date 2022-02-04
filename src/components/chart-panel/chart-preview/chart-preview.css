@@ -52,10 +52,6 @@
   margin: 0.4rem 0rem;
 }
 
-#preview-fullscreen-link {
-  color: rgb(29, 112, 184);
-}
-
 #publish {
   display: flex;
   justify-content: flex-end;

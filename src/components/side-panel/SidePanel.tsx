@@ -12,6 +12,7 @@ const SidePanel = (): JSX.Element => {
     setSelectedFilename,
     previewMode,
     setPreviewMode,
+    fullScreenMode,
   }: ChartContextProps = useContext(ChartContext);
 
   const updateProperty = (sectionName: string, property: any, value: any) => {
@@ -175,7 +176,7 @@ const SidePanel = (): JSX.Element => {
   };
 
   return (
-    <div id="side-panel">
+    <div style={{ display: fullScreenMode ? "none" : "block" }} id="side-panel">
       <div className="property-section">
         <div id="data-source"> Data source</div>
         <label id="selected-filename">{selectedFilename}</label>

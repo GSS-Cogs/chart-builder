@@ -6,7 +6,8 @@ import { PublishButton } from "../../publish-chart/PublishButton";
 import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
 
 const ChartPreview = (): JSX.Element => {
-  const { chartDefinition }: any = useContext(ChartContext);
+  const { chartDefinition, fullScreenMode, setFullScreenMode }: any =
+    useContext(ChartContext);
 
   if (Object.keys(chartDefinition).length === 0)
     return (
@@ -19,13 +20,17 @@ const ChartPreview = (): JSX.Element => {
 
   const { data, layout, config, htmlProps } = chartDefinition;
 
-  console.log(layout.width);
   return (
     <div id="preview-wrapper">
       <div id="chart-preview-container">
         <div id="preview-heading-area">
           <h2 id="preview-heading">Preview</h2>
-          <h3 id="preview-fullscreen-link">View in full screen</h3>
+          <h3
+            className="link"
+            onClick={() => setFullScreenMode(!fullScreenMode)}
+          >
+            {fullScreenMode ? "Exit full screen" : "View in full screen"}
+          </h3>
         </div>
 
         <div id="chart-preview">

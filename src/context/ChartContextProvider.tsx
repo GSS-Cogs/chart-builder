@@ -56,6 +56,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const [dataSelection, setDataSelection] = useState<
     DataSelection | undefined
   >();
+  const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();
@@ -157,6 +158,8 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
         columnNames,
         dataSelection,
         setDataSelection,
+        fullScreenMode,
+        setFullScreenMode,
       }}
     >
       {children}

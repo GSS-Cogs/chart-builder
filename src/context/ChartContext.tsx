@@ -14,6 +14,8 @@ export type ChartContextProps = {
   columnNames: string[];
   dataSelection: DataSelection | undefined;
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
+  fullScreenMode: boolean;
+  setFullScreenMode: Dispatch<SetStateAction<boolean>>;
 };
 const ChartContext = React.createContext<ChartContextProps>(
   {} as ChartContextProps,
