@@ -25,6 +25,13 @@ const basicSection = {
         "There are three key official measures of UK greenhouse gas (GHG) emissions. In 2018, the latest year that all three measures are available, territorial emissions were 468 million tonnes of carbon dioxide equivalent (Mt CO2e), residence emissions 569 Mt CO2e and footprint emissions 703 Mt CO2e.",
       output: "html",
     },
+    {
+      name: "showSummary",
+      displayName: "Show summary",
+      type: "checkbox",
+      value: true,
+      output: "html",
+    },
   ],
 };
 
@@ -129,16 +136,16 @@ const chartDimensionsSection = {
   properties: [
     {
       name: "height",
-      displayName: "Height",
+      displayName: "Height(px)",
       type: "text",
       value: "450",
       output: "svg",
     },
     {
       name: "width",
-      displayName: "Width",
+      displayName: "Width(px)",
       type: "text",
-      value: "700",
+      value: "900",
       output: "svg",
     },
   ],
@@ -152,10 +159,45 @@ const footnotesSection = {
       name: "footnotes",
       displayName: "Footnotes",
       type: "text-multi",
-      value: `Territorial estimates are published by the Department for Business, Energy and Industrial Strategy (BEIS), are used to monitor net zero and other UK-wide targets. These estimates include emissions produced within the UK’s geographical borders.
+      value: `1. Territorial estimates are published by the Department for Business, Energy and Industrial Strategy (BEIS), are used to monitor net zero and other UK-wide targets. These estimates include emissions produced within the UK’s geographical borders.
+    
+2. In accordance with international reporting protocols, each of these gases are weighted by their global warming potential (GWP), so that total greenhouse gas emissions can be reported on a consistent basis (in CO2 equivalent units).`,
+      output: "html",
+    },
+    {
+      name: "showFootnotes",
+      displayName: "Show footnotes",
+      type: "checkbox",
+      value: true,
+      output: "html",
+    },
+  ],
+};
 
-In accordance with international reporting protocols, each of these gases are weighted by their global warming potential (GWP), so that total greenhouse gas emissions can be reported on a consistent basis (in CO2 equivalent units).`,
-
+const metaDataSection = {
+  name: "metaDataProperties",
+  displayName: "Metadata",
+  properties: [
+    {
+      name: "sourceName",
+      displayName: "Source name",
+      type: "text",
+      value: "Met Office",
+      output: "html",
+    },
+    {
+      name: "sourceUrl",
+      displayName: "Source URL",
+      type: "text",
+      value:
+        "https://beta.gss-data.org.uk/cube/about?uri=http%3A%2F%2Fgss-data.org.uk%2Fdata%2Fgss_data%2Fclimate-change%2Fmet-office-annual-mean-temp-with-trends-actual-catalog-entry",
+      output: "html",
+    },
+    {
+      name: "showSource",
+      displayName: "Show source",
+      type: "checkbox",
+      value: true,
       output: "html",
     },
   ],
@@ -167,10 +209,11 @@ const initialChartState = [
   chartDimensionsSection,
   xAxisSection,
   yAxisSection,
+  metaDataSection,
+  footnotesSection,
   interactivitySection,
   GridlinesSection,
   legendSection,
-  footnotesSection,
 ];
 
 export default initialChartState;

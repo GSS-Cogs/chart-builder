@@ -71,3 +71,12 @@
   white-space: pre-wrap;
   color: rgb(107, 114, 118);
 }
+
+#chart-bottom-border {
+  border-bottom: 1px solid rgba(107, 114, 118, 0.2);
+  margin-bottom: 0.6rem;
+}
+
+#source {
+  color: rgb(107, 114, 118);
+}

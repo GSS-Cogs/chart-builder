@@ -39,19 +39,41 @@ const ChartPreview = (): JSX.Element => {
               {htmlProps.chartTitle}
             </h2>
           )}
-          <p
-            style={{ width: `${layout.width}px` }}
-            className="chart-detail-text"
-          >
-            {htmlProps.statisticalSummary}
-          </p>
+          {htmlProps.showSummary && (
+            <p
+              style={{ width: `${layout.width}px` }}
+              className="chart-detail-text"
+            >
+              {htmlProps.statisticalSummary}
+            </p>
+          )}
           <Plot data={data} layout={layout} config={config} />
-          <p
-            style={{ width: `${layout.width}px` }}
-            className="chart-detail-text"
-          >
-            {htmlProps.footnotes}
-          </p>
+          {(htmlProps.showSource || htmlProps.showFootnotes) && (
+            <div id="chart-bottom-border" />
+          )}
+
+          {htmlProps.showSource && (
+            <p id="source">
+              Source: &nbsp;
+              <a
+                id="source-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={htmlProps.sourceUrl}
+              >
+                {htmlProps.sourceName}
+              </a>
+            </p>
+          )}
+
+          {htmlProps.showFootnotes && (
+            <p
+              style={{ width: `${layout.width}px` }}
+              className="chart-detail-text"
+            >
+              {htmlProps.footnotes}
+            </p>
+          )}
         </div>
         <div id="publish">
           <PublishButton />
