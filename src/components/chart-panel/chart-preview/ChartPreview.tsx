@@ -4,6 +4,10 @@ import Plot from "react-plotly.js";
 import "./chart-preview.css";
 import { PublishButton } from "../../publish-chart/PublishButton";
 import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
+import Title from "../../../chart-demo/Title";
+import Summary from "../../../chart-demo/Summary";
+import Footnotes from "../../../chart-demo/Footnotes";
+import Source from "../../../chart-demo/Source";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition, fullScreenMode, setFullScreenMode }: any =
@@ -18,7 +22,7 @@ const ChartPreview = (): JSX.Element => {
       </div>
     );
 
-  const { data, layout, config, htmlProps } = chartDefinition;
+  const { data, layout, config } = chartDefinition;
 
   return (
     <div id="preview-wrapper">
@@ -34,46 +38,11 @@ const ChartPreview = (): JSX.Element => {
         </div>
 
         <div id="chart-preview">
-          {htmlProps.showTitle && (
-            <h2 id="chart-title" style={{ width: `${layout.width}px` }}>
-              {htmlProps.chartTitle}
-            </h2>
-          )}
-          {htmlProps.showSummary && (
-            <p
-              style={{ width: `${layout.width}px` }}
-              className="chart-detail-text"
-            >
-              {htmlProps.statisticalSummary}
-            </p>
-          )}
+          <Title />
+          <Summary />
           <Plot data={data} layout={layout} config={config} />
-          {(htmlProps.showSource || htmlProps.showFootnotes) && (
-            <div id="chart-bottom-border" />
-          )}
-
-          {htmlProps.showSource && (
-            <p id="source">
-              Source: &nbsp;
-              <a
-                id="source-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={htmlProps.sourceUrl}
-              >
-                {htmlProps.sourceName}
-              </a>
-            </p>
-          )}
-
-          {htmlProps.showFootnotes && (
-            <p
-              style={{ width: `${layout.width}px` }}
-              className="chart-detail-text"
-            >
-              {htmlProps.footnotes}
-            </p>
-          )}
+          <Source />
+          <Footnotes />
         </div>
         <div id="publish">
           <PublishButton />

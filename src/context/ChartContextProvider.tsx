@@ -116,7 +116,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     }
   };
 
-  const [htmlProps, chartProps] = flattenChartProperties(chartProperties);
+  const chartProps = flattenChartProperties(chartProperties);
   const chartType = chartProps.chartType.toLowerCase();
 
   const updateChartDefinition = () => {
@@ -140,7 +140,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     const layout: any = getLayout(chartProps, chartData);
     const config: any = getConfig();
 
-    setChartDefinition({ data: traces, layout, config, htmlProps });
+    setChartDefinition({ data: traces, layout, config });
   };
 
   return (

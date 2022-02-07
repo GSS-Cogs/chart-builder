@@ -1,0 +1,40 @@
+textarea {
+  margin-top: 1.1rem;
+  font-size: 0.7rem;
+  line-height: 1.3rem;
+  font-family: "GDSTransportWebsite", sans-serif;
+  color: rgb(107, 114, 118);
+  resize: none;
+  outline: none;
+  border: none;
+  overflow-y: visible;
+}
+
+#chart-title {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6rem;
+  color: rgb(0, 0, 0);
+  border: none;
+}
+
+#summary {
+  width: 66%;
+}
+
+#chart-bottom-border {
+  border-bottom: 1px solid rgba(107, 114, 118, 0.2);
+  margin-bottom: 0.6rem;
+}
+
+#source {
+  font-size: 0.7rem;
+  color: rgb(107, 114, 118);
+}
+
+#footnotes {
+  width: 100%;
+}

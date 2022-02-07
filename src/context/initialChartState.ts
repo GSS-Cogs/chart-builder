@@ -1,40 +1,3 @@
-const basicSection = {
-  name: "BasicChartProperties",
-  displayName: "Title and summary",
-  properties: [
-    {
-      name: "chartTitle",
-      displayName: "Chart title",
-      type: "text-multi",
-      value:
-        "Greenhouse gas emissions on a territorial, residence and carbon footprint basis: UK, 1990 to 2019 and provisional 2020 (million tonnes of carbon dioxide equivalent)",
-      output: "html",
-    },
-    {
-      name: "showTitle",
-      displayName: "Show title",
-      type: "checkbox",
-      value: true,
-      output: "html",
-    },
-    {
-      name: "statisticalSummary",
-      displayName: "Statistical summary",
-      type: "text-multi",
-      value:
-        "There are three key official measures of UK greenhouse gas (GHG) emissions. In 2018, the latest year that all three measures are available, territorial emissions were 468 million tonnes of carbon dioxide equivalent (Mt CO2e), residence emissions 569 Mt CO2e and footprint emissions 703 Mt CO2e.",
-      output: "html",
-    },
-    {
-      name: "showSummary",
-      displayName: "Show summary",
-      type: "checkbox",
-      value: true,
-      output: "html",
-    },
-  ],
-};
-
 const legendSection = {
   name: "LegendSection",
   displayName: "Legend",
@@ -151,66 +114,11 @@ const chartDimensionsSection = {
   ],
 };
 
-const footnotesSection = {
-  name: "footnoteProperties",
-  displayName: "Footnotes",
-  properties: [
-    {
-      name: "footnotes",
-      displayName: "Footnotes",
-      type: "text-multi",
-      value: `1. Territorial estimates are published by the Department for Business, Energy and Industrial Strategy (BEIS), are used to monitor net zero and other UK-wide targets. These estimates include emissions produced within the UK’s geographical borders.
-    
-2. In accordance with international reporting protocols, each of these gases are weighted by their global warming potential (GWP), so that total greenhouse gas emissions can be reported on a consistent basis (in CO2 equivalent units).`,
-      output: "html",
-    },
-    {
-      name: "showFootnotes",
-      displayName: "Show footnotes",
-      type: "checkbox",
-      value: true,
-      output: "html",
-    },
-  ],
-};
-
-const metaDataSection = {
-  name: "metaDataProperties",
-  displayName: "Metadata",
-  properties: [
-    {
-      name: "sourceName",
-      displayName: "Source name",
-      type: "text",
-      value: "Met Office",
-      output: "html",
-    },
-    {
-      name: "sourceUrl",
-      displayName: "Source URL",
-      type: "text",
-      value:
-        "https://beta.gss-data.org.uk/cube/about?uri=http%3A%2F%2Fgss-data.org.uk%2Fdata%2Fgss_data%2Fclimate-change%2Fmet-office-annual-mean-temp-with-trends-actual-catalog-entry",
-      output: "html",
-    },
-    {
-      name: "showSource",
-      displayName: "Show source",
-      type: "checkbox",
-      value: true,
-      output: "html",
-    },
-  ],
-};
-
 const initialChartState = [
-  basicSection,
   chartTypesSection,
   chartDimensionsSection,
   xAxisSection,
   yAxisSection,
-  metaDataSection,
-  footnotesSection,
   interactivitySection,
   GridlinesSection,
   legendSection,
