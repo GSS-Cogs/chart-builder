@@ -1,5 +1,3 @@
-import { extent } from "d3-array";
-
 interface Series {
   name: string;
   values: string[];
@@ -22,10 +20,9 @@ const calculateYRange = (ySeries: Series[]): any => {
   const yRange = ySeries.forEach((series: Series) => {
     // convert string values to numbers
     const yValues = series.values.map(Number);
-    const yExtent = extent(yValues);
 
-    globalYMin = Math.min(globalYMin, yExtent[0]!);
-    globalYMax = Math.max(globalYMax, yExtent[1]!);
+    globalYMin = Math.min(globalYMin, ...yValues);
+    globalYMax = Math.max(globalYMax, ...yValues);
   });
   return [globalYMin, globalYMax];
 };
