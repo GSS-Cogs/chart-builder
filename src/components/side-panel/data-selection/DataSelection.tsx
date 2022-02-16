@@ -5,6 +5,21 @@ import DimensionSelection from "./dimension-selection/DimensionSelection";
 import "./data-selection.css";
 import { DEMO_MODE } from "../../constants/Dev-constants";
 
+const options = [
+  {
+    name: "xSeries",
+    labelName: "Category axis:",
+  },
+  {
+    name: "measure",
+    labelName: "Measure:",
+  },
+  {
+    name: "dimension",
+    labelName: "Dimension:",
+  },
+];
+
 const DataSelection = (): JSX.Element => {
   const {
     dataSelection,
@@ -28,6 +43,18 @@ const DataSelection = (): JSX.Element => {
       setAvailableDimensions(getDistinctValues("country_name", tidyData));
     }
   }, [tidyData]);
+
+  const getPropertyValue = (name: string) => {
+    switch (name) {
+      case "xSeries":
+        return dataSelection?.xSeries;
+      case "measure":
+        return dataSelection?.measure;
+      case "dimension":
+        return dataSelection?.dimension;
+    }
+    return "";
+  };
 
   const onHandleChange = (e: any) => {
     if (
@@ -74,62 +101,26 @@ const DataSelection = (): JSX.Element => {
     <>
       <div className="property-section">
         <div className="section-heading"> Data columns</div>
-
-        <div className="chart-property">
-          <label className="column-label">Category axis:</label>
-          <select
-            className="chart-dimension-select"
-            name="xSeries"
-            value={dataSelection ? dataSelection.xSeries : ""}
-            onChange={onHandleChange}
-          >
-            <option key="defaultXSeries" value="">
-              --
-            </option>
-            {columnNames.map((columnName: string, index: number) => (
-              <option key={columnName} value={columnName}>
-                {columnName}
+        {options.map((item, index) => (
+          <div key={item.name} className="chart-property">
+            <label className="column-label">{item.labelName}</label>
+            <select
+              className="chart-dimension-select"
+              name={item.name}
+              value={dataSelection ? getPropertyValue(item.name) : ""}
+              onChange={onHandleChange}
+            >
+              <option key="default" value="">
+                --
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="chart-property">
-          <label className="column-label">Measure:</label>
-          <select
-            className="chart-dimension-select"
-            name="measure"
-            value={dataSelection ? dataSelection.measure : ""}
-            onChange={onHandleChange}
-          >
-            <option key="defaultMeasure" value="">
-              --
-            </option>
-            {columnNames.map((columnName: string, index: number) => (
-              <option key={columnName} value={columnName}>
-                {columnName}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="chart-property">
-          <label className="column-label">Dimension:&nbsp;</label>
-          <select
-            className="chart-dimension-select"
-            name="dimension"
-            value={dataSelection ? dataSelection.dimension : ""}
-            onChange={onHandleChange}
-          >
-            <option key="defaultDimension" value="">
-              --
-            </option>
-            {columnNames.map((columnName: string, index: number) => (
-              <option key={columnName} value={columnName}>
-                {columnName}
-              </option>
-            ))}
-          </select>
-        </div>
+              {columnNames.map((columnName: string, index: number) => (
+                <option key={columnName} value={columnName}>
+                  {columnName}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
       </div>
       <DimensionSelection availableDimensions={availableDimensions} />
     </>
