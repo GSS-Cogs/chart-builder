@@ -16,7 +16,7 @@ const getLayout = (chartProps: any, chartData: any) => {
       pad: 4,
     },
     xaxis: {
-      range: calculateXRange(chartData),
+      //range: calculateXRange(chartData),
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.showGridLines,
       title: {
@@ -27,7 +27,7 @@ const getLayout = (chartProps: any, chartData: any) => {
       tickangle: chartProps.xAxisTickAngle,
     },
     yaxis: {
-      range: calculateYRange(chartData!.ySeries),
+      //range: calculateYRange(chartData!.ySeries),
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.showGridLines,
       title: { text: chartProps.yAxisTitle, standoff: 15, font: { size: 14 } },
