@@ -1,6 +1,5 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import ChartContext from "../../../context/ChartContext";
-import Plot from "react-plotly.js";
 import "./chart-preview.css";
 import { PublishButton } from "../../publish-chart/PublishButton";
 import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
@@ -8,6 +7,10 @@ import Title from "../../../chart-demo/Title";
 import Summary from "../../../chart-demo/Summary";
 import Footnotes from "../../../chart-demo/Footnotes";
 import Source from "../../../chart-demo/Source";
+
+const Plot = typeof window !== 'undefined'
+  ? require("react-plotly.js")
+  : null;
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition, fullScreenMode, setFullScreenMode }: any =
