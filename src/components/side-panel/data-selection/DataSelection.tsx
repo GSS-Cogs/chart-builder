@@ -57,23 +57,26 @@ const DataSelection = (): JSX.Element => {
   };
 
   const onHandleChange = (e: any) => {
+    const { name, value } = e.target;
+
     if (
-      e.target.value === "" ||
-      selectedColumns.some((item) => item === e.target.value)
+      value === "" ||
+      selectedColumns.some((item) => item === value)
     ) {
       alert(
-        `${e.target.value} has already been selected. Please choose a different column`,
+        `${value} has already been selected. Please choose a different column`,
       );
       setDataSelection((prevState: any) => ({
         ...prevState,
       }));
     } else {
+
       let previousValue = "";
-      if (e.target.name === "xSeries") {
+      if (name === "xSeries") {
         previousValue = dataSelection!.xSeries;
-      } else if (e.target.name === "measure") {
+      } else if (name === "measure") {
         previousValue = dataSelection!.measure;
-      } else if (e.target.name === "dimension") {
+      } else if (name === "dimension") {
         previousValue = dataSelection!.dimension;
       }
       if (previousValue) {
@@ -82,17 +85,17 @@ const DataSelection = (): JSX.Element => {
           (item) => item !== previousValue,
         );
         newSelectedColumnNames.push(...alreadySelectedColumnNames);
-        newSelectedColumnNames.push(e.target.value);
+        newSelectedColumnNames.push(value);
         setSelectedColumns(newSelectedColumnNames);
       } else {
-        setSelectedColumns([...selectedColumns, e.target.value]);
+        setSelectedColumns([...selectedColumns, value]);
       }
       setDataSelection((prevState: any) => ({
         ...prevState,
-        [e.target.name]: e.target.value,
+        [name]: value,
       }));
-      if (e.target.name === "dimension" && e.target.value !== "") {
-        setAvailableDimensions(getDistinctValues(e.target.value, tidyData));
+      if (name === "dimension" && value !== "") {
+        setAvailableDimensions(getDistinctValues(value, tidyData));
       }
     }
   };
