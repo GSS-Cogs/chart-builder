@@ -8,9 +8,8 @@ import Summary from "../../../chart-demo/Summary";
 import Footnotes from "../../../chart-demo/Footnotes";
 import Source from "../../../chart-demo/Source";
 
-const Plot = typeof window !== 'undefined'
-  ? require("react-plotly.js")
-  : null;
+const Plot =
+  typeof window !== "undefined" ? require("react-plotly.js").default : null;
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition, fullScreenMode, setFullScreenMode }: any =
