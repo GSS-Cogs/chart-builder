@@ -43,20 +43,61 @@ export interface DataSelection {
   ySeries: SelectedDimension[];
 }
 
-const ChartContextProvider = ({ children }: Props): JSX.Element => {
+export function useChartContextState() {
   const [tidyData, setTidyData] = useState<any>([]);
-  const [chartData, setChartData] = useState<ChartData>();
   const [chartDefinition, setChartDefinition] = useState({});
   const [chartProperties, setChartProperties] = useState(initialChartState);
   const [selectedFilename, setSelectedFilename] = useState(
-    NO_FILE_SELECTED_TEXT,
+      NO_FILE_SELECTED_TEXT,
   );
   const [previewMode, setPreviewMode] = useState<boolean>(false);
   const [columnNames, setColumnNames] = useState<string[]>([]);
   const [dataSelection, setDataSelection] = useState<
-    DataSelection | undefined
-  >();
+      DataSelection | undefined
+      >();
   const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
+
+  return {
+    tidyData,
+    setTidyData,
+    chartDefinition,
+    setChartDefinition,
+    chartProperties,
+    setChartProperties,
+    selectedFilename,
+    setSelectedFilename,
+    previewMode,
+    setPreviewMode,
+    columnNames,
+    setColumnNames,
+    dataSelection,
+    setDataSelection,
+    fullScreenMode,
+    setFullScreenMode,
+  }
+}
+
+export function useChartContext(state: any) {
+  const [chartData, setChartData] = useState<ChartData>();
+
+  const {
+    tidyData,
+    setTidyData,
+    chartDefinition,
+    setChartDefinition,
+    chartProperties,
+    setChartProperties,
+    selectedFilename,
+    setSelectedFilename,
+    previewMode,
+    setPreviewMode,
+    columnNames,
+    setColumnNames,
+    dataSelection,
+    setDataSelection,
+    fullScreenMode,
+    setFullScreenMode,
+  } = state;
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();
@@ -72,10 +113,10 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
 
   useEffect(() => {
     if (
-      dataSelection &&
-      dataSelection.xSeries &&
-      dataSelection.measure &&
-      dataSelection.dimension
+        dataSelection &&
+        dataSelection.xSeries &&
+        dataSelection.measure &&
+        dataSelection.dimension
     ) {
       sanitizeChartData();
     }
@@ -97,11 +138,11 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
       const result = dataSelection.ySeries.map((series) => {
         const filteredDataBySeries = tidyData.filter(
-          (item: any) => item[dataSelection.dimension] === series.Name,
+            (item: any) => item[dataSelection.dimension] === series.Name,
         );
         const currentSeries = arrayColumn(
-          filteredDataBySeries,
-          dataSelection.measure,
+            filteredDataBySeries,
+            dataSelection.measure,
         );
         return { name: series.DisplayName, values: currentSeries } as Series;
       });
@@ -143,25 +184,30 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
     setChartDefinition({ data: traces, layout, config });
   };
 
+  return {
+    tidyData,
+    setTidyData,
+    chartDefinition,
+    chartProperties,
+    setChartProperties,
+    selectedFilename,
+    setSelectedFilename,
+    previewMode,
+    setPreviewMode,
+    columnNames,
+    dataSelection,
+    setDataSelection,
+    fullScreenMode,
+    setFullScreenMode,
+  };
+}
+
+const ChartContextProvider = ({ children }: Props): JSX.Element => {
+  const state = useChartContextState();
+  const hook = useChartContext(state);
+
   return (
-    <ChartContext.Provider
-      value={{
-        tidyData,
-        setTidyData,
-        chartDefinition,
-        chartProperties,
-        setChartProperties,
-        selectedFilename,
-        setSelectedFilename,
-        previewMode,
-        setPreviewMode,
-        columnNames,
-        dataSelection,
-        setDataSelection,
-        fullScreenMode,
-        setFullScreenMode,
-      }}
-    >
+    <ChartContext.Provider value={hook}>
       {children}
     </ChartContext.Provider>
   );
