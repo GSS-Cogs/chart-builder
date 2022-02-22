@@ -45,9 +45,6 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
         <Source />
         <Footnotes />
       </div>
-      <div id="publish">
-        <PublishButton />
-      </div>
     </div>
   );
 };
