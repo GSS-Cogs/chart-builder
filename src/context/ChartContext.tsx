@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { DataSelection } from "./ChartContextProvider";
+import {DataSelection, SelectedDimension} from "./ChartContextProvider";
 
 export type ChartContextProps = {
   tidyData: any;
@@ -20,7 +20,8 @@ export type ChartContextProps = {
   setAvailableDimensions: Dispatch<SetStateAction<string[]>>;
   selectedColumns: string[],
   setSelectedColumns: Dispatch<SetStateAction<string[]>>,
-
+  selectedDimensions: SelectedDimension[],
+  setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>,
 };
 const ChartContext = React.createContext<ChartContextProps>(
   {} as ChartContextProps,

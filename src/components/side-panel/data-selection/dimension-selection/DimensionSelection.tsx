@@ -11,10 +11,7 @@ export interface Props {
 }
 
 const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
-  const [selectedDimensions, setSelectedDimensions] = useState<
-    SelectedDimension[]
-  >([]);
-  const { dataSelection, setDataSelection }: ChartContextProps =
+  const { selectedDimensions, setSelectedDimensions, dataSelection, setDataSelection }: ChartContextProps =
     useContext(ChartContext);
 
   useEffect(() => {

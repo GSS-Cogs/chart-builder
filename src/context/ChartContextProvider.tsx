@@ -60,6 +60,8 @@ export function useChartContextState() {
   const [availableDimensions, setAvailableDimensions] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 
+  const [selectedDimensions, setSelectedDimensions] = useState<SelectedDimension[]>([]);
+
   return {
     tidyData,
     setTidyData,
@@ -81,6 +83,8 @@ export function useChartContextState() {
     setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
+    selectedDimensions,
+    setSelectedDimensions
   }
 }
 
@@ -108,6 +112,8 @@ export function useChartContext(state: any) {
     setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
+    selectedDimensions,
+    setSelectedDimensions
   } = state;
 
   useEffect(() => {
@@ -214,6 +220,8 @@ export function useChartContext(state: any) {
     setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
+    selectedDimensions,
+    setSelectedDimensions
   };
 }
 
