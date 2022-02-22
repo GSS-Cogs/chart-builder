@@ -8,6 +8,7 @@ textarea {
   outline: none;
   border: none;
   overflow-y: visible;
+  background-color: rgb(245, 245, 245);
 }
 
 #chart-title {

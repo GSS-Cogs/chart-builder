@@ -33,8 +33,8 @@ const getLayout = (chartProps: any, chartData: any) => {
       title: { text: chartProps.yAxisTitle, standoff: 15, font: { size: 14 } },
       type: "linear",
     },
-    paper_bgcolor: "rgb(255,255,255)",
-    plot_bgcolor: "rgb(255,255,255)",
+    paper_bgcolor: "rgb(245,245,245)",
+    plot_bgcolor: "rgb(245,245,245)",
     legend: { orientation: "h", y: -0.38 },
     showlegend: chartProps.showLegend,
   };

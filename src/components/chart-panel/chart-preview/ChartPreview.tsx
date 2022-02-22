@@ -27,28 +27,16 @@ const ChartPreview = (): JSX.Element => {
   const { data, layout, config } = chartDefinition;
 
   return (
-    <div id="preview-wrapper">
-      <div id="chart-preview-container">
-        <div id="preview-heading-area">
-          <h2 id="preview-heading">Preview</h2>
-          <h3
-            className="link"
-            onClick={() => setFullScreenMode(!fullScreenMode)}
-          >
-            {fullScreenMode ? "Exit full screen" : "View in full screen"}
-          </h3>
-        </div>
-
-        <div id="chart-preview">
-          <Title />
-          <Summary />
-          <Plot data={data} layout={layout} config={config} />
-          <Source />
-          <Footnotes />
-        </div>
-        <div id="publish">
-          <PublishButton />
-        </div>
+    <div id="chart-preview-container">
+      <div id="chart-preview">
+        <Title />
+        <Summary />
+        <Plot data={data} layout={layout} config={config} />
+        <Source />
+        <Footnotes />
+      </div>
+      <div id="publish">
+        <PublishButton />
       </div>
     </div>
   );
