@@ -39,11 +39,7 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   return (
     <div id="chart-preview-container">
       <div id="chart-preview">
-        <Title />
-        <Summary />
         {Plot ? <Plot data={data} layout={layout} config={config} /> : null}
-        <Source />
-        <Footnotes />
       </div>
     </div>
   );
