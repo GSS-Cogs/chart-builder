@@ -26,9 +26,11 @@ const DataSelection = (): JSX.Element => {
     setDataSelection,
     tidyData,
     columnNames,
+    availableDimensions,
+    setAvailableDimensions,
+    selectedColumns,
+    setSelectedColumns,
   }: ChartContextProps = useContext(ChartContext);
-  const [availableDimensions, setAvailableDimensions] = useState<string[]>([]);
-  const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 
   useEffect(() => {
     //DEMO Mode

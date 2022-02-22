@@ -57,6 +57,9 @@ export function useChartContextState() {
       >();
   const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
+  const [availableDimensions, setAvailableDimensions] = useState<string[]>([]);
+  const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
+
   return {
     tidyData,
     setTidyData,
@@ -74,6 +77,10 @@ export function useChartContextState() {
     setDataSelection,
     fullScreenMode,
     setFullScreenMode,
+    availableDimensions,
+    setAvailableDimensions,
+    selectedColumns,
+    setSelectedColumns,
   }
 }
 
@@ -97,6 +104,10 @@ export function useChartContext(state: any) {
     setDataSelection,
     fullScreenMode,
     setFullScreenMode,
+    availableDimensions,
+    setAvailableDimensions,
+    selectedColumns,
+    setSelectedColumns,
   } = state;
 
   useEffect(() => {
@@ -199,6 +210,10 @@ export function useChartContext(state: any) {
     setDataSelection,
     fullScreenMode,
     setFullScreenMode,
+    availableDimensions,
+    setAvailableDimensions,
+    selectedColumns,
+    setSelectedColumns,
   };
 }
 
