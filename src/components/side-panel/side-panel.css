@@ -1,10 +1,15 @@
 #side-panel {
-  /* The 3.2rem in calc below is the height of the header plus its border-bottom */
-  height: calc(100vh - 3.2rem);
-  min-width: 30rem;
-  max-width: 30rem;
+  /* The 61px in calc below is the height of the side portal heading area */
+  height: calc(100vh - 61px);
+
+  min-width: calc(100% - 2rem);
+  max-width: calc(100% -2rem);
+
+  /* Uncomment for standalone chart builder */
+  /* min-width: 27.5rem;
+  max-width: 27.5rem; */
+
   overflow-y: scroll;
-  margin-left: 2rem;
 }
 
 .chart-property {
@@ -48,7 +53,7 @@
 
 .textbox {
   padding: 0.35rem 0.2rem;
-  width: 24.5rem;
+  width: 20rem;
   margin-right: 2rem;
   border-style: solid;
   border-width: 0.08rem;
@@ -72,9 +77,7 @@
 
 .property-section {
   padding: 1rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  margin-right: 2rem;
+  margin: 2rem;
   border-style: solid;
   border-width: 0.5px;
   border-color: rgba(50, 115, 220, 0.3);
