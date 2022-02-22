@@ -31,7 +31,7 @@
 }
 
 #no-data-container {
-  height: calc(100vh - 3.2rem);
+  /* height: calc(100vh - 3.2rem); */
   display: flex;
   align-items: center;
   justify-content: center;
