@@ -15,6 +15,16 @@ const ChartPreview = (): JSX.Element => {
   const { chartDefinition, fullScreenMode, setFullScreenMode }: any =
     useContext(ChartContext);
 
+  return (
+    <ActualChart
+      chartDefinition={chartDefinition}
+      fullScreenMode={fullScreenMode}
+      setFullScreenMode={setFullScreenMode}
+    />
+  );
+};
+
+export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   if (Object.keys(chartDefinition).length === 0)
     return (
       <div id="no-data-container">
@@ -31,7 +41,7 @@ const ChartPreview = (): JSX.Element => {
       <div id="chart-preview">
         <Title />
         <Summary />
-        <Plot data={data} layout={layout} config={config} />
+        {Plot ? <Plot data={data} layout={layout} config={config} /> : null}
         <Source />
         <Footnotes />
       </div>
