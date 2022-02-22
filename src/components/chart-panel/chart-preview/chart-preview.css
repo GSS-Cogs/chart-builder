@@ -10,17 +10,6 @@
 #chart-preview-container {
   display: flex;
   flex-direction: column;
-  margin-right: 1.9rem;
-  margin-bottom: 1.9rem;
-  margin-left: 1.9rem;
-}
-
-/* The 'Preview' heading and the 'View in full screen' link located above the chart */
-#preview-heading-area {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.28rem 0rem;
 }
 
 /* The actual chart preview */
