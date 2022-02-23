@@ -1,8 +1,3 @@
-interface Series {
-  name: string;
-  values: string[];
-}
-
 const colors = [
   "rgb(29, 112, 184)",
   "rgb(244, 119, 56)",
@@ -13,19 +8,6 @@ const colors = [
   "rgb(213, 56, 128)",
   "rgb(80, 90, 95)",
 ];
-
-const calculateYRange = (ySeries: Series[]): any => {
-  let globalYMin = Number.MAX_SAFE_INTEGER;
-  let globalYMax = Number.MIN_SAFE_INTEGER;
-  const yRange = ySeries.forEach((series: Series) => {
-    // convert string values to numbers
-    const yValues = series.values.map(Number);
-
-    globalYMin = Math.min(globalYMin, ...yValues);
-    globalYMax = Math.max(globalYMax, ...yValues);
-  });
-  return [globalYMin, globalYMax];
-};
 
 const flattenChartProperties = (chartProperties: any): any => {
   let chartProps: any = {};
@@ -38,8 +20,4 @@ const flattenChartProperties = (chartProperties: any): any => {
   return chartProps;
 };
 
-const calculateXRange = (chartData: any): any => {
-  return [0, chartData!.xSeries.values.length];
-};
-
-export { colors, calculateYRange, calculateXRange, flattenChartProperties };
+export { colors, flattenChartProperties };

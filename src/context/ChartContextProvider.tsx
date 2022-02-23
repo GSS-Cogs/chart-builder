@@ -9,7 +9,6 @@ import {
 
 import {
   colors,
-  calculateYRange,
   flattenChartProperties,
 } from "../helper-functions/chart-helpers";
 
@@ -122,7 +121,6 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const updateChartDefinition = () => {
     const traces: any = [];
 
-    if (chartData) calculateYRange(chartData.ySeries);
     chartData?.ySeries.map((series, index) => {
       traces.push({
         x: chartData!.xSeries.values,

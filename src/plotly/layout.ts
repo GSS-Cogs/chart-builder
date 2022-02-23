@@ -1,8 +1,3 @@
-import {
-  calculateYRange,
-  calculateXRange,
-} from "../helper-functions/chart-helpers";
-
 const getLayout = (chartProps: any, chartData: any) => {
   return {
     autosize: false,
