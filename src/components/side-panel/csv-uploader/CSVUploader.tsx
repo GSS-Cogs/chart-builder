@@ -5,23 +5,16 @@ import "./csv-uploader.css";
 import ChartContext from "../../../context/ChartContext";
 import Button from "../../button/Button";
 
-const CSVUploader = (): JSX.Element => {
-  const { setTidyData }: any = useContext(ChartContext);
-  const { setSelectedFilename }: any = useContext(ChartContext);
-  const { setPreviewMode }: any = useContext(ChartContext);
+function useChartCsvData() {
+  const {
+    setTidyData,
+    setSelectedFilename,
+    setPreviewMode
+  }: any = useContext(ChartContext);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file: File) => {
-      validateData(file);
-    });
-  }, []);
-
-  const { getRootProps, getInputProps, open } = useDropzone({
-    onDrop,
-    noClick: true,
-    accept: ".csv",
-    multiple: false,
-  });
+  const onFailure = (error: string) => {
+    console.log(error);
+  };
 
   const validateData = (data: File) => {
     Papa.parse(data, {
@@ -41,9 +34,26 @@ const CSVUploader = (): JSX.Element => {
     });
   };
 
-  const onFailure = (error: string) => {
-    console.log(error);
-  };
+  return {
+    validateData,
+  }
+}
+
+const CSVUploader = (): JSX.Element => {
+  const { validateData } = useChartCsvData();
+
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file: File) => {
+      validateData(file);
+    });
+  }, []);
+
+  const { getRootProps, getInputProps, open } = useDropzone({
+    onDrop,
+    noClick: true,
+    accept: ".csv",
+    multiple: false,
+  });
 
   return (
     <div id="csv-uploader">
