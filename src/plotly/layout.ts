@@ -1,8 +1,3 @@
-import {
-  calculateYRange,
-  calculateXRange,
-} from "../helper-functions/chart-helpers";
-
 const getLayout = (chartProps: any, chartData: any) => {
   return {
     autosize: false,
@@ -16,7 +11,7 @@ const getLayout = (chartProps: any, chartData: any) => {
       pad: 4,
     },
     xaxis: {
-      range: calculateXRange(chartData),
+      autorange: true,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.showGridLines,
       title: {
@@ -27,7 +22,7 @@ const getLayout = (chartProps: any, chartData: any) => {
       tickangle: chartProps.xAxisTickAngle,
     },
     yaxis: {
-      range: calculateYRange(chartData!.ySeries),
+      autorange: true,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.showGridLines,
       title: { text: chartProps.yAxisTitle, standoff: 15, font: { size: 14 } },

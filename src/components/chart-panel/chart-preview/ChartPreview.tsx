@@ -34,7 +34,9 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
       </div>
     );
 
-  const { data, layout, config } = chartDefinition;
+  let { data, layout, config } = chartDefinition;
+
+  layout.datarevision++;
 
   return (
     <div id="chart-preview-container">

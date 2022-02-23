@@ -9,7 +9,6 @@ import {
 
 import {
   colors,
-  calculateYRange,
   flattenChartProperties,
 } from "../helper-functions/chart-helpers";
 
@@ -48,19 +47,21 @@ export function useChartContextState() {
   const [chartDefinition, setChartDefinition] = useState({});
   const [chartProperties, setChartProperties] = useState(initialChartState);
   const [selectedFilename, setSelectedFilename] = useState(
-      NO_FILE_SELECTED_TEXT,
+    NO_FILE_SELECTED_TEXT,
   );
   const [previewMode, setPreviewMode] = useState<boolean>(false);
   const [columnNames, setColumnNames] = useState<string[]>([]);
   const [dataSelection, setDataSelection] = useState<
-      DataSelection | undefined
-      >();
+    DataSelection | undefined
+  >();
   const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
   const [availableDimensions, setAvailableDimensions] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 
-  const [selectedDimensions, setSelectedDimensions] = useState<SelectedDimension[]>([]);
+  const [selectedDimensions, setSelectedDimensions] = useState<
+    SelectedDimension[]
+  >([]);
 
   return {
     tidyData,
@@ -84,8 +85,8 @@ export function useChartContextState() {
     selectedColumns,
     setSelectedColumns,
     selectedDimensions,
-    setSelectedDimensions
-  }
+    setSelectedDimensions,
+  };
 }
 
 export function useChartContext(state: any) {
@@ -113,7 +114,7 @@ export function useChartContext(state: any) {
     selectedColumns,
     setSelectedColumns,
     selectedDimensions,
-    setSelectedDimensions
+    setSelectedDimensions,
   } = state;
 
   useEffect(() => {
@@ -130,10 +131,10 @@ export function useChartContext(state: any) {
 
   useEffect(() => {
     if (
-        dataSelection &&
-        dataSelection.xSeries &&
-        dataSelection.measure &&
-        dataSelection.dimension
+      dataSelection &&
+      dataSelection.xSeries &&
+      dataSelection.measure &&
+      dataSelection.dimension
     ) {
       sanitizeChartData();
     }
@@ -153,13 +154,13 @@ export function useChartContext(state: any) {
     };
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
-      const result = dataSelection.ySeries.map((series) => {
+      const result = dataSelection.ySeries.map((series: any) => {
         const filteredDataBySeries = tidyData.filter(
-            (item: any) => item[dataSelection.dimension] === series.Name,
+          (item: any) => item[dataSelection.dimension] === series.Name,
         );
         const currentSeries = arrayColumn(
-            filteredDataBySeries,
-            dataSelection.measure,
+          filteredDataBySeries,
+          dataSelection.measure,
         );
         return { name: series.DisplayName, values: currentSeries } as Series;
       });
@@ -180,7 +181,6 @@ export function useChartContext(state: any) {
   const updateChartDefinition = () => {
     const traces: any = [];
 
-    if (chartData) calculateYRange(chartData.ySeries);
     chartData?.ySeries.map((series, index) => {
       traces.push({
         x: chartData!.xSeries.values,
@@ -221,7 +221,7 @@ export function useChartContext(state: any) {
     selectedColumns,
     setSelectedColumns,
     selectedDimensions,
-    setSelectedDimensions
+    setSelectedDimensions,
   };
 }
 
@@ -229,11 +229,7 @@ const ChartContextProvider = ({ children }: Props): JSX.Element => {
   const state = useChartContextState();
   const hook = useChartContext(state);
 
-  return (
-    <ChartContext.Provider value={hook}>
-      {children}
-    </ChartContext.Provider>
-  );
+  return <ChartContext.Provider value={hook}>{children}</ChartContext.Provider>;
 };
 
 export default ChartContextProvider;
