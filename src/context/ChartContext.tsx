@@ -14,8 +14,6 @@ export type ChartContextProps = {
   columnNames: string[];
   dataSelection: DataSelection | undefined;
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
-  fullScreenMode: boolean;
-  setFullScreenMode: Dispatch<SetStateAction<boolean>>;
   availableDimensions: string[];
   setAvailableDimensions: Dispatch<SetStateAction<string[]>>;
   selectedColumns: string[],

@@ -12,16 +12,8 @@ const Plot =
   typeof window !== "undefined" ? require("react-plotly.js").default : null;
 
 const ChartPreview = (): JSX.Element => {
-  const { chartDefinition, fullScreenMode, setFullScreenMode }: any =
-    useContext(ChartContext);
-
-  return (
-    <ActualChart
-      chartDefinition={chartDefinition}
-      fullScreenMode={fullScreenMode}
-      setFullScreenMode={setFullScreenMode}
-    />
-  );
+  const { chartDefinition }: any = useContext(ChartContext);
+  return <ActualChart chartDefinition={chartDefinition} />;
 };
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {

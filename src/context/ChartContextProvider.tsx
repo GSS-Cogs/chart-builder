@@ -1,13 +1,26 @@
 import ChartContext from "./ChartContext";
-import {Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState} from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import initialChartState from "./initialChartState";
 
-import {arrayColumn, getDistinctValues,} from "../helper-functions/array-helpers";
+import {
+  arrayColumn,
+  getDistinctValues,
+} from "../helper-functions/array-helpers";
 
-import {colors, flattenChartProperties,} from "../helper-functions/chart-helpers";
+import {
+  colors,
+  flattenChartProperties,
+} from "../helper-functions/chart-helpers";
 
-import {NO_FILE_SELECTED_TEXT} from "../components/constants/Common-constants";
-import {getConfig} from "@testing-library/react";
+import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
+import { getConfig } from "@testing-library/react";
 import getLayout from "../plotly/layout";
 import Papa from "papaparse";
 
@@ -49,7 +62,6 @@ export function useChartContextState() {
   const [dataSelection, setDataSelection] = useState<
     DataSelection | undefined
   >();
-  const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
   const [availableDimensions, setAvailableDimensions] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
@@ -73,8 +85,6 @@ export function useChartContextState() {
     setColumnNames,
     dataSelection,
     setDataSelection,
-    fullScreenMode,
-    setFullScreenMode,
     availableDimensions,
     setAvailableDimensions,
     selectedColumns,
@@ -85,36 +95,38 @@ export function useChartContextState() {
 }
 
 export function useChartCsvData(
-    setTidyData: Dispatch<SetStateAction<any>>,
-    setSelectedFilename: Dispatch<SetStateAction<string>>,
-    setPreviewMode: Dispatch<SetStateAction<boolean>>,
+  setTidyData: Dispatch<SetStateAction<any>>,
+  setSelectedFilename: Dispatch<SetStateAction<string>>,
+  setPreviewMode: Dispatch<SetStateAction<boolean>>,
 ) {
   const onFailure = (error: string) => {
     console.log(error);
   };
 
   const validateData = useCallback(
-      (data: File | string, filename: string) => {
-        Papa.parse(data, {
-          worker: true,
-          header: true,
-          skipEmptyLines: true,
-          dynamicTyping: true,
-          complete: function (results) {
-            if (results.errors && results.errors.length > 0) {
-              onFailure(results.errors[0].message);
-            } else {
-              setSelectedFilename(filename);
-              setPreviewMode(true);
-              setTidyData(results.data);
-            }
-          },
-        });
-  }, [setSelectedFilename, setPreviewMode, setTidyData]);
+    (data: File | string, filename: string) => {
+      Papa.parse(data, {
+        worker: true,
+        header: true,
+        skipEmptyLines: true,
+        dynamicTyping: true,
+        complete: function (results) {
+          if (results.errors && results.errors.length > 0) {
+            onFailure(results.errors[0].message);
+          } else {
+            setSelectedFilename(filename);
+            setPreviewMode(true);
+            setTidyData(results.data);
+          }
+        },
+      });
+    },
+    [setSelectedFilename, setPreviewMode, setTidyData],
+  );
 
   return {
     validateData,
-  }
+  };
 }
 
 export function useChartContext(state: any) {
@@ -135,8 +147,6 @@ export function useChartContext(state: any) {
     setColumnNames,
     dataSelection,
     setDataSelection,
-    fullScreenMode,
-    setFullScreenMode,
     availableDimensions,
     setAvailableDimensions,
     selectedColumns,
@@ -229,7 +239,11 @@ export function useChartContext(state: any) {
     setChartDefinition({ data: traces, layout, config });
   };
 
-  const { validateData } = useChartCsvData(setTidyData, setSelectedFilename, setPreviewMode);
+  const { validateData } = useChartCsvData(
+    setTidyData,
+    setSelectedFilename,
+    setPreviewMode,
+  );
 
   return {
     tidyData,
@@ -244,8 +258,6 @@ export function useChartContext(state: any) {
     columnNames,
     dataSelection,
     setDataSelection,
-    fullScreenMode,
-    setFullScreenMode,
     availableDimensions,
     setAvailableDimensions,
     selectedColumns,
