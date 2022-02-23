@@ -1,11 +1,8 @@
 import ChartContext from "./ChartContext";
-import { useState, useEffect, ReactNode } from "react";
+import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
 import initialChartState from "./initialChartState";
 
-import {
-  arrayColumn,
-  getDistinctValues,
-} from "../helper-functions/array-helpers";
+import {arrayColumn, getDistinctValues,} from "../helper-functions/array-helpers";
 
 import {
   colors,
@@ -15,6 +12,7 @@ import {
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 import { getConfig } from "@testing-library/react";
 import getLayout from "../plotly/layout";
+import Papa from "papaparse";
 
 interface Props {
   children: ReactNode;
@@ -89,6 +87,38 @@ export function useChartContextState() {
   };
 }
 
+export function useChartCsvData(
+    setTidyData: Dispatch<SetStateAction<any>>,
+    setSelectedFilename: Dispatch<SetStateAction<string>>,
+    setPreviewMode: Dispatch<SetStateAction<boolean>>,
+) {
+  const onFailure = (error: string) => {
+    console.log(error);
+  };
+
+  const validateData = (data: File | string, filename: string) => {
+    Papa.parse(data, {
+      worker: true,
+      header: true,
+      skipEmptyLines: true,
+      dynamicTyping: true,
+      complete: function (results) {
+        if (results.errors && results.errors.length > 0) {
+          onFailure(results.errors[0].message);
+        } else {
+          setSelectedFilename(filename);
+          setPreviewMode(true);
+          setTidyData(results.data);
+        }
+      },
+    });
+  };
+
+  return {
+    validateData,
+  }
+}
+
 export function useChartContext(state: any) {
   const [chartData, setChartData] = useState<ChartData>();
 
@@ -154,7 +184,7 @@ export function useChartContext(state: any) {
     };
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
-      const result = dataSelection.ySeries.map((series: any) => {
+      const result = dataSelection.ySeries.map((series: SelectedDimension) => {
         const filteredDataBySeries = tidyData.filter(
           (item: any) => item[dataSelection.dimension] === series.Name,
         );
@@ -201,6 +231,8 @@ export function useChartContext(state: any) {
     setChartDefinition({ data: traces, layout, config });
   };
 
+  const { validateData } = useChartCsvData(setTidyData, setSelectedFilename, setPreviewMode);
+
   return {
     tidyData,
     setTidyData,
@@ -222,6 +254,7 @@ export function useChartContext(state: any) {
     setSelectedColumns,
     selectedDimensions,
     setSelectedDimensions,
+    validateData,
   };
 }
 

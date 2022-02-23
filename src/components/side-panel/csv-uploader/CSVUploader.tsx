@@ -1,50 +1,15 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
-import Papa from "papaparse";
 import "./csv-uploader.css";
 import ChartContext from "../../../context/ChartContext";
 import Button from "../../button/Button";
 
-function useChartCsvData() {
-  const {
-    setTidyData,
-    setSelectedFilename,
-    setPreviewMode
-  }: any = useContext(ChartContext);
-
-  const onFailure = (error: string) => {
-    console.log(error);
-  };
-
-  const validateData = (data: File) => {
-    Papa.parse(data, {
-      worker: true,
-      header: true,
-      skipEmptyLines: true,
-      dynamicTyping: true,
-      complete: function (results) {
-        if (results.errors && results.errors.length > 0) {
-          onFailure(results.errors[0].message);
-        } else {
-          setSelectedFilename(data.name);
-          setPreviewMode(true);
-          setTidyData(results.data);
-        }
-      },
-    });
-  };
-
-  return {
-    validateData,
-  }
-}
-
 const CSVUploader = (): JSX.Element => {
-  const { validateData } = useChartCsvData();
+  const { validateData } = useContext(ChartContext);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
-      validateData(file);
+      validateData(file, file.name);
     });
   }, []);
 
