@@ -24,6 +24,8 @@ const ChartPreview = (): JSX.Element => {
 
   const { data, layout, config } = chartDefinition;
 
+  layout.datarevision++;
+
   return (
     <div id="preview-wrapper">
       <div id="chart-preview-container">
