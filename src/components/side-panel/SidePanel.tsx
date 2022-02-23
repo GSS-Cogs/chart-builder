@@ -3,6 +3,7 @@ import ChartContext, { ChartContextProps } from "../../context/ChartContext";
 import { NO_FILE_SELECTED_TEXT } from "../constants/Common-constants";
 import DataSelection from "./data-selection/DataSelection";
 import "./side-panel.css";
+import CSVUploader from "../side-panel/csv-uploader/CSVUploader";
 
 const SidePanel = (): JSX.Element => {
   const {
@@ -10,8 +11,6 @@ const SidePanel = (): JSX.Element => {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
-    previewMode,
-    setPreviewMode,
   }: ChartContextProps = useContext(ChartContext);
 
   const updateProperty = (sectionName: string, property: any, value: any) => {
@@ -138,7 +137,6 @@ const SidePanel = (): JSX.Element => {
   };
 
   const resetChartState = () => {
-    setPreviewMode(false);
     setSelectedFilename(NO_FILE_SELECTED_TEXT);
   };
 
@@ -176,17 +174,16 @@ const SidePanel = (): JSX.Element => {
 
   return (
     <div id="side-panel">
+      {/* CSVUploader included here temporarily for continued dev //todo remove */}
+      <CSVUploader />
       <div className="property-section">
         <div id="data-source"> Data source</div>
         <label id="selected-filename">{selectedFilename}</label>
-        {previewMode && (
-          <button className="close-button" onClick={() => resetChartState()}>
-            {"Reset"}
-          </button>
-        )}
+        <button className="close-button" onClick={() => resetChartState()}>
+          {"Reset"}
+        </button>
       </div>
       <DataSelection />
-
       {chartProperties.map((section: any) => (
         <div className="property-section" key={section.name}>
           <div className="section-heading"> {section.displayName}</div>

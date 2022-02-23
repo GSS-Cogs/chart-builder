@@ -9,8 +9,6 @@ export type ChartContextProps = {
   setChartProperties: Dispatch<SetStateAction<any>>;
   selectedFilename: string;
   setSelectedFilename: Dispatch<SetStateAction<string>>;
-  previewMode: boolean;
-  setPreviewMode: Dispatch<SetStateAction<boolean>>;
   columnNames: string[];
   dataSelection: DataSelection | undefined;
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;

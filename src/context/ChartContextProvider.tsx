@@ -57,7 +57,6 @@ export function useChartContextState() {
   const [selectedFilename, setSelectedFilename] = useState(
     NO_FILE_SELECTED_TEXT,
   );
-  const [previewMode, setPreviewMode] = useState<boolean>(false);
   const [columnNames, setColumnNames] = useState<string[]>([]);
   const [dataSelection, setDataSelection] = useState<
     DataSelection | undefined
@@ -79,8 +78,6 @@ export function useChartContextState() {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
-    previewMode,
-    setPreviewMode,
     columnNames,
     setColumnNames,
     dataSelection,
@@ -97,7 +94,6 @@ export function useChartContextState() {
 export function useChartCsvData(
   setTidyData: Dispatch<SetStateAction<any>>,
   setSelectedFilename: Dispatch<SetStateAction<string>>,
-  setPreviewMode: Dispatch<SetStateAction<boolean>>,
 ) {
   const onFailure = (error: string) => {
     console.log(error);
@@ -115,13 +111,12 @@ export function useChartCsvData(
             onFailure(results.errors[0].message);
           } else {
             setSelectedFilename(filename);
-            setPreviewMode(true);
             setTidyData(results.data);
           }
         },
       });
     },
-    [setSelectedFilename, setPreviewMode, setTidyData],
+    [setSelectedFilename, setTidyData],
   );
 
   return {
@@ -141,8 +136,6 @@ export function useChartContext(state: any) {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
-    previewMode,
-    setPreviewMode,
     columnNames,
     setColumnNames,
     dataSelection,
@@ -239,11 +232,7 @@ export function useChartContext(state: any) {
     setChartDefinition({ data: traces, layout, config });
   };
 
-  const { validateData } = useChartCsvData(
-    setTidyData,
-    setSelectedFilename,
-    setPreviewMode,
-  );
+  const { validateData } = useChartCsvData(setTidyData, setSelectedFilename);
 
   return {
     tidyData,
@@ -253,8 +242,6 @@ export function useChartContext(state: any) {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
-    previewMode,
-    setPreviewMode,
     columnNames,
     dataSelection,
     setDataSelection,

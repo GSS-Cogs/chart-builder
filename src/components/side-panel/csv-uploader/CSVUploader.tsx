@@ -26,7 +26,6 @@ const CSVUploader = (): JSX.Element => {
         <input {...getInputProps()} />
         <span>Drag a csv file here or </span>
         <Button text={"Browse"} onClick={open} />
-        <span>a file from your computer</span>
       </div>
     </div>
   );
