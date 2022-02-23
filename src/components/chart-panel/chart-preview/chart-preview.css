@@ -40,9 +40,3 @@
 #preview-heading {
   margin: 0.4rem 0rem;
 }
-
-#publish {
-  display: flex;
-  justify-content: flex-end;
-  background-color: rgb(255, 255, 255);
-}
