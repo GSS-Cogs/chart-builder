@@ -217,7 +217,7 @@ export function useChartContext(state: any) {
         x: chartData!.xSeries.values,
         y: series.values,
         name: series.name,
-        type: chartType,
+        type: chartType === "stacked bar" ? "bar" : chartType,
         mode: "lines",
         hoverinfo: chartProps.interactivity,
         line: {

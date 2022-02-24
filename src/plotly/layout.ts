@@ -1,5 +1,6 @@
 const getLayout = (chartProps: any, chartData: any) => {
   return {
+    barmode: chartProps.barmode,
     autosize: true,
     height: parseInt(chartProps.height),
     margin: {
