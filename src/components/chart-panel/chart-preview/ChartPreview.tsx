@@ -30,14 +30,20 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   layout.datarevision++;
 
   return (
-    <div id="chart-preview-container">
-      <div id="chart-preview">
-        <Title />
-        <Summary />
-        {Plot ? <Plot data={data} layout={layout} config={config} /> : null}
-        <Source />
-        <Footnotes />
-      </div>
+    <div id="chart-preview">
+      <Title />
+      <Summary />
+      {Plot ? (
+        <Plot
+          data={data}
+          layout={layout}
+          config={config}
+          useResizeHandler={true}
+          style={{ width: "100%" }}
+        />
+      ) : null}
+      <Source />
+      <Footnotes />
     </div>
   );
 };

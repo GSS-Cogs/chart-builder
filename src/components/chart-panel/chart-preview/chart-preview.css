@@ -1,26 +1,10 @@
-/* Wrapper around the chart preview to allow scroll bars to work and to create the white-smoke margin around the preview */
-#preview-wrapper {
-  /* margin:auto prevents issue where flexbox fails to show centered content with small viewports and scroll activated 
-  for overflow. More info: https://www.stefanjudis.com/today-i-learned/safe-unsafe-alignment-in-css-flexbox/ */
-  margin: auto;
-  background-color: rgb(245, 245, 245);
-}
-
-/* The heading area and the actual chart preview */
-#chart-preview-container {
-  display: flex;
-  flex-direction: column;
-}
-
-/* The actual chart preview */
 #chart-preview {
-  flex-grow: 1;
+  width: 100%;
   padding: 1.4rem;
   background-color: rgb(245, 245, 245);
 }
 
 #no-data-container {
-  /* height: calc(100vh - 3.2rem); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,13 +14,4 @@
 #no-data {
   width: 10rem;
   height: 10rem;
-}
-
-#chart-preview-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-#preview-heading {
-  margin: 0.4rem 0rem;
 }
