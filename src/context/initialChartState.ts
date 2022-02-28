@@ -9,6 +9,13 @@ const legendSection = {
       value: true,
       output: "svg",
     },
+    {
+      name: "xAxisOffset",
+      displayName: "X axis offset",
+      type: "text",
+      value: -0.38,
+      output: "svg",
+    },
   ],
 };
 
@@ -104,11 +111,41 @@ const chartDimensionsSection = {
       value: "550",
       output: "svg",
     },
+    {
+      name: "marginLeft",
+      displayName: "Left margin(px)",
+      type: "text",
+      value: "70",
+      output: "svg",
+    },
+    {
+      name: "marginBottom",
+      displayName: "Bottom margin(px)",
+      type: "text",
+      value: "100",
+      output: "svg",
+    },
+  ],
+};
+
+const orientationSection = {
+  name: "orientationProperties",
+  displayName: "Chart orientation",
+  properties: [
+    {
+      name: "orientation",
+      displayName: "Bar chart orientation",
+      type: "radio",
+      options: ["vertical", "horizontal"],
+      value: "vertical",
+      output: "svg",
+    },
   ],
 };
 
 const initialChartState = [
   chartTypesSection,
+  orientationSection,
   chartDimensionsSection,
   xAxisSection,
   yAxisSection,

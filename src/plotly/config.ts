@@ -1,5 +1,3 @@
-const getConfig = () => {
-  return { displayModeBar: false };
-};
+const config = { displayModeBar: false, displayLogo: false };
 
-export default getConfig;
+export default config;

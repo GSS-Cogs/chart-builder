@@ -4,9 +4,9 @@ const getLayout = (chartProps: any, chartData: any) => {
     autosize: true,
     height: parseInt(chartProps.height),
     margin: {
-      l: 70,
+      l: chartProps.marginLeft,
       r: 20,
-      b: 100,
+      b: chartProps.marginBottom,
       t: 50,
       pad: 4,
     },
@@ -26,11 +26,10 @@ const getLayout = (chartProps: any, chartData: any) => {
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.showGridLines,
       title: { text: chartProps.yAxisTitle, standoff: 15, font: { size: 14 } },
-      type: "linear",
     },
     paper_bgcolor: "rgb(245,245,245)",
     plot_bgcolor: "rgb(245,245,245)",
-    legend: { orientation: "h", y: -0.38 },
+    legend: { orientation: "h", y: chartProps.xAxisOffset },
     showlegend: chartProps.showLegend,
   };
 };

@@ -20,7 +20,7 @@ import {
 } from "../helper-functions/chart-helpers";
 
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
-import { getConfig } from "@testing-library/react";
+import config from "../plotly/config";
 import getLayout from "../plotly/layout";
 import Papa from "papaparse";
 
@@ -213,9 +213,23 @@ export function useChartContext(state: any) {
     const traces: any = [];
 
     chartData?.ySeries.map((series, index) => {
+      let trace: {};
+      if (chartProps.orientation === "horizontal") {
+        trace = {
+          x: series.values,
+          y: chartData?.xSeries.values,
+          orientation: "h",
+        };
+      } else {
+        trace = {
+          x: chartData?.xSeries.values,
+          y: series.values,
+          orientation: "v",
+        };
+      }
+
       traces.push({
-        x: chartData!.xSeries.values,
-        y: series.values,
+        ...trace,
         name: series.name,
         type: chartType === "stacked bar" ? "bar" : chartType,
         mode: "lines",
@@ -227,7 +241,6 @@ export function useChartContext(state: any) {
     });
 
     const layout: any = getLayout(chartProps, chartData);
-    const config: any = getConfig();
 
     setChartDefinition({ data: traces, layout, config });
   };

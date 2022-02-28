@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import ChartContext from "../../../context/ChartContext";
 import "./chart-preview.css";
 import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
@@ -26,7 +26,6 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
     );
 
   let { data, layout, config } = chartDefinition;
-
   // Incrementing the datarevision forces plotly to update the chart.
   // This is a workaround for an issue where plotly loses its
   // autorange calculations on component re-render.
