@@ -212,17 +212,22 @@ export function useChartContext(state: any) {
   const updateChartDefinition = () => {
     const traces: any = [];
 
+    //truncate the xSeries values to user specified length
+    const xSeries = chartData?.xSeries.values.map((value: string) => {
+      return value.substring(0, chartProps.xTickLabelMaxLength);
+    });
+
     chartData?.ySeries.map((series, index) => {
       let trace: {};
       if (chartProps.orientation === "horizontal") {
         trace = {
           x: series.values,
-          y: chartData?.xSeries.values,
+          y: xSeries,
           orientation: "h",
         };
       } else {
         trace = {
-          x: chartData?.xSeries.values,
+          x: xSeries,
           y: series.values,
           orientation: "v",
         };

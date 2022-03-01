@@ -76,6 +76,13 @@ const xAxisSection = {
       output: "svg",
     },
     {
+      name: "xTickLabelMaxLength",
+      displayName: "X axis tick label max. length",
+      type: "text",
+      value: 40,
+      output: "svg",
+    },
+    {
       name: "xAxisTickAngle",
       displayName: "X axis label rotation",
       type: "radio",
