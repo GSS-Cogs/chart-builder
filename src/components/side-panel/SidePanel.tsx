@@ -20,8 +20,10 @@ const SidePanel = (): JSX.Element => {
 
     const updatedProperties = section.properties.map((item: any) => {
       if (item.name === property) {
-        item.value = value;
-        return item;
+        return {
+          ...item,
+          value,
+        }
       }
       return item;
     });
