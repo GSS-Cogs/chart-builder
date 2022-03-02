@@ -214,7 +214,7 @@ export function useChartContext(state: any) {
 
     //truncate the xSeries values to user specified length
     const xSeries = chartData?.xSeries.values.map((value: string) => {
-      return value.substring(0, chartProps.xTickLabelMaxLength);
+      return String(value).substring(0, chartProps.xTickLabelMaxLength);
     });
 
     chartData?.ySeries.map((series, index) => {
