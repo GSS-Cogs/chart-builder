@@ -2,10 +2,6 @@ import { useContext } from "react";
 import ChartContext from "../../../context/ChartContext";
 import "./chart-preview.css";
 import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
-import Title from "../../../chart-demo/Title";
-import Summary from "../../../chart-demo/Summary";
-import Footnotes from "../../../chart-demo/Footnotes";
-import Source from "../../../chart-demo/Source";
 
 const Plot =
   typeof window !== "undefined" ? require("react-plotly.js").default : null;
@@ -26,6 +22,7 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
     );
 
   let { data, layout, config } = chartDefinition;
+
   // Incrementing the datarevision forces plotly to update the chart.
   // This is a workaround for an issue where plotly loses its
   // autorange calculations on component re-render.
@@ -33,8 +30,6 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
 
   return (
     <div id="chart-preview">
-      <Title />
-      <Summary />
       {Plot ? (
         <Plot
           data={data}
@@ -44,8 +39,6 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
           style={{ width: "100%" }}
         />
       ) : null}
-      <Source />
-      <Footnotes />
     </div>
   );
 };
