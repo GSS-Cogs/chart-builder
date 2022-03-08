@@ -13,6 +13,8 @@ const SidePanel = (): JSX.Element => {
     setSelectedFilename,
   }: ChartContextProps = useContext(ChartContext);
 
+  const isAMap = chartProperties[0].properties[0].value === "Map";
+
   const updateProperty = (sectionName: string, property: any, value: any) => {
     const section = chartProperties.find(
       (item: any) => item.name === sectionName,
@@ -23,7 +25,7 @@ const SidePanel = (): JSX.Element => {
         return {
           ...item,
           value,
-        }
+        };
       }
       return item;
     });
@@ -174,9 +176,8 @@ const SidePanel = (): JSX.Element => {
     );
   };
 
-  return (
-    <div id="side-panel">
-      {/* CSVUploader included here temporarily for continued dev //todo remove */}
+  const dataSelectionSection = (
+    <>
       <CSVUploader />
       <div className="property-section">
         <div id="data-source"> Data source</div>
@@ -186,21 +187,31 @@ const SidePanel = (): JSX.Element => {
         </button>
       </div>
       <DataSelection />
+    </>
+  );
+
+  return (
+    <div id="side-panel">
+      {/* CSVUploader included here temporarily for continued dev //todo remove */}
+
       {chartProperties.map((section: any) => (
-        <div className="property-section" key={section.name}>
-          <div className="section-heading"> {section.displayName}</div>
-          {section.properties.map((property: any) => {
-            if (property.type === "checkbox") {
-              return getCheckbox(property, section.name);
-            } else if (property.type === "text") {
-              return getTextbox(property, section.name);
-            } else if (property.type === "text-multi") {
-              return getTextArea(property, section.name);
-            } else if (property.type === "radio") {
-              return getRadioButtonGroup(property, section.name);
-            }
-          })}
-        </div>
+        <>
+          <div className="property-section" key={section.name}>
+            <div className="section-heading"> {section.displayName}</div>
+            {section.properties.map((property: any) => {
+              if (property.type === "checkbox") {
+                return getCheckbox(property, section.name);
+              } else if (property.type === "text") {
+                return getTextbox(property, section.name);
+              } else if (property.type === "text-multi") {
+                return getTextArea(property, section.name);
+              } else if (property.type === "radio") {
+                return getRadioButtonGroup(property, section.name);
+              }
+            })}
+          </div>
+          {section.name === "chartTypes" &&  !isAMap ? dataSelectionSection : null}
+        </>
       ))}
     </div>
   );

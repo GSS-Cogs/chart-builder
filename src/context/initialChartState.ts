@@ -34,7 +34,7 @@ const GridlinesSection = {
 };
 
 const chartTypesSection = {
-  name: "ChartTypes",
+  name: "chartTypes",
   displayName: "Chart type",
   properties: [
     {
@@ -42,7 +42,7 @@ const chartTypesSection = {
       displayName: "",
       showPropertyLabel: false,
       type: "radio",
-      options: ["Line", "Bar", "Stacked Bar"],
+      options: ["Line", "Bar", "Stacked Bar", "Map"],
       value: "Line",
       output: "svg",
     },

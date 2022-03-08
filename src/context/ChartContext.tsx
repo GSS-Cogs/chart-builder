@@ -1,5 +1,5 @@
-import React, {Dispatch, SetStateAction} from "react";
-import {DataSelection, SelectedDimension} from "./ChartContextProvider";
+import React, { Dispatch, SetStateAction } from "react";
+import { DataSelection, SelectedDimension } from "./types";
 
 export type ChartContextProps = {
   tidyData: any;
@@ -14,11 +14,11 @@ export type ChartContextProps = {
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
   availableDimensions: string[];
   setAvailableDimensions: Dispatch<SetStateAction<string[]>>;
-  selectedColumns: string[],
-  setSelectedColumns: Dispatch<SetStateAction<string[]>>,
-  selectedDimensions: SelectedDimension[],
-  setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>,
-  validateData: (data: File | string, filename: string) => void,
+  selectedColumns: string[];
+  setSelectedColumns: Dispatch<SetStateAction<string[]>>;
+  selectedDimensions: SelectedDimension[];
+  setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>;
+  validateData: (data: File | string, filename: string) => void;
 };
 const ChartContext = React.createContext<ChartContextProps>(
   {} as ChartContextProps,

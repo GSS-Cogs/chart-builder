@@ -1,4 +1,4 @@
-const getLayout = (chartProps: any, chartData: any) => {
+const getChartLayout = (chartProps: any) => {
   return {
     barmode: chartProps.barmode,
     autosize: true,
@@ -34,4 +34,39 @@ const getLayout = (chartProps: any, chartData: any) => {
   };
 };
 
-export default getLayout;
+const getMapLayout = () => {
+  return {
+    font: {
+      family: "GDS Transport Light, sans-serif",
+      size: 12,
+      color: "#6B7276",
+    },
+    autosize: true,
+    responsive: true,
+    width: 1000,
+    height: 800,
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    margin: {
+      l: 50,
+      r: 50,
+      b: 0,
+      t: 0,
+      pad: 0,
+      autoexpand: true,
+    },
+    geo: {
+      width: 600,
+      showframe: false,
+      showcoastlines: false,
+      projection: {
+        type: "mercator",
+      },
+      fitbounds: "geojson",
+      bgcolor: "transparent",
+    },
+    dragmode: true,
+  };
+};
+
+export { getMapLayout, getChartLayout };
