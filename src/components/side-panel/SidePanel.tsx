@@ -176,19 +176,21 @@ const SidePanel = (): JSX.Element => {
     );
   };
 
-  const dataSelectionSection = (
-    <>
-      <CSVUploader />
-      <div className="property-section">
-        <div id="data-source"> Data source</div>
-        <label id="selected-filename">{selectedFilename}</label>
-        <button className="close-button" onClick={() => resetChartState()}>
-          {"Reset"}
-        </button>
+  const getDataSelectionSection = (sectionName: string) => {
+    return (
+      <div key={`${sectionName}-data-selection`}>
+        <CSVUploader />
+        <div className="property-section">
+          <div id="data-source"> Data source</div>
+          <label id="selected-filename">{selectedFilename}</label>
+          <button className="close-button" onClick={() => resetChartState()}>
+            {"Reset"}
+          </button>
+        </div>
+        <DataSelection />
       </div>
-      <DataSelection />
-    </>
-  );
+    );
+  };
 
   return (
     <div id="side-panel">
@@ -211,7 +213,7 @@ const SidePanel = (): JSX.Element => {
             })}
           </div>
           {section.name === "chartTypes" && !isAMap
-            ? dataSelectionSection
+            ? getDataSelectionSection(section.name)
             : null}
         </div>
       ))}
