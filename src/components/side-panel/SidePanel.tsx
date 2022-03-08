@@ -194,8 +194,8 @@ const SidePanel = (): JSX.Element => {
     <div id="side-panel">
       {/* CSVUploader included here temporarily for continued dev //todo remove */}
 
-      {chartProperties.map((section: any) => (
-        <>
+      {chartProperties.map((section: any, index: number) => (
+        <div key={section.name + index}>
           <div className="property-section" key={section.name}>
             <div className="section-heading"> {section.displayName}</div>
             {section.properties.map((property: any) => {
@@ -210,8 +210,10 @@ const SidePanel = (): JSX.Element => {
               }
             })}
           </div>
-          {section.name === "chartTypes" &&  !isAMap ? dataSelectionSection : null}
-        </>
+          {section.name === "chartTypes" && !isAMap
+            ? dataSelectionSection
+            : null}
+        </div>
       ))}
     </div>
   );
