@@ -13,7 +13,7 @@ const legendSection = {
       name: "xAxisOffset",
       displayName: "X axis offset",
       type: "text",
-      value: -0.38,
+      value: -0.25,
       output: "svg",
     },
   ],
