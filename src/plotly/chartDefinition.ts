@@ -14,15 +14,14 @@ const updateChartDefinition = async (chartProperties: any, chartData: any) => {
 
   let data;
 
-  console.log(chartType);
   chartType === "map"
-    ? (data = await getMapData())
+    ? (data = await getMapData(chartProps))
     : (data = getChartData(chartType, chartProps, chartData));
 
   let layout;
 
   chartType === "map"
-    ? (layout = getMapLayout())
+    ? (layout = getMapLayout(chartProps))
     : (layout = getChartLayout(chartProps));
 
   return { data, layout, config };
@@ -66,11 +65,9 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
   return traces;
 };
 
-const getMapData = async () => {
+const getMapData = async (chartProps: any) => {
   const mapData = await get();
   const boundaries = await getUkLaBoundaries();
-
-  console.log(mapData);
 
   const data = [
     {
@@ -79,6 +76,7 @@ const getMapData = async () => {
       locations: mapData.la_uri,
       z: mapData.emissions,
       text: mapData.label,
+      hoverinfo: chartProps.interactivity,
       colorscale: [
         [0, "rgb(242, 108, 49)"],
         [0.35, "rgb(242, 160, 49)"],
