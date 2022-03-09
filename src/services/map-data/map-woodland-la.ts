@@ -1,7 +1,7 @@
 import { tidyResults } from "./fetch-data";
 import { FOREST_RESEARCH_WOODLAND_AREA_LA } from "./datasets";
 
-export const get: any = async () => {
+export const getMapData: any = async () => {
   const data: any = await tidyResults(`
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

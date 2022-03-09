@@ -1,21 +1,24 @@
 import { getMapLayout, getChartLayout } from "./layout";
 import config from "./config";
-import { get } from "../services/map-data/map-woodland-la";
-import { getUkLaBoundaries } from "../services/map-data/uk-la-boundaries";
 
 import {
   colors,
   flattenChartProperties,
 } from "../helper-functions/chart-helpers";
 
-const updateChartDefinition = async (chartProperties: any, chartData: any) => {
+const updateChartDefinition = (
+  chartProperties: any,
+  chartData: any,
+  mapData: any,
+  geoJson: any,
+) => {
   const chartProps = flattenChartProperties(chartProperties);
   const chartType = chartProps.chartType.toLowerCase();
 
   let data;
 
   chartType === "map"
-    ? (data = await getMapData(chartProps))
+    ? (data = getMapData(chartProps, mapData, geoJson))
     : (data = getChartData(chartType, chartProps, chartData));
 
   let layout;
@@ -65,10 +68,7 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
   return traces;
 };
 
-const getMapData = async (chartProps: any) => {
-  const mapData = await get();
-  const boundaries = await getUkLaBoundaries();
-
+const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
   const data = [
     {
       type: "choropleth",
@@ -86,7 +86,7 @@ const getMapData = async (chartProps: any) => {
         [1, "rgb(36, 151, 140)"],
       ],
       featureidkey: "properties.geography_uri",
-      geojson: boundaries,
+      geojson: geoJson,
       marker: {
         line: {
           color: "rgb(123,123,123)",

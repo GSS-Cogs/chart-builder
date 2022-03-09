@@ -3,6 +3,8 @@ import { ReactNode, useEffect, useState } from "react";
 import initialChartState from "./initialChartState";
 import useChartCsvData from "./useChartCsvData";
 import { Series, ChartData, SelectedDimension, DataSelection } from "./types";
+import { getMapData } from "../services/map-data/map-woodland-la";
+import { getUkLaBoundaries } from "../services/map-data/uk-la-boundaries";
 
 import {
   arrayColumn,
@@ -34,6 +36,8 @@ export function useChartContextState() {
   const [selectedDimensions, setSelectedDimensions] = useState<
     SelectedDimension[]
   >([]);
+  const [mapData, setMapData] = useState<any>([]);
+  const [geoJson, setGeoJson] = useState<any>([]);
 
   return {
     tidyData,
@@ -54,6 +58,10 @@ export function useChartContextState() {
     setSelectedColumns,
     selectedDimensions,
     setSelectedDimensions,
+    mapData,
+    setMapData,
+    geoJson,
+    setGeoJson,
   };
 }
 
@@ -79,27 +87,43 @@ export function useChartContext(state: any) {
     setSelectedColumns,
     selectedDimensions,
     setSelectedDimensions,
+    mapData,
+    setMapData,
+    geoJson,
+    setGeoJson,
   } = state;
 
   useEffect(() => {
     if (tidyData.length > 0) transformTidyData();
   }, [tidyData]);
 
-  const f = async () => {
-    const chartDefinition = await updateChartDefinition(
-      chartProperties,
-      chartData,
-    );
-    setChartDefinition(chartDefinition);
+  const loadMapData = async () => {
+    const mapData = await getMapData();
+    const geoJson = await getUkLaBoundaries();
+    setMapData(mapData);
+    setGeoJson(geoJson);
   };
 
   useEffect(() => {
-    if (!chartData) {
+    loadMapData();
+  }, []);
+
+  useEffect(() => {
+    const hasMapData = mapData.length > 0 && geoJson.length > 0;
+
+    if (!mapData && !hasMapData) {
       setChartDefinition({});
       return;
     }
-    f();
-  }, [chartData, chartProperties]);
+
+    const chartDefinition = updateChartDefinition(
+      chartProperties,
+      chartData,
+      mapData,
+      geoJson,
+    );
+    setChartDefinition(chartDefinition);
+  }, [chartData, mapData, geoJson, chartProperties]);
 
   useEffect(() => {
     if (
