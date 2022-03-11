@@ -108,60 +108,22 @@ export function useChartCsvData(
   };
 }
 
-function useTidyDataToChartContext(tidyData: TidyData) {
+function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined) {
   const columnNames = useMemo(() => {
     if (tidyData.length) return Object.keys(tidyData[0]);
     return [];
   }, [tidyData]);
 
-  return {
-    columnNames,
-  }
-}
-
-export function useChartContext(state: any) {
-  const [chartData, setChartData] = useState<ChartData>();
-
-  const {
-    tidyData,
-    setTidyData,
-    chartDefinition,
-    setChartDefinition,
-    chartProperties,
-    setChartProperties,
-    selectedFilename,
-    setSelectedFilename,
-    dataSelection,
-    setDataSelection,
-    availableDimensions,
-    setAvailableDimensions,
-    selectedColumns,
-    setSelectedColumns,
-    selectedDimensions,
-    setSelectedDimensions,
-  } = state;
-
-  useEffect(() => {
-    if (!chartData) {
-      setChartDefinition({});
-      return;
-    }
-    updateChartDefinition();
-  }, [chartData, chartProperties]);
-
-  useEffect(() => {
+  const chartData = useMemo(() => {
     if (
-      dataSelection &&
-      dataSelection.xSeries &&
-      dataSelection.measure &&
-      dataSelection.dimension
+      !dataSelection ||
+      !dataSelection.xSeries ||
+      !dataSelection.measure ||
+      ! dataSelection.dimension
     ) {
-      sanitizeChartData();
+      return undefined;
     }
-  }, [dataSelection]);
 
-  const sanitizeChartData = () => {
-    if (!dataSelection) return;
     const xSeries = getDistinctValues(dataSelection.xSeries, tidyData);
     const newXSeries: Series = {
       name: dataSelection.xSeries,
@@ -184,11 +146,47 @@ export function useChartContext(state: any) {
         xSeries: newXSeries,
         ySeries: result,
       };
-      setChartData(newChartData);
-    } else {
-      setChartData(undefined);
+      return newChartData;
     }
-  };
+
+    return undefined;
+  }, [dataSelection]);
+
+  return {
+    columnNames,
+    chartData,
+  }
+}
+
+export function useChartContext(state: any) {
+  const {
+    tidyData,
+    setTidyData,
+    chartDefinition,
+    setChartDefinition,
+    chartProperties,
+    setChartProperties,
+    selectedFilename,
+    setSelectedFilename,
+    dataSelection,
+    setDataSelection,
+    availableDimensions,
+    setAvailableDimensions,
+    selectedColumns,
+    setSelectedColumns,
+    selectedDimensions,
+    setSelectedDimensions,
+  } = state;
+
+  const { chartData, columnNames } = useTidyDataToChartContext(tidyData, dataSelection);
+
+  useEffect(() => {
+    if (!chartData) {
+      setChartDefinition({});
+      return;
+    }
+    updateChartDefinition();
+  }, [chartData, chartProperties]);
 
   const chartProps = flattenChartProperties(chartProperties);
   const chartType = chartProps.chartType.toLowerCase();
@@ -234,8 +232,7 @@ export function useChartContext(state: any) {
     setChartDefinition({ data: traces, layout, config });
   };
 
-  const { validateData } = useChartCsvData(setTidyData, setSelectedFilename);
-  const { columnNames } = useTidyDataToChartContext(tidyData);
+  const { importCsvData } = useChartCsvData(setTidyData, setSelectedFilename);
 
   return {
     tidyData,
