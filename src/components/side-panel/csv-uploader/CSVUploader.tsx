@@ -1,15 +1,15 @@
-import { useCallback, useContext } from "react";
-import { useDropzone } from "react-dropzone";
+import {useCallback, useContext} from "react";
+import {useDropzone} from "react-dropzone";
 import "./csv-uploader.css";
 import ChartContext from "../../../context/ChartContext";
 import Button from "../../button/Button";
 
 const CSVUploader = (): JSX.Element => {
-  const { validateData } = useContext(ChartContext);
+  const { importCsvData } = useContext(ChartContext);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
-      validateData(file, file.name);
+      importCsvData(file, file.name);
     });
   }, []);
 

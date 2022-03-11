@@ -83,7 +83,7 @@ export function useChartCsvData(
     console.log(error);
   };
 
-  const validateData = useCallback(
+  const importCsvData = useCallback(
     (data: File | string, filename: string) => {
       Papa.parse(data, {
         worker: true,
@@ -104,7 +104,7 @@ export function useChartCsvData(
   );
 
   return {
-    validateData,
+    importCsvData,
   };
 }
 
@@ -254,7 +254,7 @@ export function useChartContext(state: any) {
     setSelectedColumns,
     selectedDimensions,
     setSelectedDimensions,
-    validateData,
+    importCsvData,
   };
 }
 

@@ -46,7 +46,7 @@ export type ChartContextState = {
 export interface ChartContextProps extends ChartContextState {
   // generated from the data
   columnNames: string[];
-  validateData: (data: File | string, filename: string) => void,
+  importCsvData: (data: File | string, filename: string) => void,
 };
 
 const ChartContext = React.createContext<ChartContextProps>(
