@@ -105,9 +105,10 @@ export function useChartCsvData(
 interface TidyDataChartProps {
   columnNames: string[];
   chartData: ChartData | undefined;
+  availableDimensions: string[];
 }
 
-function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined): TidyDataChartProps {
+function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined, dimensionValue: string): TidyDataChartProps {
   const columnNames = useMemo(() => {
     if (tidyData.length) return Object.keys(tidyData[0]);
     return [];
@@ -151,9 +152,15 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
     return undefined;
   }, [dataSelection]);
 
+  const availableDimensions = useMemo(() => {
+    if (dimensionValue != '') return getDistinctValues(dimensionValue, tidyData);
+    else return []
+  }, [dimensionValue, tidyData]);
+
   return {
     columnNames,
     chartData,
+    availableDimensions,
   }
 }
 
@@ -175,10 +182,17 @@ export function useChartContext(state: any) {
     setSelectedDimensions,
   } = state;
 
-  const { chartData: tidyDataChartData, columnNames: tidyDataColumnNames } = useTidyDataToChartContext(tidyData, dataSelection);
+  const { dimension: dimensionValue } = dataSelection;
+
+  const {
+    chartData: tidyDataChartData,
+    columnNames: tidyDataColumnNames,
+    availableDimensions: tidyDataAvailableDimensions,
+  } = useTidyDataToChartContext(tidyData, dataSelection, dimensionValue);
 
   const chartData = tidyDataChartData;
   const columnNames = tidyDataColumnNames;
+  const availableDimensions = tidyDataAvailableDimensions;
 
   useEffect(function updateChartDefinition() {
     if (!chartData) {
@@ -230,12 +244,6 @@ export function useChartContext(state: any) {
   }, [chartData, chartProperties]);
 
   const { importCsvData } = useChartCsvData(setTidyData, setSelectedFilename);
-
-  const { dimension: dimensionValue } = dataSelection;
-  const availableDimensions = useMemo(() => {
-    if (dimensionValue != '') return getDistinctValues(dimensionValue, tidyData);
-    else return []
-  }, [dimensionValue, tidyData]);
 
   return {
     tidyData,
