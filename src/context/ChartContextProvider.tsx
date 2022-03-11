@@ -1,5 +1,5 @@
 import ChartContext, {PlotlyChartDefinition, TidyData} from "./ChartContext";
-import {Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState,} from "react";
+import {Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState,} from "react";
 import initialChartProperties from "./initialChartProperties";
 
 import {arrayColumn, getDistinctValues,} from "../helper-functions/array-helpers";
@@ -44,7 +44,6 @@ export function useChartContextState() {
   const [selectedFilename, setSelectedFilename] = useState(
     NO_FILE_SELECTED_TEXT,
   );
-  const [columnNames, setColumnNames] = useState<string[]>([]);
   const [dataSelection, setDataSelection] = useState<
     DataSelection | undefined
   >();
@@ -65,8 +64,6 @@ export function useChartContextState() {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
-    columnNames,
-    setColumnNames,
     dataSelection,
     setDataSelection,
     availableDimensions,
@@ -111,6 +108,17 @@ export function useChartCsvData(
   };
 }
 
+function useTidyDataToChartContext(tidyData: TidyData) {
+  const columnNames = useMemo(() => {
+    if (tidyData.length) return Object.keys(tidyData[0]);
+    return [];
+  }, [tidyData]);
+
+  return {
+    columnNames,
+  }
+}
+
 export function useChartContext(state: any) {
   const [chartData, setChartData] = useState<ChartData>();
 
@@ -123,8 +131,6 @@ export function useChartContext(state: any) {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
-    columnNames,
-    setColumnNames,
     dataSelection,
     setDataSelection,
     availableDimensions,
@@ -134,10 +140,6 @@ export function useChartContext(state: any) {
     selectedDimensions,
     setSelectedDimensions,
   } = state;
-
-  useEffect(() => {
-    if (tidyData.length > 0) transformTidyData();
-  }, [tidyData]);
 
   useEffect(() => {
     if (!chartData) {
@@ -157,11 +159,6 @@ export function useChartContext(state: any) {
       sanitizeChartData();
     }
   }, [dataSelection]);
-
-  const transformTidyData = () => {
-    let columnNames = Object.keys(tidyData[0]);
-    setColumnNames(columnNames);
-  };
 
   const sanitizeChartData = () => {
     if (!dataSelection) return;
@@ -238,6 +235,7 @@ export function useChartContext(state: any) {
   };
 
   const { validateData } = useChartCsvData(setTidyData, setSelectedFilename);
+  const { columnNames } = useTidyDataToChartContext(tidyData);
 
   return {
     tidyData,

@@ -26,10 +26,6 @@ export type ChartContextState = {
   selectedFilename: string;
   setSelectedFilename: Dispatch<SetStateAction<string>>;
 
-  // generated from the tidy data
-  columnNames: string[];
-  setColumnNames: Dispatch<SetStateAction<string[]>>;
-
   dataSelection: DataSelection | undefined;
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
 
@@ -48,6 +44,8 @@ export type ChartContextState = {
 }
 
 export interface ChartContextProps extends ChartContextState {
+  // generated from the data
+  columnNames: string[];
   validateData: (data: File | string, filename: string) => void,
 };
 
