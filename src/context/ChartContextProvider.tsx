@@ -180,18 +180,15 @@ export function useChartContext(state: any) {
 
   const { chartData, columnNames } = useTidyDataToChartContext(tidyData, dataSelection);
 
-  useEffect(() => {
+  useEffect(function updateChartDefinition() {
     if (!chartData) {
       setChartDefinition({});
       return;
     }
-    updateChartDefinition();
-  }, [chartData, chartProperties]);
 
-  const chartProps = flattenChartProperties(chartProperties);
-  const chartType = chartProps.chartType.toLowerCase();
+    const chartProps = flattenChartProperties(chartProperties);
+    const chartType = chartProps.chartType.toLowerCase();
 
-  const updateChartDefinition = () => {
     const traces: any = [];
 
     //truncate the xSeries values to user specified length
@@ -229,8 +226,8 @@ export function useChartContext(state: any) {
 
     const layout: any = getLayout(chartProps, chartData);
 
-    setChartDefinition({ data: traces, layout, config });
-  };
+    setChartDefinition({data: traces, layout, config});
+  }, [chartData, chartProperties]);
 
   const { importCsvData } = useChartCsvData(setTidyData, setSelectedFilename);
 
