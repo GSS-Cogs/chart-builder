@@ -151,7 +151,7 @@ const chartDimensionsSection: ChartPropertySection = {
   ],
 };
 
-const orientationSection = {
+const orientationSection: ChartPropertySection = {
   name: "orientationProperties",
   displayName: "Chart orientation",
   properties: [
