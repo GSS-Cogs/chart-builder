@@ -38,7 +38,6 @@ export interface DataSelection {
 }
 
 export function useChartContextState() {
-  const [tidyData, setTidyData] = useState<TidyData>([]);
   const [chartDefinition, setChartDefinition] = useState<PlotlyChartDefinition>({});
   const [chartProperties, setChartProperties] = useState(initialChartProperties);
   const [selectedFilename, setSelectedFilename] = useState(
@@ -56,8 +55,6 @@ export function useChartContextState() {
   >([]);
 
   return {
-    tidyData,
-    setTidyData,
     chartDefinition,
     setChartDefinition,
     chartProperties,
@@ -108,7 +105,12 @@ export function useChartCsvData(
   };
 }
 
-function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined) {
+interface TidyDataChartProps {
+  columnNames: string[];
+  chartData: ChartData | undefined;
+}
+
+function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined): TidyDataChartProps {
   const columnNames = useMemo(() => {
     if (tidyData.length) return Object.keys(tidyData[0]);
     return [];
@@ -159,9 +161,9 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
 }
 
 export function useChartContext(state: any) {
+  const [tidyData, setTidyData] = useState<object[]>([]);
+
   const {
-    tidyData,
-    setTidyData,
     chartDefinition,
     setChartDefinition,
     chartProperties,
@@ -178,7 +180,10 @@ export function useChartContext(state: any) {
     setSelectedDimensions,
   } = state;
 
-  const { chartData, columnNames } = useTidyDataToChartContext(tidyData, dataSelection);
+  const { chartData: tidyDataChartData, columnNames: tidyDataColumnNames } = useTidyDataToChartContext(tidyData, dataSelection);
+
+  const chartData = tidyDataChartData;
+  const columnNames = tidyDataColumnNames;
 
   useEffect(function updateChartDefinition() {
     if (!chartData) {
@@ -233,7 +238,6 @@ export function useChartContext(state: any) {
 
   return {
     tidyData,
-    setTidyData,
     chartDefinition,
     chartProperties,
     setChartProperties,
