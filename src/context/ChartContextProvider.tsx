@@ -1,25 +1,12 @@
-import ChartContext from "./ChartContext";
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import initialChartState from "./initialChartState";
+import ChartContext, {PlotlyChartDefinition, TidyData} from "./ChartContext";
+import {Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState,} from "react";
+import initialChartProperties from "./initialChartProperties";
 
-import {
-  arrayColumn,
-  getDistinctValues,
-} from "../helper-functions/array-helpers";
+import {arrayColumn, getDistinctValues,} from "../helper-functions/array-helpers";
 
-import {
-  colors,
-  flattenChartProperties,
-} from "../helper-functions/chart-helpers";
+import {colors, flattenChartProperties,} from "../helper-functions/chart-helpers";
 
-import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
+import {NO_FILE_SELECTED_TEXT} from "../components/constants/Common-constants";
 import config from "../plotly/config";
 import getLayout from "../plotly/layout";
 import Papa from "papaparse";
@@ -51,9 +38,9 @@ export interface DataSelection {
 }
 
 export function useChartContextState() {
-  const [tidyData, setTidyData] = useState<any>([]);
-  const [chartDefinition, setChartDefinition] = useState({});
-  const [chartProperties, setChartProperties] = useState(initialChartState);
+  const [tidyData, setTidyData] = useState<TidyData>([]);
+  const [chartDefinition, setChartDefinition] = useState<PlotlyChartDefinition>({});
+  const [chartProperties, setChartProperties] = useState(initialChartProperties);
   const [selectedFilename, setSelectedFilename] = useState(
     NO_FILE_SELECTED_TEXT,
   );
@@ -92,7 +79,7 @@ export function useChartContextState() {
 }
 
 export function useChartCsvData(
-  setTidyData: Dispatch<SetStateAction<any>>,
+  setTidyData: Dispatch<SetStateAction<TidyData>>,
   setSelectedFilename: Dispatch<SetStateAction<string>>,
 ) {
   const onFailure = (error: string) => {

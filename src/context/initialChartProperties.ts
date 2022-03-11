@@ -1,4 +1,20 @@
-const legendSection = {
+export interface ChartProperty {
+  name: string;
+  displayName: string;
+  type: "checkbox" | "radio" | "text";
+  value: boolean | string | number;
+  output: string;
+  options?: string[];
+  showPropertyLabel?: boolean;
+}
+
+export interface ChartPropertySection {
+  name: string,
+  displayName: string,
+  properties: ChartProperty[]
+}
+
+const legendSection: ChartPropertySection = {
   name: "LegendSection",
   displayName: "Legend",
   properties: [
@@ -19,7 +35,7 @@ const legendSection = {
   ],
 };
 
-const GridlinesSection = {
+const GridlinesSection: ChartPropertySection = {
   name: "Gridlines",
   displayName: "Gridlines",
   properties: [
@@ -33,7 +49,7 @@ const GridlinesSection = {
   ],
 };
 
-const chartTypesSection = {
+const chartTypesSection: ChartPropertySection = {
   name: "ChartTypes",
   displayName: "Chart type",
   properties: [
@@ -49,7 +65,7 @@ const chartTypesSection = {
   ],
 };
 
-const interactivitySection = {
+const interactivitySection: ChartPropertySection = {
   name: "Interactivity",
   displayName: "Interactivity",
   properties: [
@@ -64,7 +80,7 @@ const interactivitySection = {
   ],
 };
 
-const xAxisSection = {
+const xAxisSection: ChartPropertySection = {
   name: "xAxisProperties",
   displayName: "X axis",
   properties: [
@@ -93,7 +109,7 @@ const xAxisSection = {
   ],
 };
 
-const yAxisSection = {
+const yAxisSection: ChartPropertySection = {
   name: "yAxisProperties",
   displayName: "Y axis",
   properties: [
@@ -107,7 +123,7 @@ const yAxisSection = {
   ],
 };
 
-const chartDimensionsSection = {
+const chartDimensionsSection: ChartPropertySection = {
   name: "chartDimensionProperties",
   displayName: "Chart dimensions",
   properties: [
@@ -150,7 +166,7 @@ const orientationSection = {
   ],
 };
 
-const initialChartState = [
+const initialChartProperties: ChartPropertySection[] = [
   chartTypesSection,
   orientationSection,
   chartDimensionsSection,
@@ -161,4 +177,4 @@ const initialChartState = [
   legendSection,
 ];
 
-export default initialChartState;
+export default initialChartProperties;
