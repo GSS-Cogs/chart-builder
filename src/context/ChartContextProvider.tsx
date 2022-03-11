@@ -164,7 +164,76 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
   }
 }
 
+interface EeaData {
+  "@id": string;
+  "data": {
+    pk: number[];
+    [col: string]: number[] | string[];
+  }
+}
+
+function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelection | undefined, dimensionValue: string): TidyDataChartProps {
+  const columnNames = useMemo(() => {
+    if (typeof eeaData?.['data'] === 'object') {
+      // primary key is included in the "data"; it's not a usable column.
+      const { pk, ...fields } = eeaData.data;
+      return Object.keys(fields);
+    }
+    return [];
+  }, [eeaData]);
+
+  const chartData = useMemo(() => {
+    if (
+      !dataSelection ||
+      !dataSelection.xSeries ||
+      !dataSelection.measure ||
+      !dataSelection.dimension ||
+      !eeaData
+    ) {
+      return undefined;
+    }
+
+    const xSeries = eeaData?.data?.[dataSelection.xSeries];// getDistinctValues(dataSelection.xSeries, tidyData);
+    const newXSeries: Series = {
+      name: dataSelection.xSeries,
+      values: xSeries,
+    };
+
+    if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
+      const result = dataSelection.ySeries.map((series: SelectedDimension) => {
+        const currentSeries = eeaData.data[dataSelection.measure].filter(
+          (_, index) => eeaData.data[dataSelection.dimension][index] === series.Name
+        );
+        return { name: series.DisplayName, values: currentSeries } as Series;
+      });
+
+      let newChartData: ChartData = {
+        xSeries: newXSeries,
+        ySeries: result,
+      };
+      return newChartData;
+    }
+
+    return undefined;
+  }, [dataSelection]);
+
+  const availableDimensions = useMemo(() => {
+    const vals = eeaData?.data?.[dimensionValue];
+    if (dimensionValue != '' && Array.isArray(vals)) {
+      return Array.from(new Set(vals));
+    }
+    else return []
+  }, [dimensionValue, eeaData]);
+
+  return {
+    columnNames,
+    chartData,
+    availableDimensions,
+  }
+}
+
 export function useChartContext(state: any) {
+  const [eeaData, importEeaData] = useState<EeaData | null>(null);
   const [tidyData, setTidyData] = useState<object[]>([]);
 
   const {
@@ -184,15 +253,25 @@ export function useChartContext(state: any) {
 
   const { dimension: dimensionValue } = dataSelection;
 
-  const {
-    chartData: tidyDataChartData,
-    columnNames: tidyDataColumnNames,
-    availableDimensions: tidyDataAvailableDimensions,
-  } = useTidyDataToChartContext(tidyData, dataSelection, dimensionValue);
+  // const {
+  //   chartData: tidyDataChartData,
+  //   columnNames: tidyDataColumnNames,
+  //   availableDimensions: tidyDataAvailableDimensions,
+  // } = useTidyDataToChartContext(tidyData, dataSelection, dimensionValue);
+  //
+  // const chartData = tidyDataChartData;
+  // const columnNames = tidyDataColumnNames;
+  // const availableDimensions = tidyDataAvailableDimensions;
 
-  const chartData = tidyDataChartData;
-  const columnNames = tidyDataColumnNames;
-  const availableDimensions = tidyDataAvailableDimensions;
+  const {
+    chartData: eeaDataChartData,
+    columnNames: eeaDataColumnNames,
+    availableDimensions: eeaDataAvailableDimensions,
+  } = useEeaConnectoData(eeaData, dataSelection, dimensionValue);
+
+  const chartData = eeaDataChartData;
+  const columnNames = eeaDataColumnNames;
+  const availableDimensions = eeaDataAvailableDimensions;
 
   useEffect(function updateChartDefinition() {
     if (!chartData) {
@@ -261,6 +340,7 @@ export function useChartContext(state: any) {
     selectedDimensions,
     setSelectedDimensions,
     importCsvData,
+    importEeaData,
   };
 }
 
