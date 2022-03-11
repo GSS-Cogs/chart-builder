@@ -22,10 +22,8 @@ const DataSelection = (): JSX.Element => {
   const {
     dataSelection,
     setDataSelection,
-    tidyData,
     columnNames,
     availableDimensions,
-    setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
   }: ChartContextProps = useContext(ChartContext);
@@ -80,9 +78,6 @@ const DataSelection = (): JSX.Element => {
         ...prevState,
         [name]: value,
       }));
-      if (name === "dimension" && value !== "") {
-        setAvailableDimensions(getDistinctValues(value, tidyData));
-      }
     }
   };
 

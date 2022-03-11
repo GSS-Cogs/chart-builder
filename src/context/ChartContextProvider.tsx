@@ -47,7 +47,6 @@ export function useChartContextState() {
     DataSelection | undefined
   >();
 
-  const [availableDimensions, setAvailableDimensions] = useState<string[]>([]);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 
   const [selectedDimensions, setSelectedDimensions] = useState<
@@ -63,8 +62,6 @@ export function useChartContextState() {
     setSelectedFilename,
     dataSelection,
     setDataSelection,
-    availableDimensions,
-    setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
     selectedDimensions,
@@ -172,8 +169,6 @@ export function useChartContext(state: any) {
     setSelectedFilename,
     dataSelection,
     setDataSelection,
-    availableDimensions,
-    setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
     selectedDimensions,
@@ -236,6 +231,12 @@ export function useChartContext(state: any) {
 
   const { importCsvData } = useChartCsvData(setTidyData, setSelectedFilename);
 
+  const { dimension: dimensionValue } = dataSelection;
+  const availableDimensions = useMemo(() => {
+    if (dimensionValue != '') return getDistinctValues(dimensionValue, tidyData);
+    else return []
+  }, [dimensionValue, tidyData]);
+
   return {
     tidyData,
     chartDefinition,
@@ -247,7 +248,6 @@ export function useChartContext(state: any) {
     dataSelection,
     setDataSelection,
     availableDimensions,
-    setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
     selectedDimensions,
