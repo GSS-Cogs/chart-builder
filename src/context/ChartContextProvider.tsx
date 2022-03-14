@@ -1,15 +1,16 @@
 import ChartContext, {ChartContextProps, ChartContextState} from "./ChartContext";
-import { ReactNode, useCallback, useEffect, useState, useMemo, } from "react";
+import {ReactNode, useCallback, useEffect, useMemo, useState,} from "react";
 import initialChartProperties from "./initialChartProperties";
 import useChartCsvData from "./useChartCsvData";
 import {
-  Series,
   ChartData,
-  SelectedDimension,
   DataSelection,
+  EeaData,
   PlotlyChartDefinition,
+  SelectedDimension,
+  Series,
   TidyData,
-  EeaData
+  ChartDataProvider
 } from "./types";
 import { getMapData } from "../services/map-data/map-data-loader";
 import { getUkLaBoundaries } from "../services/map-data/uk-la-boundaries";
@@ -59,13 +60,7 @@ export function useChartContextState(): ChartContextState {
   };
 }
 
-interface TidyDataChartProps {
-  columnNames: string[];
-  chartData: ChartData | undefined;
-  availableDimensions: string[];
-}
-
-function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined, dimensionValue: string): TidyDataChartProps {
+function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelection | undefined, dimensionValue: string): ChartDataProvider {
   const columnNames = useMemo(() => {
     if (tidyData.length) return Object.keys(tidyData[0]);
     return [];
@@ -121,7 +116,7 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
   }
 }
 
-function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelection | undefined, dimensionValue: string): TidyDataChartProps {
+function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelection | undefined, dimensionValue: string): ChartDataProvider {
   const columnNames = useMemo(() => {
     if (typeof eeaData?.['data'] === 'object') {
       // primary key is included in the "data"; it's not a usable column.

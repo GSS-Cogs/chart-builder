@@ -42,6 +42,12 @@ interface ChartPropertySection {
   properties: ChartProperty[]
 }
 
+interface ChartDataProvider {
+  columnNames: string[];
+  availableDimensions: string[];
+  chartData: ChartData | undefined;
+}
+
 export type {
   Series,
   ChartData,
@@ -50,6 +56,7 @@ export type {
   TidyData,
   EeaData,
   PlotlyChartDefinition,
-  ChartPropertySection
+  ChartPropertySection,
+  ChartDataProvider
 };
 
