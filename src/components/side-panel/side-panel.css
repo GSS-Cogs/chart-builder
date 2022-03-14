@@ -7,9 +7,10 @@
 
   /* Uncomment for standalone chart builder */
   /* min-width: 27.5rem;
-  max-width: 27.5rem; */
+  max-width: 27.5rem;
 
   overflow-y: scroll;
+  */
 }
 
 .chart-property {
