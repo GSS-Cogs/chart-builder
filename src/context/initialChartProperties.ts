@@ -1,3 +1,5 @@
+import {ChartPropertySection} from "./types";
+
 export interface ChartProperty {
   name: string;
   displayName: string;
@@ -6,12 +8,6 @@ export interface ChartProperty {
   output: string;
   options?: string[];
   showPropertyLabel?: boolean;
-}
-
-export interface ChartPropertySection {
-  name: string,
-  displayName: string,
-  properties: ChartProperty[]
 }
 
 const legendSection: ChartPropertySection = {

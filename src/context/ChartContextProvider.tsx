@@ -1,16 +1,21 @@
-import ChartContext from "./ChartContext";
-import { ReactNode, useCallback, useEffect, useState, useMemo, useCallback, SetStateAction, } from "react";
+import ChartContext, {ChartContextProps, ChartContextState} from "./ChartContext";
+import { ReactNode, useCallback, useEffect, useState, useMemo, } from "react";
 import initialChartProperties from "./initialChartProperties";
 import useChartCsvData from "./useChartCsvData";
-import { Series, ChartData, SelectedDimension, DataSelection, PlotlyChartDefinition, TidyData } from "./types";
+import {
+  Series,
+  ChartData,
+  SelectedDimension,
+  DataSelection,
+  PlotlyChartDefinition,
+  TidyData,
+  EeaData
+} from "./types";
 import { getMapData } from "../services/map-data/map-data-loader";
 import { getUkLaBoundaries } from "../services/map-data/uk-la-boundaries";
 import { arrayColumn, getDistinctValues } from "../helper-functions/array-helpers";
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 import updateChartDefinition from "../plotly/chartDefinition";
-import config from "../plotly/config";
-import getLayout from "../plotly/layout";
-import Papa from "papaparse";
 
 interface Props {
   children: ReactNode;
@@ -51,39 +56,6 @@ export function useChartContextState(): ChartContextState {
     setMapData,
     geoJson,
     setGeoJson,
-  };
-}
-
-export function useChartCsvData(
-  setTidyData: Dispatch<SetStateAction<TidyData>>,
-  setSelectedFilename: Dispatch<SetStateAction<string>>,
-) {
-  const onFailure = (error: string) => {
-    console.log(error);
-  };
-
-  const importCsvData = useCallback(
-    (data: File | string, filename: string) => {
-      Papa.parse(data, {
-        worker: true,
-        header: true,
-        skipEmptyLines: true,
-        dynamicTyping: true,
-        complete: function (results) {
-          if (results.errors && results.errors.length > 0) {
-            onFailure(results.errors[0].message);
-          } else {
-            setSelectedFilename(filename);
-            setTidyData(results.data);
-          }
-        },
-      });
-    },
-    [setSelectedFilename, setTidyData],
-  );
-
-  return {
-    importCsvData,
   };
 }
 
@@ -146,14 +118,6 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
     columnNames,
     chartData,
     availableDimensions,
-  }
-}
-
-export interface EeaData {
-  "@id": string;
-  "data": {
-    pk: number[];
-    [col: string]: number[] | string[];
   }
 }
 
@@ -220,7 +184,7 @@ function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelectio
   }
 }
 
-export function useChartContext(state: any) {
+export function useChartContext(state: ChartContextState): ChartContextProps {
   const [eeaData, importEeaData] = useState<EeaData | null>(null);
   const [tidyData, setTidyData] = useState<object[]>([]);
 
