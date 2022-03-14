@@ -94,7 +94,8 @@ const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
         },
       },
       colorbar: {
-        title: "Percentage<br>of area",
+        title: chartProps.colorBarTitle,
+        thickness: chartProps.colorBarWidth,
       },
     },
   ];

@@ -33,6 +33,7 @@ const SidePanel = (): JSX.Element => {
     const updatedSection = {
       name: section.name,
       displayName: section.displayName,
+      sectionFor: section.sectionFor,
       properties: updatedProperties,
     };
 
@@ -194,29 +195,37 @@ const SidePanel = (): JSX.Element => {
 
   return (
     <div id="side-panel">
-      {/* CSVUploader included here temporarily for continued dev //todo remove */}
+      {chartProperties.map((section: any, index: number) => {
+        const showSection =
+          section.sectionFor === "all" ||
+          (section.sectionFor === "maps" && isAMap) ||
+          (section.sectionFor === "charts" && !isAMap);
 
-      {chartProperties.map((section: any, index: number) => (
-        <div key={section.name + index}>
-          <div className="property-section" key={section.name}>
-            <div className="section-heading"> {section.displayName}</div>
-            {section.properties.map((property: any) => {
-              if (property.type === "checkbox") {
-                return getCheckbox(property, section.name);
-              } else if (property.type === "text") {
-                return getTextbox(property, section.name);
-              } else if (property.type === "text-multi") {
-                return getTextArea(property, section.name);
-              } else if (property.type === "radio") {
-                return getRadioButtonGroup(property, section.name);
-              }
-            })}
+        // Show sections relevant to the visualisation type (chart/map/all)
+        if (!showSection) return null;
+
+        return (
+          <div key={section.name + index}>
+            <div className="property-section" key={section.name}>
+              <div className="section-heading"> {section.displayName}</div>
+              {section.properties.map((property: any) => {
+                if (property.type === "checkbox") {
+                  return getCheckbox(property, section.name);
+                } else if (property.type === "text") {
+                  return getTextbox(property, section.name);
+                } else if (property.type === "text-multi") {
+                  return getTextArea(property, section.name);
+                } else if (property.type === "radio") {
+                  return getRadioButtonGroup(property, section.name);
+                }
+              })}
+            </div>
+            {section.name === "chartTypes" && !isAMap
+              ? getDataSelectionSection(section.name)
+              : null}
           </div>
-          {section.name === "chartTypes" && !isAMap
-            ? getDataSelectionSection(section.name)
-            : null}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

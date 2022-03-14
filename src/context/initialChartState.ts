@@ -1,6 +1,7 @@
 const legendSection = {
   name: "LegendSection",
   displayName: "Legend",
+  sectionFor: "charts",
   properties: [
     {
       name: "showLegend",
@@ -22,6 +23,7 @@ const legendSection = {
 const GridlinesSection = {
   name: "Gridlines",
   displayName: "Gridlines",
+  sectionFor: "charts",
   properties: [
     {
       name: "showGridLines",
@@ -36,6 +38,7 @@ const GridlinesSection = {
 const chartTypesSection = {
   name: "chartTypes",
   displayName: "Chart type",
+  sectionFor: "all",
   properties: [
     {
       name: "chartType",
@@ -52,6 +55,7 @@ const chartTypesSection = {
 const interactivitySection = {
   name: "Interactivity",
   displayName: "Interactivity",
+  sectionFor: "all",
   properties: [
     {
       name: "interactivity",
@@ -67,6 +71,7 @@ const interactivitySection = {
 const xAxisSection = {
   name: "xAxisProperties",
   displayName: "X axis",
+  sectionFor: "charts",
   properties: [
     {
       name: "xAxisTitle",
@@ -96,6 +101,7 @@ const xAxisSection = {
 const yAxisSection = {
   name: "yAxisProperties",
   displayName: "Y axis",
+  sectionFor: "charts",
   properties: [
     {
       name: "yAxisTitle",
@@ -110,6 +116,7 @@ const yAxisSection = {
 const chartDimensionsSection = {
   name: "chartDimensionProperties",
   displayName: "Chart dimensions",
+  sectionFor: "all",
   properties: [
     {
       name: "height",
@@ -152,6 +159,7 @@ const chartDimensionsSection = {
 const orientationSection = {
   name: "orientationProperties",
   displayName: "Chart orientation",
+  sectionFor: "charts",
   properties: [
     {
       name: "orientation",
@@ -164,15 +172,38 @@ const orientationSection = {
   ],
 };
 
+const colorBarSection = {
+  name: "colorBarProperties",
+  displayName: "Colorbar",
+  sectionFor: "maps",
+  properties: [
+    {
+      name: "colorBarTitle",
+      displayName: "Title",
+      type: "text",
+      value: "Percentage <br>of area",
+      output: "svg",
+    },
+    {
+      name: "colorBarWidth",
+      displayName: "Width(px)",
+      type: "text",
+      value: "25",
+      output: "svg",
+    },
+  ],
+};
+
 const initialChartState = [
   chartTypesSection,
   orientationSection,
   chartDimensionsSection,
   xAxisSection,
   yAxisSection,
-  interactivitySection,
   GridlinesSection,
   legendSection,
+  colorBarSection,
+  interactivitySection,
 ];
 
 export default initialChartState;
