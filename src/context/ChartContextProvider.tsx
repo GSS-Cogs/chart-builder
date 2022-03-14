@@ -116,7 +116,7 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
   }
 }
 
-function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelection | undefined, dimensionValue: string): ChartDataProvider {
+function useEeaConnectorData(eeaData: EeaData | null, dataSelection: DataSelection | undefined, dimensionValue: string): ChartDataProvider {
   const columnNames = useMemo(() => {
     if (typeof eeaData?.['data'] === 'object') {
       // primary key is included in the "data"; it's not a usable column.
@@ -180,6 +180,7 @@ function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelectio
 }
 
 export function useChartContext(state: ChartContextState): ChartContextProps {
+  const [dataSource, setDataSource] = useState<'' | 'tidy' | 'eea'>('');
   const [eeaData, importEeaData] = useState<EeaData | null>(null);
   const [tidyData, setTidyData] = useState<object[]>([]);
 
@@ -204,26 +205,29 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
 
   const dimensionValue = dataSelection?.dimension || '';
 
-  // const {
-  //   chartData: tidyDataChartData,
-  //   columnNames: tidyDataColumnNames,
-  //   availableDimensions: tidyDataAvailableDimensions,
-  // } = useTidyDataToChartContext(tidyData, dataSelection, dimensionValue);
-  //
-  // const chartData = tidyDataChartData;
-  // const columnNames = tidyDataColumnNames;
-  // const availableDimensions = tidyDataAvailableDimensions;
-
+  const {
+    chartData: tidyDataChartData,
+    availableDimensions: tidyDataAvailableDimensions,
+    columnNames: tidyDataColumnNames,
+  } = useTidyDataToChartContext(tidyData, dataSelection, dimensionValue);
 
   const {
     chartData: eeaDataChartData,
-    columnNames: eeaDataColumnNames,
     availableDimensions: eeaDataAvailableDimensions,
-  } = useEeaConnectoData(eeaData, dataSelection, dimensionValue);
+    columnNames: eeaDataColumnNames,
+  } = useEeaConnectorData(eeaData, dataSelection, dimensionValue);
 
-  const chartData = eeaDataChartData;
-  const columnNames = eeaDataColumnNames;
-  const availableDimensions = eeaDataAvailableDimensions;
+  let chartData: ChartData | undefined = undefined, columnNames: string[] = [], availableDimensions: string[] = [];
+
+  if (dataSource === 'tidy') {
+    chartData = tidyDataChartData;
+    availableDimensions = tidyDataAvailableDimensions;
+    columnNames = tidyDataColumnNames;
+  } else if (dataSource === 'eea') {
+    chartData = eeaDataChartData;
+    columnNames = eeaDataColumnNames;
+    availableDimensions = eeaDataAvailableDimensions;
+  }
 
   const loadMapData = useCallback(async () => {
     const mapData = await getMapData();
@@ -247,7 +251,7 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setChartDefinition(chartDefinition);
   }, [chartData, mapData, geoJson, chartProperties]);
 
-  const { importCsvData } = useChartCsvData(setTidyData, setSelectedFilename);
+  const { importCsvData: importCsvHook } = useChartCsvData(setTidyData, setSelectedFilename);
 
   return {
     chartDefinition,
@@ -263,8 +267,14 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setSelectedColumns,
     selectedDimensions,
     setSelectedDimensions,
-    importCsvData,
-    importEeaData,
+    importCsvData: (data: File | string, filename: string) => {
+      setDataSource('tidy');
+      importCsvHook(data, filename);
+    },
+    importEeaData: (data: EeaData) => {
+      setDataSource('eea');
+      importEeaData(data);
+    },
     mapData,
     setMapData,
     geoJson,
