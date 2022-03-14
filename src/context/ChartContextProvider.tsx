@@ -1,9 +1,9 @@
 import ChartContext from "./ChartContext";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import initialChartState from "./initialChartState";
 import useChartCsvData from "./useChartCsvData";
 import { Series, ChartData, SelectedDimension, DataSelection } from "./types";
-import { getMapData } from "../services/map-data/map-woodland-la";
+import { getMapData } from "../services/map-data/map-data-loader";
 import { getUkLaBoundaries } from "../services/map-data/uk-la-boundaries";
 
 import {
@@ -97,25 +97,19 @@ export function useChartContext(state: any) {
     if (tidyData.length > 0) transformTidyData();
   }, [tidyData]);
 
-  const loadMapData = async () => {
+  const loadMapData = useCallback(async () => {
     const mapData = await getMapData();
     const geoJson = await getUkLaBoundaries();
     setMapData(mapData);
     setGeoJson(geoJson);
-  };
+  }, []);
 
   useEffect(() => {
     loadMapData();
   }, []);
 
   useEffect(() => {
-    const hasMapData = mapData.length > 0 && geoJson.length > 0;
-
-    if (!mapData && !hasMapData) {
-      setChartDefinition({});
-      return;
-    }
-
+    // todo restore empty data state check - with but with eea/sparql data sources for maps and charts
     const chartDefinition = updateChartDefinition(
       chartProperties,
       chartData,

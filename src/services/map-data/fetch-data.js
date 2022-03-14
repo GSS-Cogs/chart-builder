@@ -52,6 +52,7 @@ function getValues(list) {
   });
 }
 
+// convert a list of nested objects to a map of field-value arrays
 export function longify(list) {
   const map = {};
   for (let i = 0; i < list.length; ++i) {
