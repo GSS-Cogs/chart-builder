@@ -31,12 +31,34 @@ export type PlotlyChartDefinition = object;
   setSelectedColumns: Dispatch<SetStateAction<string[]>>,
 }
 
-export interface ChartContextProps extends ChartContextState {
+export interface ChartContextProps {
+  chartDefinition: PlotlyChartDefinition;
+
+  chartProperties: ChartPropertySection[];
+  setChartProperties: Dispatch<SetStateAction<ChartPropertySection[]>>;
+
+  selectedFilename: string;
+  setSelectedFilename: Dispatch<SetStateAction<string>>;
+
+  selectedDimensions: SelectedDimension[];
+  setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>;
+
+  dataSelection: DataSelection | undefined;
+  setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
+
+  selectedColumns: string[];
+  setSelectedColumns: Dispatch<SetStateAction<string[]>>;
+
   // generated from the data
   columnNames: string[];
   // when dataSelection. (xSeries, measure, dimension) are selected, gets populated
   // with the available dimensions
   availableDimensions: string[];
+
+  mapData: any,
+  setMapData: any,
+  geoJson: any,
+  setGeoJson: any,
 
   importCsvData: (data: File | string, filename: string) => void;
   importEeaData: (data: EeaData) => void;

@@ -188,7 +188,7 @@ const orientationSection: ChartPropertySection = {
   ],
 };
 
-const colorBarSection = {
+const colorBarSection: ChartPropertySection = {
   name: "colorBarProperties",
   displayName: "Colorbar",
   sectionFor: "maps",

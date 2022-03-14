@@ -16,7 +16,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function useChartContextState() {
+export function useChartContextState(): ChartContextState {
   const [chartDefinition, setChartDefinition] = useState<PlotlyChartDefinition>({});
   const [chartProperties, setChartProperties] = useState(initialChartProperties);
   const [selectedFilename, setSelectedFilename] = useState(
@@ -186,9 +186,12 @@ function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelectio
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
       const result = dataSelection.ySeries.map((series: SelectedDimension) => {
-        const currentSeries = eeaData.data[dataSelection.measure].filter(
-          (_, index) => eeaData.data[dataSelection.dimension][index] === series.Name
-        );
+        const toFilter: number[]|string[] = Array.isArray(eeaData.data?.[dataSelection.measure])
+          ? eeaData.data[dataSelection.measure]
+          : [];
+
+        const currentSeries = (toFilter as any[]).filter<string|number>((_, index): _ is any => eeaData.data[dataSelection.dimension][index] === series.Name);
+
         return { name: series.DisplayName, values: currentSeries } as Series;
       });
 
@@ -202,10 +205,10 @@ function useEeaConnectoData(eeaData: EeaData | null, dataSelection: DataSelectio
     return undefined;
   }, [dataSelection]);
 
-  const availableDimensions = useMemo(() => {
+  const availableDimensions = useMemo((): string[] => {
     const vals = eeaData?.data?.[dimensionValue];
     if (dimensionValue != '' && Array.isArray(vals)) {
-      return Array.from(new Set(vals));
+      return Array.from(new Set(vals as string[]));
     }
     else return []
   }, [dimensionValue, eeaData]);
@@ -240,7 +243,7 @@ export function useChartContext(state: any) {
     setGeoJson,
   } = state;
 
-  const { dimension: dimensionValue } = dataSelection;
+  const dimensionValue = dataSelection?.dimension || '';
 
   // const {
   //   chartData: tidyDataChartData,
@@ -288,7 +291,6 @@ export function useChartContext(state: any) {
   const { importCsvData } = useChartCsvData(setTidyData, setSelectedFilename);
 
   return {
-    tidyData,
     chartDefinition,
     chartProperties,
     setChartProperties,
@@ -304,6 +306,10 @@ export function useChartContext(state: any) {
     setSelectedDimensions,
     importCsvData,
     importEeaData,
+    mapData,
+    setMapData,
+    geoJson,
+    setGeoJson,
   };
 }
 

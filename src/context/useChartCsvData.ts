@@ -9,7 +9,7 @@ function useChartCsvData(
     console.log(error);
   };
 
-  const validateData = useCallback(
+  const importCsvData = useCallback(
     (data: File | string, filename: string) => {
       Papa.parse(data, {
         worker: true,
@@ -30,7 +30,7 @@ function useChartCsvData(
   );
 
   return {
-    validateData,
+    importCsvData,
   };
 }
 

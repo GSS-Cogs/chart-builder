@@ -1,6 +1,6 @@
 interface Series {
   name: string;
-  values: string[];
+  values: string[] | number[];
 }
 
 interface ChartData {
