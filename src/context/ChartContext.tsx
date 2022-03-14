@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction} from "react";
-import {DataSelection, SelectedDimension} from "./ChartContextProvider";
+import {DataSelection, EeaData, SelectedDimension} from "./ChartContextProvider";
 import {ChartPropertySection} from "./initialChartProperties";
 
 export type TidyData = object[];
@@ -42,8 +42,9 @@ export interface ChartContextProps extends ChartContextState {
   // with the available dimensions
   availableDimensions: string[];
 
-  importCsvData: (data: File | string, filename: string) => void,
-};
+  importCsvData: (data: File | string, filename: string) => void;
+  importEeaData: (data: EeaData) => void;
+}
 
 const ChartContext = React.createContext<ChartContextProps>(
   {} as ChartContextProps,

@@ -164,7 +164,7 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
   }
 }
 
-interface EeaData {
+export interface EeaData {
   "@id": string;
   "data": {
     pk: number[];
