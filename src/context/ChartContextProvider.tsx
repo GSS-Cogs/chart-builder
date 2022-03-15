@@ -102,7 +102,7 @@ function useTidyDataToChartContext(tidyData: TidyData, dataSelection: DataSelect
     }
 
     return undefined;
-  }, [dataSelection]);
+  }, [tidyData, dataSelection]);
 
   const availableDimensions = useMemo(() => {
     if (dimensionValue != '') return getDistinctValues(dimensionValue, tidyData);
@@ -162,7 +162,7 @@ function useEeaConnectorData(eeaData: EeaData | null, dataSelection: DataSelecti
     }
 
     return undefined;
-  }, [dataSelection]);
+  }, [eeaData, dataSelection]);
 
   const availableDimensions = useMemo((): string[] => {
     const vals = eeaData?.data?.[dimensionValue];
@@ -250,6 +250,13 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     );
     setChartDefinition(chartDefinition);
   }, [chartData, mapData, geoJson, chartProperties]);
+
+  useEffect(() => {
+    setDataSelection((prevState: any) => ({
+      ...prevState,
+      ySeries: selectedDimensions,
+    }));
+  }, [selectedDimensions]);
 
   const { importCsvData: importCsvHook } = useChartCsvData(setTidyData, setSelectedFilename);
 
