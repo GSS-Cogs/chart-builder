@@ -19,6 +19,8 @@ export type ChartContextProps = {
   selectedDimensions: SelectedDimension[];
   setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>;
   validateData: (data: File | string, filename: string) => void;
+  sparqlQuery: string;
+  setSparqlQuery: Dispatch<SetStateAction<string>>;
 };
 const ChartContext = React.createContext<ChartContextProps>(
   {} as ChartContextProps,

@@ -38,6 +38,7 @@ export function useChartContextState() {
   >([]);
   const [mapData, setMapData] = useState<any>([]);
   const [geoJson, setGeoJson] = useState<any>([]);
+  const [sparqlQuery, setSparqlQuery] = useState<string>("");
 
   return {
     tidyData,
@@ -62,6 +63,8 @@ export function useChartContextState() {
     setMapData,
     geoJson,
     setGeoJson,
+    sparqlQuery,
+    setSparqlQuery,
   };
 }
 
@@ -91,6 +94,8 @@ export function useChartContext(state: any) {
     setMapData,
     geoJson,
     setGeoJson,
+    sparqlQuery,
+    setSparqlQuery,
   } = state;
 
   useEffect(() => {
@@ -98,15 +103,16 @@ export function useChartContext(state: any) {
   }, [tidyData]);
 
   const loadMapData = useCallback(async () => {
-    const mapData = await getMapData();
+    const mapData = await getMapData(sparqlQuery);
     const geoJson = await getUkLaBoundaries();
     setMapData(mapData);
     setGeoJson(geoJson);
-  }, []);
+  }, [sparqlQuery]);
 
   useEffect(() => {
+    if (sparqlQuery === "") return;
     loadMapData();
-  }, []);
+  }, [sparqlQuery]);
 
   useEffect(() => {
     // todo restore empty data state check - with but with eea/sparql data sources for maps and charts
@@ -185,6 +191,8 @@ export function useChartContext(state: any) {
     selectedDimensions,
     setSelectedDimensions,
     validateData,
+    sparqlQuery,
+    setSparqlQuery,
   };
 }
 

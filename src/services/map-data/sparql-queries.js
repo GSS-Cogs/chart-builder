@@ -1,6 +1,6 @@
 import {
   FOREST_RESEARCH_WOODLAND_AREA_LA,
-  FORESTRY_RESEARCH_NEW_PLANTING,
+  BEIS_LA_CARBON_EMISSIONS,
 } from "./datasets";
 
 const LOCAL_AUTHORITY_BOUNDARY_QUERY = `
@@ -61,42 +61,29 @@ WHERE {
 }
 GROUP BY ?la_uri ?label`;
 
-const FORESTRY_RESEARCH_NEW_PLANTING_QUERY = `
+const BEIS_LA_CARBON_EMISSIONS_QUERY = `
 PREFIX qb: <http://purl.org/linked-data/cube#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX scovo: <http://purl.org/NET/scovo#>
-PREFIX sdmxa: <http://purl.org/linked-data/sdmx/2009/attribute#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://statistics.data.gov.uk/def/statistical-geography#>
+PREFIX data: <${BEIS_LA_CARBON_EMISSIONS.uri}#>
+PREFIX dim: <${BEIS_LA_CARBON_EMISSIONS.uri}#dimension/>
 PREFIX meas: <http://gss-data.org.uk/def/climate-change/measure/>
-PREFIX data: <${FORESTRY_RESEARCH_NEW_PLANTING.uri}#>
-PREFIX dim: <${FORESTRY_RESEARCH_NEW_PLANTING.uri}#dimension/>
-PREFIX def: <http://gss-data.org.uk/def/climate-change/property/dimension/>
- 
-SELECT * {
-    {
-        SELECT ?year ?type ?value
-            WHERE {
-                ?obs qb:dataSet data:dataset ;
-                    dim:year [ rdfs:label ?year ] ;
-                    qb:measureType [ rdfs:label ?type ] ;
-                    meas:new-broadleaves ?value;
-            }
-    }
-    UNION
-    {
-            SELECT ?year ?type ?value
-                WHERE {
-                    ?obs qb:dataSet data:dataset ;
-                        dim:year [ rdfs:label ?year ] ;
-                        qb:measureType [ rdfs:label ?type ] ;
-                        meas:new-conifers ?value;
-                }
-    }
+
+SELECT ?la_uri ?label  (ROUND((SUM(xsd:float(?val)) * 100) / 100) AS ?emissions)
+WHERE {
+  ?obs qb:dataSet data:dataset ;
+       dim:year <http://reference.data.gov.uk/id/year/2019> ;
+       dim:local-authority-code ?la_uri ;
+       meas:territorial-emissions ?val .
+
+       FILTER(?la_uri != <http://statistics.data.gov.uk/id/statistical-geography/N92000002>)
+
+    OPTIONAL { ?la_uri geo:officialname ?label }
 }
-ORDER BY ?year ?type
- `;
+GROUP BY ?la_uri ?label`;
 
 export {
   LOCAL_AUTHORITY_BOUNDARY_QUERY,
   FOREST_RESEARCH_WOODLAND_AREA_QUERY,
-  FORESTRY_RESEARCH_NEW_PLANTING_QUERY,
+  BEIS_LA_CARBON_EMISSIONS_QUERY,
 };

@@ -1,7 +1,7 @@
 import { datasets } from "./datasets";
 
-const SPARQL_ENDPOINT = "https://staging.gss-data.org.uk/sparql";
-const PMD_BASEURL = "https://staging.gss-data.org.uk/";
+const SPARQL_ENDPOINT = "https://beta.gss-data.org.uk/sparql";
+const PMD_BASEURL = "https://beta.gss-data.org.uk";
 
 /**
  * @param {string} query

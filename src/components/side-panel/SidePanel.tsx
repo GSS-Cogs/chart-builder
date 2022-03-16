@@ -11,6 +11,8 @@ const SidePanel = (): JSX.Element => {
     setChartProperties,
     selectedFilename,
     setSelectedFilename,
+    sparqlQuery,
+    setSparqlQuery,
   }: ChartContextProps = useContext(ChartContext);
 
   const isAMap = chartProperties[0].properties[0].value === "Map";
@@ -193,6 +195,22 @@ const SidePanel = (): JSX.Element => {
     );
   };
 
+  const getSparqlInput = () => {
+    return (
+      <div className="property-section">
+        <div className="section-heading"> SPARQL Query</div>
+        <textarea
+          id="sparql-input"
+          rows={10}
+          value={sparqlQuery}
+          spellCheck={false}
+          onChange={(e) => setSparqlQuery(e.target.value.trim())}
+          onFocus={(e) => e.target.select()}
+        />
+      </div>
+    );
+  };
+
   return (
     <div id="side-panel">
       {chartProperties.map((section: any, index: number) => {
@@ -220,8 +238,10 @@ const SidePanel = (): JSX.Element => {
                 }
               })}
             </div>
-            {section.name === "chartTypes" && !isAMap
-              ? getDataSelectionSection(section.name)
+            {section.name === "chartTypes"
+              ? isAMap
+                ? getSparqlInput()
+                : getDataSelectionSection(section.name)
               : null}
           </div>
         );
