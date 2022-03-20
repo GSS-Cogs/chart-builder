@@ -3,8 +3,9 @@ import { ReactNode, useCallback, useEffect, useState } from "react";
 import initialChartState from "./initialChartState";
 import useChartCsvData from "./useChartCsvData";
 import { Series, ChartData, SelectedDimension, DataSelection } from "./types";
-import { getMapData } from "../services/map-data/map-data-loader";
-import { getUkLaBoundaries } from "../services/map-data/uk-la-boundaries";
+import { getMapData } from "../services/map-data/mapDataLoader";
+import { getGeoJson } from "../services/map-data/geoJsonLoader";
+import LOCAL_AUTHORITY_BOUNDARY_QUERY from "../services/map-data/geoJsonQueries";
 
 import {
   arrayColumn,
@@ -104,7 +105,8 @@ export function useChartContext(state: any) {
 
   const loadMapData = useCallback(async () => {
     const mapData = await getMapData(sparqlQuery);
-    const geoJson = await getUkLaBoundaries();
+    const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
+
     setMapData(mapData);
     setGeoJson(geoJson);
   }, [sparqlQuery]);

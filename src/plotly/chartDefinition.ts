@@ -87,7 +87,7 @@ const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
     {
       type: "choropleth",
       locationmode: "geojson-id",
-      locations: mapData.la_uri,
+      locations: mapData.geography_uri,
       z: mapData.values,
       text: mapData.label,
       colorscale:
@@ -111,6 +111,8 @@ const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
     },
   ];
 
+  // if interactivity is enabled show hover text over map regions
+  // we use a custom hover template so that the geography_uri doesn't show up in the hover text
   if (chartProps.interactivity === "x+y") {
     const hovertemplate = {
       hovertemplate: ` %{text} <br> %{z}${chartProps.hoverInfoUnit} <extra></extra> `,
