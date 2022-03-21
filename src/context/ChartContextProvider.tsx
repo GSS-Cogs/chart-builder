@@ -103,16 +103,18 @@ export function useChartContext(state: any) {
     if (tidyData.length > 0) transformTidyData();
   }, [tidyData]);
 
-  const loadMapData = useCallback(async () => {
-    const mapData = await getMapData(sparqlQuery);
-    const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
-
-    setMapData(mapData);
-    setGeoJson(geoJson);
-  }, [sparqlQuery]);
-
   useEffect(() => {
     if (sparqlQuery === "") return;
+    const loadMapData = async () => {
+      try {
+        const mapData = await getMapData(sparqlQuery);
+        const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
+        setGeoJson(geoJson);
+        setMapData(mapData);
+      } catch (e) {
+        console.error(e);
+      }
+    };
     loadMapData();
   }, [sparqlQuery]);
 
