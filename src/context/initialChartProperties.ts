@@ -1,4 +1,16 @@
-const legendSection = {
+import {ChartPropertySection} from "./types";
+
+export interface ChartProperty {
+  name: string;
+  displayName: string;
+  type: "checkbox" | "radio" | "text";
+  value: boolean | string | number;
+  output: string;
+  options?: string[];
+  showPropertyLabel?: boolean;
+}
+
+const legendSection: ChartPropertySection = {
   name: "LegendSection",
   displayName: "Legend",
   sectionFor: "charts",
@@ -20,7 +32,7 @@ const legendSection = {
   ],
 };
 
-const GridlinesSection = {
+const GridlinesSection: ChartPropertySection = {
   name: "Gridlines",
   displayName: "Gridlines",
   sectionFor: "charts",
@@ -35,7 +47,7 @@ const GridlinesSection = {
   ],
 };
 
-const chartTypesSection = {
+const chartTypesSection: ChartPropertySection = {
   name: "chartTypes",
   displayName: "Chart type",
   sectionFor: "all",
@@ -52,7 +64,7 @@ const chartTypesSection = {
   ],
 };
 
-const interactivitySection = {
+const interactivitySection: ChartPropertySection = {
   name: "Interactivity",
   displayName: "Interactivity",
   sectionFor: "all",
@@ -75,7 +87,7 @@ const interactivitySection = {
   ],
 };
 
-const xAxisSection = {
+const xAxisSection: ChartPropertySection = {
   name: "xAxisProperties",
   displayName: "X axis",
   sectionFor: "charts",
@@ -105,7 +117,7 @@ const xAxisSection = {
   ],
 };
 
-const yAxisSection = {
+const yAxisSection: ChartPropertySection = {
   name: "yAxisProperties",
   displayName: "Y axis",
   sectionFor: "charts",
@@ -120,7 +132,7 @@ const yAxisSection = {
   ],
 };
 
-const chartDimensionsSection = {
+const chartDimensionsSection: ChartPropertySection = {
   name: "chartDimensionProperties",
   displayName: "Chart dimensions",
   sectionFor: "all",
@@ -163,7 +175,7 @@ const chartDimensionsSection = {
   ],
 };
 
-const orientationSection = {
+const orientationSection: ChartPropertySection = {
   name: "orientationProperties",
   displayName: "Chart orientation",
   sectionFor: "charts",
@@ -179,7 +191,7 @@ const orientationSection = {
   ],
 };
 
-const colorBarSection = {
+const colorBarSection: ChartPropertySection = {
   name: "colorBarProperties",
   displayName: "Colorbar",
   sectionFor: "maps",
@@ -216,7 +228,7 @@ const colorBarSection = {
   ],
 };
 
-const initialChartState = [
+const initialChartProperties: ChartPropertySection[] = [
   chartTypesSection,
   orientationSection,
   chartDimensionsSection,
@@ -228,4 +240,4 @@ const initialChartState = [
   interactivitySection,
 ];
 
-export default initialChartState;
+export default initialChartProperties;
