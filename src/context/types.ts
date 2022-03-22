@@ -33,7 +33,7 @@ interface EeaData {
 }
 
 // should be whatever shape of props react-plotly receives.
-type PlotlyChartDefinition = object;56
+type PlotlyChartDefinition = object;
 
 interface ChartPropertySection {
   name: string,

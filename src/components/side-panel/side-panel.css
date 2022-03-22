@@ -114,3 +114,16 @@
   align-items: center;
   margin-top: 0.5rem;
 }
+
+#sparql-input {
+  width: 100%;
+  margin-top: 0.7rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  font-family: monospace;
+  border-style: solid;
+  background-color: whitesmoke;
+  outline: none;
+  overflow-y: auto;
+  resize: none;
+}

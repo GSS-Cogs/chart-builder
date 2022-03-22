@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   ChartPropertySection,
   DataSelection,
@@ -37,6 +37,9 @@ export interface ChartContextState {
   setMapData: any,
   geoJson: any,
   setGeoJson: any,
+
+  sparqlQuery: string;
+  setSparqlQuery: Dispatch<SetStateAction<string>>;
 }
 
 export interface ChartContextProps {
@@ -70,6 +73,9 @@ export interface ChartContextProps {
 
   importCsvData: (data: File | string, filename: string) => void;
   importEeaData: (data: EeaData) => void;
+
+  sparqlQuery: string;
+  setSparqlQuery: Dispatch<SetStateAction<string>>;
 }
 
 const ChartContext = React.createContext<ChartContextProps>(

@@ -1,6 +1,20 @@
 import { getMapLayout, getChartLayout } from "./layout";
 import config from "./config";
 
+const divergingColorScale = [
+  [0, "rgb(242, 108, 49)"],
+  [0.35, "rgb(242, 160, 49)"],
+  [0.5, "rgb(233, 212, 30)"],
+  [0.6, "rgb(202, 233, 30)"],
+  [0.7, "rgb(44, 182, 169)"],
+  [1, "rgb(36, 151, 140)"],
+];
+
+const sequentialColorScale = [
+  [0, "rgb(233, 212, 30)"],
+  [1, "rgb(36, 151, 140)"],
+];
+
 import {
   colors,
   flattenChartProperties,
@@ -69,24 +83,21 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
 };
 
 const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
-  const data = [
+  let data: any = [
     {
       type: "choropleth",
       locationmode: "geojson-id",
-      locations: mapData.la_uri,
-      z: mapData.emissions,
+      locations: mapData.geography_uri,
+      z: mapData.values,
       text: mapData.label,
-      hoverinfo: chartProps.interactivity,
-      colorscale: [
-        [0, "rgb(242, 108, 49)"],
-        [0.35, "rgb(242, 160, 49)"],
-        [0.5, "rgb(233, 212, 30)"],
-        [0.6, "rgb(202, 233, 30)"],
-        [0.7, "rgb(44, 182, 169)"],
-        [1, "rgb(36, 151, 140)"],
-      ],
+      colorscale:
+        chartProps.colorscale === "Diverging"
+          ? divergingColorScale
+          : sequentialColorScale,
+      autocolorscale: chartProps.autocolorscale,
       featureidkey: "properties.geography_uri",
       geojson: geoJson,
+      hoverinfo: chartProps.interactivity,
       marker: {
         line: {
           color: "rgb(123,123,123)",
@@ -99,6 +110,15 @@ const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
       },
     },
   ];
+
+  // if interactivity is enabled show hover text over map regions
+  // we use a custom hover template so that the geography_uri doesn't show up in the hover text
+  if (chartProps.interactivity === "x+y") {
+    const hovertemplate = {
+      hovertemplate: ` %{text} <br> %{z}${chartProps.hoverInfoUnit} <extra></extra> `,
+    };
+    data = [{ ...data[0], ...hovertemplate }];
+  }
   return data;
 };
 
