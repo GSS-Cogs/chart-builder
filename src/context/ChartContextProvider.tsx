@@ -186,7 +186,7 @@ function useEeaConnectorData(eeaData: EeaData | null, dataSelection: DataSelecti
 
 export function useChartContext(state: ChartContextState): ChartContextProps {
   const [dataSource, setDataSource] = useState<'' | 'tidy' | 'eea'>('');
-  const [eeaData, importEeaData] = useState<EeaData | null>(null);
+  const [eeaData, importEeaDataHook] = useState<EeaData | null>(null);
   const [tidyData, setTidyData] = useState<object[]>([]);
 
   const {
@@ -271,6 +271,22 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
 
   const { importCsvData: importCsvHook } = useChartCsvData(setTidyData, setSelectedFilename);
 
+  const importCsvData = useCallback(
+    (data: File | string, filename: string) => {
+      setDataSource('tidy');
+      importCsvHook(data, filename);
+    },
+    [setDataSource, importCsvHook]
+  );
+
+  const importEeaData = useCallback(
+    (data: EeaData) => {
+      setDataSource('eea');
+      importEeaData(data);
+    },
+    [setDataSource, importEeaDataHook]
+  );
+
   return {
     chartDefinition,
     chartProperties,
@@ -285,14 +301,8 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setSelectedColumns,
     selectedDimensions,
     setSelectedDimensions,
-    importCsvData: (data: File | string, filename: string) => {
-      setDataSource('tidy');
-      importCsvHook(data, filename);
-    },
-    importEeaData: (data: EeaData) => {
-      setDataSource('eea');
-      importEeaData(data);
-    },
+    importCsvData,
+    importEeaData,
     mapData,
     setMapData,
     geoJson,
