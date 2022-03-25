@@ -282,7 +282,7 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
   const importEeaData = useCallback(
     (data: EeaData) => {
       setDataSource('eea');
-      importEeaData(data);
+      importEeaDataHook(data);
     },
     [setDataSource, importEeaDataHook]
   );
