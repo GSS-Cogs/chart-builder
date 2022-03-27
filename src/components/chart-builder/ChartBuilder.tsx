@@ -1,4 +1,4 @@
-import ChartPreview from "../chart-panel/chart-preview/ChartPreview";
+import ChartPreview from "../chart-preview/ChartPreview";
 import SidePanel from "../side-panel/SidePanel";
 import "./chart-builder.css";
 
