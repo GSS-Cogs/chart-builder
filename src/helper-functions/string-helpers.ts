@@ -1,4 +1,5 @@
-import { upperFirst, startCase } from "lodash";
+import upperFirst from "lodash/upperFirst";
+import startCase from "lodash/startCase";
 
 const titleCase = (str: string) => {
   return str
