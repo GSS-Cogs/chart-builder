@@ -1,6 +1,6 @@
 import ChartContext from "./ChartContext";
 import { ReactNode, useCallback, useEffect, useState } from "react";
-import initialChartState from "./initialChartState";
+import initialChartProperties from "./initialChartProperties";
 import useChartCsvData from "./useChartCsvData";
 import { Series, ChartData, SelectedDimension, DataSelection } from "./types";
 import { getMapData } from "../services/map-data/mapDataLoader";
@@ -22,7 +22,9 @@ interface Props {
 export function useChartContextState() {
   const [tidyData, setTidyData] = useState<any>([]);
   const [chartDefinition, setChartDefinition] = useState({});
-  const [chartProperties, setChartProperties] = useState(initialChartState);
+  const [chartProperties, setChartProperties] = useState(
+    initialChartProperties,
+  );
   const [selectedFilename, setSelectedFilename] = useState(
     NO_FILE_SELECTED_TEXT,
   );
