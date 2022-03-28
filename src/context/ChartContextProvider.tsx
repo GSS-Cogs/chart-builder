@@ -113,6 +113,7 @@ export function useChartContext(state: any) {
         const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
         setGeoJson(geoJson);
         setMapData(mapData);
+        setChartData(undefined);
       } catch (e) {
         console.error(e);
       }
@@ -121,7 +122,10 @@ export function useChartContext(state: any) {
   }, [sparqlQuery]);
 
   useEffect(() => {
-    // todo restore empty data state check - with but with eea/sparql data sources for maps and charts
+    if (!chartData && mapData.length === 0) {
+      setChartDefinition({});
+      return;
+    }
     const chartDefinition = updateChartDefinition(
       chartProperties,
       chartData,
@@ -172,6 +176,8 @@ export function useChartContext(state: any) {
         ySeries: result,
       };
       setChartData(newChartData);
+      setMapData([]);
+      setSparqlQuery("");
     } else {
       setChartData(undefined);
     }
