@@ -142,7 +142,7 @@ function useEeaConnectorData(eeaData: EeaData | null, dataSelection: DataSelecti
       return undefined;
     }
 
-    const xSeries = eeaData?.data?.[dataSelection.xSeries];// getDistinctValues(dataSelection.xSeries, tidyData);
+    const xSeries = Array.from(new Set(eeaData?.data?.[dataSelection.xSeries]));
     const newXSeries: Series = {
       name: dataSelection.xSeries,
       values: xSeries,
