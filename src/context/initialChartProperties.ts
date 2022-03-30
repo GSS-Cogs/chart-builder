@@ -1,4 +1,4 @@
-import {ChartPropertySection} from "./types";
+import { ChartPropertySection } from "./types";
 
 export interface ChartProperty {
   name: string;
@@ -26,7 +26,7 @@ const legendSection: ChartPropertySection = {
       name: "xAxisOffset",
       displayName: "X axis offset",
       type: "text",
-      value: -0.25,
+      value: -0.18,
       output: "svg",
     },
   ],
@@ -81,7 +81,7 @@ const interactivitySection: ChartPropertySection = {
       name: "hoverInfoUnit",
       displayName: "Hoverinfo unit",
       type: "text",
-      value: "%",
+      value: "",
       output: "svg",
     },
   ],
@@ -96,7 +96,7 @@ const xAxisSection: ChartPropertySection = {
       name: "xAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Week starting",
+      value: "",
       output: "svg",
     },
     {
@@ -126,7 +126,7 @@ const yAxisSection: ChartPropertySection = {
       name: "yAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Mt CO2e",
+      value: "",
       output: "svg",
     },
   ],
@@ -141,14 +141,14 @@ const chartDimensionsSection: ChartPropertySection = {
       name: "height",
       displayName: "Height(px)",
       type: "text",
-      value: "700",
+      value: "550",
       output: "svg",
     },
     {
       name: "marginLeft",
       displayName: "Left margin(px)",
       type: "text",
-      value: "0",
+      value: "70",
       output: "svg",
     },
     {
@@ -169,7 +169,7 @@ const chartDimensionsSection: ChartPropertySection = {
       name: "marginBottom",
       displayName: "Bottom margin(px)",
       type: "text",
-      value: "0",
+      value: "70",
       output: "svg",
     },
   ],
@@ -200,7 +200,7 @@ const colorBarSection: ChartPropertySection = {
       name: "colorBarTitle",
       displayName: "Title",
       type: "text",
-      value: "Percentage <br>of area",
+      value: "",
       output: "svg",
     },
     {
