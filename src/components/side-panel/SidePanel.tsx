@@ -16,14 +16,8 @@ const mapTypeToComponent = {
 };
 
 const SidePanel = (): JSX.Element => {
-  const {
-    chartProperties,
-    setChartProperties,
-    selectedFilename,
-    setSelectedFilename,
-    sparqlQuery,
-    setSparqlQuery,
-  }: ChartContextProps = useContext(ChartContext);
+  const { chartProperties, setChartProperties }: ChartContextProps =
+    useContext(ChartContext);
 
   const isAMap = chartProperties[0].properties[0].value === "Map";
 
