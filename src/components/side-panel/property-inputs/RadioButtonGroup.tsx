@@ -11,7 +11,7 @@ const RadioButtonGroup: VoidFunctionComponent<Props> = ({
   sectionName,
   updateProperty,
 }) => {
-  const onRadioButtonChange = (e: any) => {
+  const onRadioButtonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name: property, value } = e.target;
     const sectionName = e.target.id.split("-")[0];
     updateProperty(sectionName, property, value);

@@ -11,7 +11,7 @@ const TextArea: VoidFunctionComponent<Props> = ({
   sectionName,
   updateProperty,
 }) => {
-  const onTextChange = (e: any) => {
+  const onTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name: property, value } = e.target;
     const sectionName = e.target.id.split("-")[0];
     updateProperty(sectionName, property, value);

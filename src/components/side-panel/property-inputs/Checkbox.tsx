@@ -11,7 +11,7 @@ const Checkbox: VoidFunctionComponent<Props> = ({
   sectionName,
   updateProperty,
 }) => {
-  const onCheckboxChange = (e: any) => {
+  const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: property, checked: value } = e.target;
     const sectionName = e.target.id.split("-")[0];
     updateProperty(sectionName, property, value);

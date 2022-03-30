@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
 import { getDistinctValues } from "../../../helper-functions/array-helpers";
 import DimensionSelection from "./dimension-selection/DimensionSelection";
@@ -58,13 +58,10 @@ const DataSelection = (): JSX.Element => {
     return "";
   };
 
-  const onHandleChange = (e: any) => {
+  const onHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (
-      value === "" ||
-      selectedColumns.some((item) => item === value)
-    ) {
+    if (value === "" || selectedColumns.some((item) => item === value)) {
       alert(
         `${value} has already been selected. Please choose a different column`,
       );
@@ -72,7 +69,6 @@ const DataSelection = (): JSX.Element => {
         ...prevState,
       }));
     } else {
-
       let previousValue = "";
       if (name === "xSeries") {
         previousValue = dataSelection!.xSeries;
