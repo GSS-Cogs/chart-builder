@@ -1,6 +1,7 @@
 import { getMapLayout, getChartLayout } from "./layout";
 import config from "./config";
 import { sequentialColorScale, divergingColorScale } from "./colorScales";
+import { GeoJSON } from "geojson";
 
 import {
   colors,
@@ -18,7 +19,7 @@ const updateChartDefinition = (
   chartProperties: any,
   chartData: any,
   mapData: any,
-  geoJson: any,
+  geoJson: GeoJSON,
 ) => {
   const chartProps = flattenChartProperties(chartProperties);
   const chartType = chartProps.chartType.toLowerCase();
@@ -75,7 +76,7 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
   return traces;
 };
 
-const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
+const getMapData = (chartProps: any, mapData: any, geoJson: GeoJSON) => {
   let data: any = [
     {
       type: "choropleth",

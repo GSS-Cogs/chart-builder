@@ -6,6 +6,7 @@ import { Series, ChartData, SelectedDimension, DataSelection } from "./types";
 import { getMapData } from "../services/map-data/mapDataLoader";
 import { getGeoJson } from "../services/map-data/geoJsonLoader";
 import LOCAL_AUTHORITY_BOUNDARY_QUERY from "../services/map-data/geoJsonQueries";
+import { GeoJSON } from "geojson";
 
 import {
   arrayColumn,
@@ -40,7 +41,7 @@ export function useChartContextState() {
     SelectedDimension[]
   >([]);
   const [mapData, setMapData] = useState<any>([]);
-  const [geoJson, setGeoJson] = useState<any>([]);
+  const [geoJson, setGeoJson] = useState<GeoJSON>({} as GeoJSON);
   const [sparqlQuery, setSparqlQuery] = useState<string>("");
 
   return {
