@@ -12,10 +12,15 @@ import {
   TidyData,
   ChartDataProvider
 } from "./types";
-import { arrayColumn, getDistinctValues } from "../helper-functions/array-helpers";
 import { getMapData } from "../services/map-data/mapDataLoader";
 import { getGeoJson } from "../services/map-data/geoJsonLoader";
 import LOCAL_AUTHORITY_BOUNDARY_QUERY from "../services/map-data/geoJsonQueries";
+import { GeoJSON } from "geojson";
+
+import {
+  arrayColumn,
+  getDistinctValues,
+} from "../helper-functions/array-helpers";
 
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 import updateChartDefinition from "../plotly/chartDefinition";
@@ -25,8 +30,12 @@ interface Props {
 }
 
 export function useChartContextState(): ChartContextState {
-  const [chartDefinition, setChartDefinition] = useState<PlotlyChartDefinition>({});
-  const [chartProperties, setChartProperties] = useState(initialChartProperties);
+  const [chartDefinition, setChartDefinition] = useState<PlotlyChartDefinition>(
+      {}
+  );
+  const [chartProperties, setChartProperties] = useState(
+      initialChartProperties,
+  );
   const [selectedFilename, setSelectedFilename] = useState(
     NO_FILE_SELECTED_TEXT,
   );
@@ -40,7 +49,7 @@ export function useChartContextState(): ChartContextState {
     SelectedDimension[]
   >([]);
   const [mapData, setMapData] = useState<any>([]);
-  const [geoJson, setGeoJson] = useState<any>([]);
+  const [geoJson, setGeoJson] = useState<GeoJSON>({} as GeoJSON);
   const [sparqlQuery, setSparqlQuery] = useState<string>("");
 
   return {
@@ -244,6 +253,9 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
         const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
         setGeoJson(geoJson);
         setMapData(mapData);
+        // todo: if dataSource != 'tidy' in the useTidyData.. hook, clear any temp state
+        // todo: same in useEeaConnectorData
+        // todo: same in any choropleth loading areas
       } catch (e) {
         console.error(e);
       }
@@ -252,7 +264,10 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
   }, [sparqlQuery]);
 
   useEffect(() => {
-    // todo restore empty data state check - with but with eea/sparql data sources for maps and charts
+    if (!chartData && mapData.length === 0) {
+      setChartDefinition({});
+      return;
+    }
     const chartDefinition = updateChartDefinition(
       chartProperties,
       chartData,

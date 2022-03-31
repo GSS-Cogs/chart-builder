@@ -45,12 +45,12 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
             type="text"
             name={dimension.Name}
             value={dimension.DisplayName}
-            onChange={(e) => handleInputChange(e, index)}
+            onChange={handleInputChange}
           />
           <button
             name={dimension.Name}
             className="remove-dimension"
-            onClick={(e) => handleRemoveDimensionClick(e)}
+            onClick={handleRemoveDimensionClick}
           >
             &nbsp;{"-"}&nbsp;
           </button>
@@ -92,34 +92,38 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     );
   };
 
-  const handleSelectedDimensionChange = (e: any) => {
+  const handleSelectedDimensionChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const newSelectedDimension: SelectedDimension = {
       Name: e.target.value,
       DisplayName: e.target.value,
     }; //TBC
 
-    const updatedDimensions = selectedDimensions.map((item, index) => {
+    const updatedDimensions = selectedDimensions.map((item) => {
       return item.Name === e.target.name ? newSelectedDimension : item;
     });
     setSelectedDimensions(updatedDimensions);
   };
 
-  const handleInputChange = (e: any, index: number) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const newDimensions = [...selectedDimensions];
     const dimension: SelectedDimension = {
       Name: name,
       DisplayName: value,
     };
-    const updatedDimensions = newDimensions.map((item, index) => {
+    const updatedDimensions = newDimensions.map((item) => {
       return item.Name === name ? dimension : item;
     });
     setSelectedDimensions(updatedDimensions);
   };
 
-  const handleRemoveDimensionClick = (e: any) => {
+  const handleRemoveDimensionClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     const alreadyOtherSelectedDimension = selectedDimensions.filter(
-      (item) => item.Name !== e.target.name,
+      (item) => item.Name !== (e.target as HTMLButtonElement).name,
     );
     setSelectedDimensions(alreadyOtherSelectedDimension);
   };

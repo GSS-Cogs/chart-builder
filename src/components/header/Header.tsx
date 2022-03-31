@@ -6,7 +6,7 @@ const Header = (): JSX.Element => {
     <div id="header">
       <div id="header-content">
         <span>
-          <img src={crown} />
+          <img src={crown} alt="gov uk crown logo" width="36" height="32" />
         </span>
         <div id="header-gov-uk">GOV.UK</div>
         <div id="header-text">Chart Builder</div>

@@ -1,42 +1,36 @@
 import { getMapLayout, getChartLayout } from "./layout";
 import config from "./config";
-
-const divergingColorScale = [
-  [0, "rgb(242, 108, 49)"],
-  [0.35, "rgb(242, 160, 49)"],
-  [0.5, "rgb(233, 212, 30)"],
-  [0.6, "rgb(202, 233, 30)"],
-  [0.7, "rgb(44, 182, 169)"],
-  [1, "rgb(36, 151, 140)"],
-];
-
-const sequentialColorScale = [
-  [0, "rgb(233, 212, 30)"],
-  [1, "rgb(36, 151, 140)"],
-];
+import { sequentialColorScale, divergingColorScale } from "./colorScales";
+import { GeoJSON } from "geojson";
 
 import {
   colors,
   flattenChartProperties,
 } from "../helper-functions/chart-helpers";
 
+// A plain 'Bar' chart can also act as grouped bar chart if it
+// has more than one series so we set barmode as 'group'
+// Otherwise if its a 'Stacked Bar' barmode is 'stack'.
+const inferBarMode = (chartType: string) => {
+  return chartType === "bar" ? "group" : "stack";
+};
+
 const updateChartDefinition = (
   chartProperties: any,
   chartData: any,
   mapData: any,
-  geoJson: any,
+  geoJson: GeoJSON,
 ) => {
   const chartProps = flattenChartProperties(chartProperties);
   const chartType = chartProps.chartType.toLowerCase();
+  chartProps.barmode = inferBarMode(chartType);
 
   let data;
-
   chartType === "map"
     ? (data = getMapData(chartProps, mapData, geoJson))
     : (data = getChartData(chartType, chartProps, chartData));
 
   let layout;
-
   chartType === "map"
     ? (layout = getMapLayout(chartProps))
     : (layout = getChartLayout(chartProps));
@@ -47,7 +41,7 @@ const updateChartDefinition = (
 const getChartData = (chartType: any, chartProps: any, chartData: any) => {
   const traces: any = [];
 
-  //truncate the xSeries values to user specified length
+  // truncate the xSeries values to user specified length
   const xSeries = chartData?.xSeries.values.map((value: string) => {
     return String(value).substring(0, chartProps.xTickLabelMaxLength);
   });
@@ -82,7 +76,7 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
   return traces;
 };
 
-const getMapData = (chartProps: any, mapData: any, geoJson: any) => {
+const getMapData = (chartProps: any, mapData: any, geoJson: GeoJSON) => {
   let data: any = [
     {
       type: "choropleth",

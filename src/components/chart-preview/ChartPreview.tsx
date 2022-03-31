@@ -1,15 +1,19 @@
-import { useContext } from "react";
-import ChartContext from "../../../context/ChartContext";
+import { Suspense, useContext } from "react";
+import ChartContext from "../../context/ChartContext";
 import "./chart-preview.css";
-import NoDataIcon from "../../../assets/icons/chart-preview/NoDataIcon.svg";
-
-const Plot =
-  typeof window !== "undefined" ? require("react-plotly.js").default : null;
+import NoDataIcon from "../../assets/icons/chart-preview/NoDataIcon.svg";
+import React from "react";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
   return <ActualChart chartDefinition={chartDefinition} />;
 };
+
+const isClientSideRender = typeof window !== "undefined";
+
+const Plot = isClientSideRender
+    ? React.lazy(() => import("react-plotly.js"))
+    : null;
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   if (Object.keys(chartDefinition).length === 0)
@@ -31,13 +35,15 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   return (
     <div id="chart-preview">
       {Plot ? (
-        <Plot
-          data={data}
-          layout={layout}
-          config={config}
-          useResizeHandler={true}
-          style={{ width: "100%" }}
-        />
+        <Suspense fallback={<div />}>
+          <Plot
+            data={data}
+            layout={layout}
+            config={config}
+            useResizeHandler={true}
+            style={{ width: "100%" }}
+          />
+        </Suspense>
       ) : null}
     </div>
   );
