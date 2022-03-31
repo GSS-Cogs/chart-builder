@@ -26,6 +26,8 @@ const SidePanel = (): JSX.Element => {
       (item: any) => item.name === sectionName,
     );
 
+    if (!section) return;
+
     const updatedProperties = section.properties.map((item: any) => {
       if (item.name === property) {
         return {

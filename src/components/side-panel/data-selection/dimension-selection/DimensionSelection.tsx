@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SelectedDimension } from "../../../../context/types";
 import ChartContext, {
   ChartContextProps,
@@ -15,15 +15,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     selectedDimensions,
     setSelectedDimensions,
     dataSelection,
-    setDataSelection,
   }: ChartContextProps = useContext(ChartContext);
-
-  useEffect(() => {
-    setDataSelection((prevState: any) => ({
-      ...prevState,
-      ySeries: selectedDimensions,
-    }));
-  }, [selectedDimensions]);
 
   const createDimensionList = () => {
     const nonSelectedAvailableDimensions: string[] =

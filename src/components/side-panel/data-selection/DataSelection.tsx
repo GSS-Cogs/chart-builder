@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
-import { getDistinctValues } from "../../../helper-functions/array-helpers";
+import React, { useContext } from "react";
+import ChartContext, {ChartContextProps} from "../../../context/ChartContext";
 import DimensionSelection from "./dimension-selection/DimensionSelection";
 import "./data-selection.css";
-import { DEMO_MODE } from "../../constants/Dev-constants";
 
 const options = [
   {
@@ -24,27 +22,11 @@ const DataSelection = (): JSX.Element => {
   const {
     dataSelection,
     setDataSelection,
-    tidyData,
     columnNames,
     availableDimensions,
-    setAvailableDimensions,
     selectedColumns,
     setSelectedColumns,
   }: ChartContextProps = useContext(ChartContext);
-
-  useEffect(() => {
-    //DEMO Mode
-    if (DEMO_MODE) {
-      setDataSelection((prevState: any) => ({
-        ...prevState,
-        ["xSeries"]: "week_starting",
-        ["measure"]: "infection_rate",
-        ["dimension"]: "country_name",
-      }));
-      setSelectedColumns(["week_starting", "infection_rate", "country_name"]);
-      setAvailableDimensions(getDistinctValues("country_name", tidyData));
-    }
-  }, [tidyData]);
 
   const getPropertyValue = (name: string) => {
     switch (name) {
@@ -92,9 +74,6 @@ const DataSelection = (): JSX.Element => {
         ...prevState,
         [name]: value,
       }));
-      if (name === "dimension" && value !== "") {
-        setAvailableDimensions(getDistinctValues(value, tidyData));
-      }
     }
   };
 

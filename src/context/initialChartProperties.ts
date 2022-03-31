@@ -1,4 +1,16 @@
-const legendSection = {
+import { ChartPropertySection } from "./types";
+
+export interface ChartProperty {
+  name: string;
+  displayName: string;
+  type: "checkbox" | "radio" | "text";
+  value: boolean | string | number;
+  output: string;
+  options?: string[];
+  showPropertyLabel?: boolean;
+}
+
+const legendSection: ChartPropertySection = {
   name: "LegendSection",
   displayName: "Legend",
   sectionFor: "charts",
@@ -14,13 +26,13 @@ const legendSection = {
       name: "xAxisOffset",
       displayName: "X axis offset",
       type: "text",
-      value: -0.25,
+      value: -0.18,
       output: "svg",
     },
   ],
 };
 
-const GridlinesSection = {
+const GridlinesSection: ChartPropertySection = {
   name: "Gridlines",
   displayName: "Gridlines",
   sectionFor: "charts",
@@ -35,7 +47,7 @@ const GridlinesSection = {
   ],
 };
 
-const chartTypesSection = {
+const chartTypesSection: ChartPropertySection = {
   name: "chartTypes",
   displayName: "Chart type",
   sectionFor: "all",
@@ -52,7 +64,7 @@ const chartTypesSection = {
   ],
 };
 
-const interactivitySection = {
+const interactivitySection: ChartPropertySection = {
   name: "Interactivity",
   displayName: "Interactivity",
   sectionFor: "all",
@@ -69,13 +81,13 @@ const interactivitySection = {
       name: "hoverInfoUnit",
       displayName: "Hoverinfo unit",
       type: "text",
-      value: "%",
+      value: "",
       output: "svg",
     },
   ],
 };
 
-const xAxisSection = {
+const xAxisSection: ChartPropertySection = {
   name: "xAxisProperties",
   displayName: "X axis",
   sectionFor: "charts",
@@ -84,7 +96,7 @@ const xAxisSection = {
       name: "xAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Week starting",
+      value: "",
       output: "svg",
     },
     {
@@ -105,7 +117,7 @@ const xAxisSection = {
   ],
 };
 
-const yAxisSection = {
+const yAxisSection: ChartPropertySection = {
   name: "yAxisProperties",
   displayName: "Y axis",
   sectionFor: "charts",
@@ -114,13 +126,13 @@ const yAxisSection = {
       name: "yAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "Mt CO2e",
+      value: "",
       output: "svg",
     },
   ],
 };
 
-const chartDimensionsSection = {
+const chartDimensionsSection: ChartPropertySection = {
   name: "chartDimensionProperties",
   displayName: "Chart dimensions",
   sectionFor: "all",
@@ -129,14 +141,14 @@ const chartDimensionsSection = {
       name: "height",
       displayName: "Height(px)",
       type: "text",
-      value: "700",
+      value: "550",
       output: "svg",
     },
     {
       name: "marginLeft",
       displayName: "Left margin(px)",
       type: "text",
-      value: "0",
+      value: "70",
       output: "svg",
     },
     {
@@ -157,13 +169,13 @@ const chartDimensionsSection = {
       name: "marginBottom",
       displayName: "Bottom margin(px)",
       type: "text",
-      value: "0",
+      value: "70",
       output: "svg",
     },
   ],
 };
 
-const orientationSection = {
+const orientationSection: ChartPropertySection = {
   name: "orientationProperties",
   displayName: "Chart orientation",
   sectionFor: "charts",
@@ -179,7 +191,7 @@ const orientationSection = {
   ],
 };
 
-const colorBarSection = {
+const colorBarSection: ChartPropertySection = {
   name: "colorBarProperties",
   displayName: "Colorbar",
   sectionFor: "maps",
@@ -188,7 +200,7 @@ const colorBarSection = {
       name: "colorBarTitle",
       displayName: "Title",
       type: "text",
-      value: "Percentage <br>of area",
+      value: "",
       output: "svg",
     },
     {
@@ -216,7 +228,7 @@ const colorBarSection = {
   ],
 };
 
-const initialChartState = [
+const initialChartProperties: ChartPropertySection[] = [
   chartTypesSection,
   orientationSection,
   chartDimensionsSection,
@@ -228,4 +240,4 @@ const initialChartState = [
   interactivitySection,
 ];
 
-export default initialChartState;
+export default initialChartProperties;

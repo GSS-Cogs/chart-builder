@@ -1,6 +1,8 @@
+import {ChartProperty} from "./initialChartProperties";
+
 interface Series {
   name: string;
-  values: string[];
+  values: string[] | number[];
 }
 
 interface ChartData {
@@ -20,4 +22,41 @@ interface DataSelection {
   ySeries: SelectedDimension[];
 }
 
-export type { Series, ChartData, SelectedDimension, DataSelection };
+type TidyData = object[];
+
+interface EeaData {
+  "@id": string;
+  "data": {
+    pk: number[];
+    [col: string]: number[] | string[];
+  }
+}
+
+// should be whatever shape of props react-plotly receives.
+type PlotlyChartDefinition = object;
+
+interface ChartPropertySection {
+  name: string,
+  displayName: string,
+  sectionFor: string,
+  properties: ChartProperty[]
+}
+
+interface ChartDataProvider {
+  columnNames: string[];
+  availableDimensions: string[];
+  chartData: ChartData | undefined;
+}
+
+export type {
+  Series,
+  ChartData,
+  SelectedDimension,
+  DataSelection,
+  TidyData,
+  EeaData,
+  PlotlyChartDefinition,
+  ChartPropertySection,
+  ChartDataProvider
+};
+
