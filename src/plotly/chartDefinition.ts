@@ -3,10 +3,8 @@ import config from "./config";
 import { sequentialColorScale, divergingColorScale } from "./colorScales";
 import { GeoJSON } from "geojson";
 
-import {
-  colors,
-  flattenChartProperties,
-} from "../helper-functions/chart-helpers";
+import {colors,} from "../helper-functions/chart-helpers";
+import {ChartPropertyValues,} from "../context/ChartContext";
 
 // A plain 'Bar' chart can also act as grouped bar chart if it
 // has more than one series so we set barmode as 'group'
@@ -16,13 +14,12 @@ const inferBarMode = (chartType: string) => {
 };
 
 const updateChartDefinition = (
-  chartProperties: any,
+  chartProps: ChartPropertyValues,
   chartData: any,
   mapData: any,
   geoJson: GeoJSON,
 ) => {
-  const chartProps = flattenChartProperties(chartProperties);
-  const chartType = chartProps.chartType.toLowerCase();
+  const chartType = chartProps.chartTypes.chartType.toLowerCase();
   chartProps.barmode = inferBarMode(chartType);
 
   let data;
@@ -43,12 +40,12 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
 
   // truncate the xSeries values to user specified length
   const xSeries = chartData?.xSeries.values.map((value: string) => {
-    return String(value).substring(0, chartProps.xTickLabelMaxLength);
+    return String(value).substring(0, chartProps.xAxisProperties.xTickLabelMaxLength);
   });
 
   chartData?.ySeries.map((series: any, index: number) => {
     let trace: {};
-    if (chartProps.orientation === "horizontal") {
+    if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
         y: xSeries,
@@ -67,7 +64,7 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: "lines",
-      hoverinfo: chartProps.interactivity,
+      hoverinfo: chartProps.Interactivity.interactivity,
       line: {
         color: colors[index],
       },
@@ -76,7 +73,7 @@ const getChartData = (chartType: any, chartProps: any, chartData: any) => {
   return traces;
 };
 
-const getMapData = (chartProps: any, mapData: any, geoJson: GeoJSON) => {
+const getMapData = (chartProps: ChartPropertyValues, mapData: any, geoJson: GeoJSON) => {
   let data: any = [
     {
       type: "choropleth",
@@ -85,13 +82,13 @@ const getMapData = (chartProps: any, mapData: any, geoJson: GeoJSON) => {
       z: mapData.values,
       text: mapData.label,
       colorscale:
-        chartProps.colorscale === "Diverging"
+        chartProps.colorBarProperties.colorscale === "Diverging"
           ? divergingColorScale
           : sequentialColorScale,
-      autocolorscale: chartProps.autocolorscale,
+      autocolorscale: chartProps.colorBarProperties.autocolorscale,
       featureidkey: "properties.geography_uri",
       geojson: geoJson,
-      hoverinfo: chartProps.interactivity,
+      hoverinfo: chartProps.Interactivity.interactivity,
       marker: {
         line: {
           color: "rgb(123,123,123)",
@@ -99,17 +96,17 @@ const getMapData = (chartProps: any, mapData: any, geoJson: GeoJSON) => {
         },
       },
       colorbar: {
-        title: chartProps.colorBarTitle,
-        thickness: chartProps.colorBarWidth,
+        title: chartProps.colorBarProperties.colorBarTitle,
+        thickness: chartProps.colorBarProperties.colorBarWidth,
       },
     },
   ];
 
   // if interactivity is enabled show hover text over map regions
   // we use a custom hover template so that the geography_uri doesn't show up in the hover text
-  if (chartProps.interactivity === "x+y") {
+  if (chartProps.Interactivity.interactivity === "x+y") {
     const hovertemplate = {
-      hovertemplate: ` %{text} <br> %{z}${chartProps.hoverInfoUnit} <extra></extra> `,
+      hovertemplate: ` %{text} <br> %{z}${chartProps.Interactivity.hoverInfoUnit} <extra></extra> `,
     };
     data = [{ ...data[0], ...hovertemplate }];
   }

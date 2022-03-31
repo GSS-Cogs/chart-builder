@@ -1,5 +1,3 @@
-import {ChartProperty} from "./initialChartProperties";
-
 interface Series {
   name: string;
   values: string[] | number[];
@@ -35,11 +33,21 @@ interface EeaData {
 // should be whatever shape of props react-plotly receives.
 type PlotlyChartDefinition = object;
 
-interface ChartPropertySection {
+export interface ChartPropertySchema {
+  name: string;
+  displayName: string;
+  type: "checkbox" | "radio" | "text";
+  defaultValue: boolean | string | number;
+  output: string;
+  options?: string[];
+  showPropertyLabel?: boolean;
+}
+
+interface ChartPropertySchemaSection {
   name: string,
   displayName: string,
   sectionFor: string,
-  properties: ChartProperty[]
+  properties: ChartPropertySchema[]
 }
 
 interface ChartDataProvider {
@@ -56,7 +64,7 @@ export type {
   TidyData,
   EeaData,
   PlotlyChartDefinition,
-  ChartPropertySection,
+  ChartPropertySchemaSection,
   ChartDataProvider
 };
 

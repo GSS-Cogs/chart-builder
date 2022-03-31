@@ -1,19 +1,15 @@
 import { VoidFunctionComponent } from "react";
+import {PropertyInputProps} from "./types";
 
-interface Props {
-  property: any;
-  sectionName: string;
-  updateProperty: (sectionName: string, property: any, value: any) => void;
-}
-
-const TextArea: VoidFunctionComponent<Props> = ({
+const TextArea: VoidFunctionComponent<PropertyInputProps> = ({
   property,
   sectionName,
   updateProperty,
+  value,
 }) => {
   const onTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name: property, value } = e.target;
-    updateProperty(sectionName, property, value);
+    const { value } = e.target;
+    updateProperty(sectionName, property.name, value);
   };
   return (
     <div className="chart-property" key={property.name}>
@@ -27,7 +23,7 @@ const TextArea: VoidFunctionComponent<Props> = ({
         <textarea
           id={sectionName + "-" + property.name}
           name={property.name}
-          value={property.value}
+          value={value}
           cols={55}
           rows={9}
           autoComplete="off"

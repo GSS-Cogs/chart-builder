@@ -7,6 +7,7 @@ import Textbox from "./property-inputs/Textbox";
 import TextArea from "./property-inputs/TextArea";
 import SparqlInput from "./property-inputs/SparqlInput";
 import DataSelectionSection from "./property-inputs/DataSelectionSection";
+import chartPropertiesSchema from "../../context/ChartPropertiesSchema";
 
 const mapTypeToComponent = {
   checkbox: Checkbox,
@@ -16,49 +17,14 @@ const mapTypeToComponent = {
 };
 
 const SidePanel = (): JSX.Element => {
-  const { chartProperties, setChartProperties }: ChartContextProps =
+  const { chartProperties, setChartProperties: updateProperty }: ChartContextProps =
     useContext(ChartContext);
 
-  const isAMap = chartProperties[0].properties[0].value === "Map";
-
-  const updateProperty = (sectionName: string, property: any, value: any) => {
-    const section = chartProperties.find(
-      (item: any) => item.name === sectionName,
-    );
-
-    if (!section) return;
-
-    const updatedProperties = section.properties.map((item: any) => {
-      if (item.name === property) {
-        return {
-          ...item,
-          value,
-        };
-      }
-      return item;
-    });
-
-    const updatedSection = {
-      name: section.name,
-      displayName: section.displayName,
-      sectionFor: section.sectionFor,
-      properties: updatedProperties,
-    };
-
-    // update the chart properties with the updated section
-    const updatedChartProperties = chartProperties.map((item: any) => {
-      if (item.name === section.name) {
-        return updatedSection;
-      }
-      return item;
-    });
-
-    setChartProperties(updatedChartProperties);
-  };
+  const isAMap = chartProperties?.chartTypes?.chartType === "Map";
 
   return (
     <div id="side-panel">
-      {chartProperties.map((section: any, index: number) => {
+      {chartPropertiesSchema.map((section: any, index: number) => {
         const showSection =
           section.sectionFor === "all" ||
           (section.sectionFor === "maps" && isAMap) ||
@@ -91,6 +57,7 @@ const SidePanel = (): JSX.Element => {
                     property={property}
                     sectionName={section.name}
                     updateProperty={updateProperty}
+                    value={chartProperties[section.name][property.name]}
                   />
                 );
               })}

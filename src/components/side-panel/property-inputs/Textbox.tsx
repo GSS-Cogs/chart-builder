@@ -1,19 +1,15 @@
 import { VoidFunctionComponent } from "react";
+import {PropertyInputProps} from "./types";
 
-interface Props {
-  property: any;
-  sectionName: string;
-  updateProperty: (sectionName: string, property: any, value: any) => void;
-}
-
-const Textbox: VoidFunctionComponent<Props> = ({
+const Textbox: VoidFunctionComponent<PropertyInputProps> = ({
   property,
   sectionName,
   updateProperty,
+  value,
 }) => {
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name: property, value } = e.target;
-    updateProperty(sectionName, property, value);
+    const { value } = e.target;
+    updateProperty(sectionName, property.name, value);
   };
 
   return (
@@ -29,7 +25,7 @@ const Textbox: VoidFunctionComponent<Props> = ({
           className={"textbox"}
           id={sectionName + "-" + property.name}
           name={property.name}
-          value={property.value}
+          value={value}
           autoComplete="off"
           onChange={onTextChange}
         />
