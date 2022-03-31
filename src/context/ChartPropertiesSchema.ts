@@ -10,14 +10,12 @@ const legendSection: ChartPropertySchemaSection = {
       displayName: "Show legend",
       type: "checkbox",
       defaultValue: true,
-      output: "svg",
     },
     {
       name: "xAxisOffset",
       displayName: "X axis offset",
       type: "text",
       defaultValue: -0.18,
-      output: "svg",
     },
   ],
 };
@@ -32,7 +30,6 @@ const GridlinesSection: ChartPropertySchemaSection = {
       displayName: "Show gridlines",
       type: "checkbox",
       defaultValue: true,
-      output: "svg",
     },
   ],
 };
@@ -49,7 +46,6 @@ const chartTypesSection: ChartPropertySchemaSection = {
       type: "radio",
       options: ["Line", "Bar", "Stacked Bar", "Map"],
       defaultValue: "Line",
-      output: "svg",
     },
   ],
 };
@@ -65,14 +61,12 @@ const interactivitySection: ChartPropertySchemaSection = {
       type: "radio",
       options: ["x+y", "none"],
       defaultValue: "x+y",
-      output: "svg",
     },
     {
       name: "hoverInfoUnit",
       displayName: "Hoverinfo unit",
       type: "text",
       defaultValue: "",
-      output: "svg",
     },
   ],
 };
@@ -87,14 +81,12 @@ const xAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
-      output: "svg",
     },
     {
       name: "xTickLabelMaxLength",
       displayName: "X axis tick label max. length",
       type: "text",
       defaultValue: 40,
-      output: "svg",
     },
     {
       name: "xAxisTickAngle",
@@ -102,7 +94,6 @@ const xAxisSection: ChartPropertySchemaSection = {
       type: "radio",
       options: ["0", "45", "-45", "-90"],
       defaultValue: "-45",
-      output: "svg",
     },
   ],
 };
@@ -117,7 +108,6 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
-      output: "svg",
     },
   ],
 };
@@ -132,35 +122,30 @@ const chartDimensionsSection: ChartPropertySchemaSection = {
       displayName: "Height(px)",
       type: "text",
       defaultValue: "550",
-      output: "svg",
     },
     {
       name: "marginLeft",
       displayName: "Left margin(px)",
       type: "text",
       defaultValue: "70",
-      output: "svg",
     },
     {
       name: "marginRight",
       displayName: "Right margin(px)",
       type: "text",
       defaultValue: "0",
-      output: "svg",
     },
     {
       name: "marginTop",
       displayName: "Top margin(px)",
       type: "text",
       defaultValue: "0",
-      output: "svg",
     },
     {
       name: "marginBottom",
       displayName: "Bottom margin(px)",
       type: "text",
       defaultValue: "70",
-      output: "svg",
     },
   ],
 };
@@ -176,7 +161,6 @@ const orientationSection: ChartPropertySchemaSection = {
       type: "radio",
       options: ["vertical", "horizontal"],
       defaultValue: "vertical",
-      output: "svg",
     },
   ],
 };
@@ -191,14 +175,12 @@ const colorBarSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
-      output: "svg",
     },
     {
       name: "colorBarWidth",
       displayName: "Width(px)",
       type: "text",
       defaultValue: "25",
-      output: "svg",
     },
     {
       name: "colorscale",
@@ -206,14 +188,12 @@ const colorBarSection: ChartPropertySchemaSection = {
       type: "radio",
       options: ["Sequential", "Diverging"],
       defaultValue: "Sequential",
-      output: "svg",
     },
     {
       name: "autocolorscale",
       displayName: "Auto color scale",
       type: "checkbox",
       defaultValue: false,
-      output: "svg",
     },
   ],
 };

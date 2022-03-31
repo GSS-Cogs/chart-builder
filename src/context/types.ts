@@ -38,7 +38,6 @@ export interface ChartPropertySchema {
   displayName: string;
   type: "checkbox" | "radio" | "text";
   defaultValue: boolean | string | number;
-  output: string;
   options?: string[];
   showPropertyLabel?: boolean;
 }

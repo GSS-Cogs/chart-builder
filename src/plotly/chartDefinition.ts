@@ -1,17 +1,10 @@
-import { getMapLayout, getChartLayout } from "./layout";
+import {getChartLayout, getMapLayout} from "./layout";
 import config from "./config";
-import { sequentialColorScale, divergingColorScale } from "./colorScales";
-import { GeoJSON } from "geojson";
+import {divergingColorScale, sequentialColorScale} from "./colorScales";
+import {GeoJSON} from "geojson";
 
 import {colors,} from "../helper-functions/chart-helpers";
 import {ChartPropertyValues,} from "../context/ChartContext";
-
-// A plain 'Bar' chart can also act as grouped bar chart if it
-// has more than one series so we set barmode as 'group'
-// Otherwise if its a 'Stacked Bar' barmode is 'stack'.
-const inferBarMode = (chartType: string) => {
-  return chartType === "bar" ? "group" : "stack";
-};
 
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
@@ -20,7 +13,6 @@ const updateChartDefinition = (
   geoJson: GeoJSON,
 ) => {
   const chartType = chartProps.chartTypes.chartType.toLowerCase();
-  chartProps.barmode = inferBarMode(chartType);
 
   let data;
   chartType === "map"
@@ -35,7 +27,7 @@ const updateChartDefinition = (
   return { data, layout, config };
 };
 
-const getChartData = (chartType: any, chartProps: any, chartData: any) => {
+const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData: any) => {
   const traces: any = [];
 
   // truncate the xSeries values to user specified length

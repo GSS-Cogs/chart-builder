@@ -1,12 +1,29 @@
-const getCommonLayout = (chartProps: any) => {
+import {ChartPropertyValues} from "../context/ChartContext";
+
+// A plain 'Bar' chart can also act as grouped bar chart if it
+// has more than one series so we set barmode as 'group'
+// Otherwise if its a 'Stacked Bar' barmode is 'stack'.
+const inferBarMode = (chartType: string) => {
+  return chartType === "bar" ? "group" : "stack";
+};
+
+const getCommonLayout = (chartProps: ChartPropertyValues) => {
+  const {
+    height,
+    marginLeft,
+    marginRight,
+    marginBottom,
+    marginTop,
+  } = chartProps.chartDimensionProperties;
+
   return {
     autosize: true,
-    height: parseInt(chartProps.height),
+    height: parseInt(height),
     margin: {
-      l: chartProps.marginLeft,
-      r: chartProps.marginRight,
-      b: chartProps.marginBottom,
-      t: chartProps.marginTop,
+      l: marginLeft,
+      r: marginRight,
+      b: marginBottom,
+      t: marginTop,
       pad: 4,
     },
     paper_bgcolor: "transparent",
@@ -14,35 +31,36 @@ const getCommonLayout = (chartProps: any) => {
   };
 };
 
-const getChartLayout = (chartProps: any) => {
+const getChartLayout = (chartProps: ChartPropertyValues) => {
   const commonLayout = getCommonLayout(chartProps);
+  const barmode = inferBarMode(chartProps.chartTypes.chartType.toLowerCase());
 
   const chartLayout = {
-    barmode: chartProps.barmode,
+    barmode,
     xaxis: {
       autorange: true,
       fixedrange: true, // prevents the user from zooming in/out
-      showgrid: chartProps.showGridLines,
+      showgrid: chartProps.Gridlines.showGridLines,
       title: {
-        text: chartProps.xAxisTitle,
+        text: chartProps.xAxisProperties.xAxisTitle,
         standoff: 20,
         font: { size: 14 },
       },
-      tickangle: chartProps.xAxisTickAngle,
+      tickangle: chartProps.xAxisProperties.xAxisTickAngle,
     },
     yaxis: {
       autorange: true,
       fixedrange: true, // prevents the user from zooming in/out
-      showgrid: chartProps.showGridLines,
-      title: { text: chartProps.yAxisTitle, standoff: 15, font: { size: 14 } },
+      showgrid: chartProps.Gridlines.showGridLines,
+      title: { text: chartProps.yAxisProperties.yAxisTitle, standoff: 15, font: { size: 14 } },
     },
-    legend: { orientation: "h", y: chartProps.xAxisOffset },
-    showlegend: chartProps.showLegend,
+    legend: { orientation: "h", y: chartProps.xAxisProperties.xAxisOffset },
+    showlegend: chartProps.LegendSection.showLegend,
   };
   return { ...commonLayout, ...chartLayout };
 };
 
-const getMapLayout = (chartProps: any) => {
+const getMapLayout = (chartProps: ChartPropertyValues) => {
   const commonLayout = getCommonLayout(chartProps);
 
   const mapLayout = {
