@@ -9,6 +9,12 @@ const ChartPreview = (): JSX.Element => {
   return <ActualChart chartDefinition={chartDefinition} />;
 };
 
+const isClientSideRender = typeof window !== "undefined";
+
+const Plot = isClientSideRender
+    ? React.lazy(() => import("react-plotly.js"))
+    : null;
+
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   if (Object.keys(chartDefinition).length === 0)
     return (
@@ -18,13 +24,6 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
         </div>
       </div>
     );
-
-  const isClientSideRender = typeof window !== "undefined";
-
-  let Plot;
-  if (isClientSideRender) {
-    Plot = React.lazy(() => import("react-plotly.js"));
-  }
 
   let { data, layout, config } = chartDefinition;
 
