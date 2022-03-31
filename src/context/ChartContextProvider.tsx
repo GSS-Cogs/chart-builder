@@ -13,6 +13,11 @@ import {
   getDistinctValues,
 } from "../helper-functions/array-helpers";
 
+import {
+  colors,
+  flattenChartProperties,
+} from "../helper-functions/chart-helpers";
+
 import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
 import updateChartDefinition from "../plotly/chartDefinition";
 
@@ -184,7 +189,29 @@ export function useChartContext(state: any) {
     }
   };
 
-  const { validateData } = useChartCsvData(setTidyData, setSelectedFilename);
+  const chartProps = flattenChartProperties(chartProperties);
+  const chartType = chartProps.chartType.toLowerCase();
+
+  const updateChartDefinition = () => {
+    const traces: any = [];
+
+    if (chartData) calculateYRange(chartData.ySeries);
+    chartData?.ySeries.map((series, index) => {
+      traces.push({
+        x: chartData!.xSeries.values,
+        y: series.values,
+        name: series.name,
+        type: chartType,
+        mode: "lines",
+        hoverinfo: chartProps.interactivity,
+        line: {
+          color: colors[index],
+        },
+      });
+    });
+
+    const layout: any = getLayout(chartProps, chartData);
+    const config: any = getConfig();
 
   return {
     tidyData,
