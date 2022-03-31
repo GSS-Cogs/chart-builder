@@ -174,10 +174,12 @@ function useEeaConnectorData(eeaData: EeaData | null, dataSelection: DataSelecti
       return undefined;
     }
 
-    const xSeries = Array.from(new Set(eeaData?.data?.[dataSelection.xSeries]));
+    const rawXSeries = eeaData?.data?.[dataSelection.xSeries];
+    // can't quite make (string|number)[] become (number[]|string[]) here.
+    const xSeries = Array.from(new Set(rawXSeries as any));
     const newXSeries: Series = {
       name: dataSelection.xSeries,
-      values: xSeries,
+      values: xSeries as any,
     };
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
