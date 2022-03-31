@@ -12,7 +12,9 @@ const updateChartDefinition = (
   mapData: any,
   geoJson: GeoJSON,
 ) => {
-  const chartType = chartProps.chartTypes.chartType.toLowerCase();
+  const chartType = typeof chartProps?.chartTypes?.chartType === 'string'
+    ? chartProps.chartTypes.chartType.toLowerCase()
+    : 'line';
 
   let data;
   chartType === "map"
@@ -30,9 +32,13 @@ const updateChartDefinition = (
 const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData: any) => {
   const traces: any = [];
 
+  const xTickLabelMaxLength = typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === 'string'
+    ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
+    : 9999;
+
   // truncate the xSeries values to user specified length
   const xSeries = chartData?.xSeries.values.map((value: string) => {
-    return String(value).substring(0, chartProps.xAxisProperties.xTickLabelMaxLength);
+    return String(value).substring(0, xTickLabelMaxLength);
   });
 
   chartData?.ySeries.map((series: any, index: number) => {

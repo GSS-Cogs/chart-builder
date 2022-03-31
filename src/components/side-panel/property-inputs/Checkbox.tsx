@@ -1,7 +1,14 @@
 import {VoidFunctionComponent} from "react";
-import {PropertyInputProps} from "./types";
+import {ChartPropertyCheckbox} from "../../../context/types";
 
-const Checkbox: VoidFunctionComponent<PropertyInputProps> = ({
+export interface CheckboxProps {
+    property: ChartPropertyCheckbox;
+    sectionName: string;
+    updateProperty: (sectionName: string, property: string, value: number | boolean | string) => void;
+    value: boolean;
+}
+
+const Checkbox: VoidFunctionComponent<CheckboxProps> = ({
   property,
   sectionName,
   updateProperty,

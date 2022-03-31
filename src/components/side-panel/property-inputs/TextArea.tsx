@@ -1,14 +1,21 @@
-import { VoidFunctionComponent } from "react";
-import {PropertyInputProps} from "./types";
+import {VoidFunctionComponent} from "react";
+import {ChartPropertyText} from "../../../context/types";
 
-const TextArea: VoidFunctionComponent<PropertyInputProps> = ({
+export interface TextAreaInputProps {
+  property: ChartPropertyText<number | string>;
+  sectionName: string;
+  updateProperty: (sectionName: string, property: string, value: number | boolean | string) => void;
+  value: number | string;
+}
+
+const TextArea: VoidFunctionComponent<TextAreaInputProps> = ({
   property,
   sectionName,
   updateProperty,
   value,
 }) => {
   const onTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = e.target;
+    const {value} = e.target;
     updateProperty(sectionName, property.name, value);
   };
   return (

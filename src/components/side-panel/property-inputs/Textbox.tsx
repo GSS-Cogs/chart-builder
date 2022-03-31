@@ -1,7 +1,14 @@
-import { VoidFunctionComponent } from "react";
-import {PropertyInputProps} from "./types";
+import {VoidFunctionComponent} from "react";
+import {ChartPropertyText} from "../../../context/types";
 
-const Textbox: VoidFunctionComponent<PropertyInputProps> = ({
+export interface TextboxProps {
+  property: ChartPropertyText<number | string>;
+  sectionName: string;
+  updateProperty: (sectionName: string, property: string, value: number | boolean | string) => void;
+  value: number | string;
+}
+
+const Textbox: VoidFunctionComponent<TextboxProps> = ({
   property,
   sectionName,
   updateProperty,

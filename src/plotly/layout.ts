@@ -3,22 +3,24 @@ import {ChartPropertyValues} from "../context/ChartContext";
 // A plain 'Bar' chart can also act as grouped bar chart if it
 // has more than one series so we set barmode as 'group'
 // Otherwise if its a 'Stacked Bar' barmode is 'stack'.
-const inferBarMode = (chartType: string) => {
-  return chartType === "bar" ? "group" : "stack";
+const inferBarMode = (chartType: string|null) => {
+  return (chartType || 'bar').toLowerCase() === "bar" ? "group" : "stack";
 };
 
 const getCommonLayout = (chartProps: ChartPropertyValues) => {
   const {
-    height,
+    height: rawHeight,
     marginLeft,
     marginRight,
     marginBottom,
     marginTop,
   } = chartProps.chartDimensionProperties;
 
+  const height: number = parseInt(rawHeight as any);
+
   return {
     autosize: true,
-    height: parseInt(height),
+    height: height,
     margin: {
       l: marginLeft,
       r: marginRight,
@@ -33,7 +35,7 @@ const getCommonLayout = (chartProps: ChartPropertyValues) => {
 
 const getChartLayout = (chartProps: ChartPropertyValues) => {
   const commonLayout = getCommonLayout(chartProps);
-  const barmode = inferBarMode(chartProps.chartTypes.chartType.toLowerCase());
+  const barmode = inferBarMode(chartProps.chartTypes.chartType as any);
 
   const chartLayout = {
     barmode,
