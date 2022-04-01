@@ -1,19 +1,22 @@
-import { VoidFunctionComponent } from "react";
+import {VoidFunctionComponent} from "react";
+import {ChartPropertyText} from "../../../context/types";
 
-interface Props {
-  property: any;
+export interface TextboxProps {
+  property: ChartPropertyText<number | string>;
   sectionName: string;
-  updateProperty: (sectionName: string, property: any, value: any) => void;
+  updateProperty: (sectionName: string, property: string, value: number | boolean | string) => void;
+  value: number | string;
 }
 
-const Textbox: VoidFunctionComponent<Props> = ({
+const Textbox: VoidFunctionComponent<TextboxProps> = ({
   property,
   sectionName,
   updateProperty,
+  value,
 }) => {
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name: property, value } = e.target;
-    updateProperty(sectionName, property, value);
+    const { value } = e.target;
+    updateProperty(sectionName, property.name, value);
   };
 
   return (
@@ -29,7 +32,7 @@ const Textbox: VoidFunctionComponent<Props> = ({
           className={"textbox"}
           id={sectionName + "-" + property.name}
           name={property.name}
-          value={property.value}
+          value={value}
           autoComplete="off"
           onChange={onTextChange}
         />

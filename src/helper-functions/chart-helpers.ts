@@ -9,15 +9,4 @@ const colors = [
   "rgb(80, 90, 95)",
 ];
 
-const flattenChartProperties = (chartProperties: any): any => {
-  let chartProps: any = {};
-
-  chartProperties.forEach((section: any) => {
-    section.properties.forEach((property: any) => {
-      chartProps = { ...chartProps, [property.name]: property.value };
-    });
-  });
-  return chartProps;
-};
-
-export { colors, flattenChartProperties };
+export { colors };

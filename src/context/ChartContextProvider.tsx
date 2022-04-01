@@ -1,6 +1,6 @@
-import ChartContext, {ChartContextProps, ChartContextState} from "./ChartContext";
+import ChartContext, {ChartContextProps, ChartContextState, ChartPropertyValues, ChartPropertySectionValues} from "./ChartContext";
 import {ReactNode, useCallback, useEffect, useMemo, useState,} from "react";
-import initialChartProperties from "./initialChartProperties";
+import chartPropertiesSchema from "./ChartPropertiesSchema";
 import useChartCsvData from "./useChartCsvData";
 import {
   ChartData,
@@ -10,7 +10,7 @@ import {
   SelectedDimension,
   Series,
   TidyData,
-  ChartDataProvider
+  ChartDataProvider, ChartPropertySchemaSection, ChartPropertySchema
 } from "./types";
 import { getMapData } from "../services/map-data/mapDataLoader";
 import { getGeoJson } from "../services/map-data/geoJsonLoader";
@@ -29,13 +29,22 @@ interface Props {
   children: ReactNode;
 }
 
+export function getInitialChartProperties(): ChartPropertyValues {
+  return chartPropertiesSchema.reduce((acc: ChartPropertyValues, section: ChartPropertySchemaSection) => {
+    acc[section.name] = section.properties.reduce((acc: ChartPropertySectionValues, prop: ChartPropertySchema) => {
+      acc[prop.name] = prop.defaultValue;
+      return acc;
+    }, {})
+    return acc;
+  }, {});
+}
+
 export function useChartContextState(): ChartContextState {
   const [chartDefinition, setChartDefinition] = useState<PlotlyChartDefinition>(
       {}
   );
-  const [chartProperties, setChartProperties] = useState(
-      initialChartProperties,
-  );
+  const [chartProperties, setChartPropertiesMap] = useState(getInitialChartProperties);
+
   const [selectedFilename, setSelectedFilename] = useState(
     NO_FILE_SELECTED_TEXT,
   );
@@ -51,6 +60,20 @@ export function useChartContextState(): ChartContextState {
   const [mapData, setMapData] = useState<any>([]);
   const [geoJson, setGeoJson] = useState<GeoJSON>({} as GeoJSON);
   const [sparqlQuery, setSparqlQuery] = useState<string>("");
+
+  const setChartProperties = useCallback(
+      (section: string, name: string, value: boolean | number | string): void => {
+        setChartPropertiesMap((existing) => {
+          return {
+            ...existing,
+            [section]: {
+              ...existing[section],
+              [name]: value,
+            }
+          }
+        });
+      }
+  , [setChartPropertiesMap])
 
   return {
     chartDefinition,
@@ -151,10 +174,12 @@ function useEeaConnectorData(eeaData: EeaData | null, dataSelection: DataSelecti
       return undefined;
     }
 
-    const xSeries = Array.from(new Set(eeaData?.data?.[dataSelection.xSeries]));
+    const rawXSeries = eeaData?.data?.[dataSelection.xSeries];
+    // can't quite make (string|number)[] become (number[]|string[]) here.
+    const xSeries = Array.from(new Set(rawXSeries as any));
     const newXSeries: Series = {
       name: dataSelection.xSeries,
-      values: xSeries,
+      values: xSeries as any,
     };
 
     if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {

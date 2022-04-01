@@ -1,19 +1,22 @@
-import { VoidFunctionComponent } from "react";
+import {VoidFunctionComponent} from "react";
+import {ChartPropertyCheckbox} from "../../../context/types";
 
-interface Props {
-  property: any;
-  sectionName: string;
-  updateProperty: (sectionName: string, property: any, value: any) => void;
+export interface CheckboxProps {
+    property: ChartPropertyCheckbox;
+    sectionName: string;
+    updateProperty: (sectionName: string, property: string, value: number | boolean | string) => void;
+    value: boolean;
 }
 
-const Checkbox: VoidFunctionComponent<Props> = ({
+const Checkbox: VoidFunctionComponent<CheckboxProps> = ({
   property,
   sectionName,
   updateProperty,
+  value,
 }) => {
   const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: property, checked: value } = e.target;
-    updateProperty(sectionName, property, value);
+    const { checked: value } = e.target;
+    updateProperty(sectionName, property.name, value);
   };
   return (
     <div className="inline-chart-property" key={property.name}>
@@ -23,7 +26,7 @@ const Checkbox: VoidFunctionComponent<Props> = ({
         id={sectionName + "-" + property.name}
         name={property.name}
         value={property.name}
-        checked={property.value}
+        checked={value}
         onChange={onCheckboxChange}
       />
       <label

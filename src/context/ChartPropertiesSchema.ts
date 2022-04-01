@@ -1,16 +1,6 @@
-import { ChartPropertySection } from "./types";
+import {ChartPropertySchemaSection} from "./types";
 
-export interface ChartProperty {
-  name: string;
-  displayName: string;
-  type: "checkbox" | "radio" | "text";
-  value: boolean | string | number;
-  output: string;
-  options?: string[];
-  showPropertyLabel?: boolean;
-}
-
-const legendSection: ChartPropertySection = {
+const legendSection: ChartPropertySchemaSection = {
   name: "LegendSection",
   displayName: "Legend",
   sectionFor: "charts",
@@ -19,20 +9,18 @@ const legendSection: ChartPropertySection = {
       name: "showLegend",
       displayName: "Show legend",
       type: "checkbox",
-      value: true,
-      output: "svg",
+      defaultValue: true,
     },
     {
       name: "xAxisOffset",
       displayName: "X axis offset",
       type: "text",
-      value: -0.18,
-      output: "svg",
+      defaultValue: -0.18,
     },
   ],
 };
 
-const GridlinesSection: ChartPropertySection = {
+const GridlinesSection: ChartPropertySchemaSection = {
   name: "Gridlines",
   displayName: "Gridlines",
   sectionFor: "charts",
@@ -41,13 +29,12 @@ const GridlinesSection: ChartPropertySection = {
       name: "showGridLines",
       displayName: "Show gridlines",
       type: "checkbox",
-      value: true,
-      output: "svg",
+      defaultValue: true,
     },
   ],
 };
 
-const chartTypesSection: ChartPropertySection = {
+const chartTypesSection: ChartPropertySchemaSection = {
   name: "chartTypes",
   displayName: "Chart type",
   sectionFor: "all",
@@ -58,13 +45,12 @@ const chartTypesSection: ChartPropertySection = {
       showPropertyLabel: false,
       type: "radio",
       options: ["Line", "Bar", "Stacked Bar", "Map"],
-      value: "Line",
-      output: "svg",
+      defaultValue: "Line",
     },
   ],
 };
 
-const interactivitySection: ChartPropertySection = {
+const interactivitySection: ChartPropertySchemaSection = {
   name: "Interactivity",
   displayName: "Interactivity",
   sectionFor: "all",
@@ -74,20 +60,18 @@ const interactivitySection: ChartPropertySection = {
       displayName: "Series tooltip",
       type: "radio",
       options: ["x+y", "none"],
-      value: "x+y",
-      output: "svg",
+      defaultValue: "x+y",
     },
     {
       name: "hoverInfoUnit",
       displayName: "Hoverinfo unit",
       type: "text",
-      value: "",
-      output: "svg",
+      defaultValue: "",
     },
   ],
 };
 
-const xAxisSection: ChartPropertySection = {
+const xAxisSection: ChartPropertySchemaSection = {
   name: "xAxisProperties",
   displayName: "X axis",
   sectionFor: "charts",
@@ -96,28 +80,25 @@ const xAxisSection: ChartPropertySection = {
       name: "xAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "",
-      output: "svg",
+      defaultValue: "",
     },
     {
       name: "xTickLabelMaxLength",
       displayName: "X axis tick label max. length",
       type: "text",
-      value: 40,
-      output: "svg",
+      defaultValue: 40,
     },
     {
       name: "xAxisTickAngle",
       displayName: "X axis label rotation",
       type: "radio",
       options: ["0", "45", "-45", "-90"],
-      value: "-45",
-      output: "svg",
+      defaultValue: "-45",
     },
   ],
 };
 
-const yAxisSection: ChartPropertySection = {
+const yAxisSection: ChartPropertySchemaSection = {
   name: "yAxisProperties",
   displayName: "Y axis",
   sectionFor: "charts",
@@ -126,13 +107,12 @@ const yAxisSection: ChartPropertySection = {
       name: "yAxisTitle",
       displayName: "Title",
       type: "text",
-      value: "",
-      output: "svg",
+      defaultValue: "",
     },
   ],
 };
 
-const chartDimensionsSection: ChartPropertySection = {
+const chartDimensionsSection: ChartPropertySchemaSection = {
   name: "chartDimensionProperties",
   displayName: "Chart dimensions",
   sectionFor: "all",
@@ -141,41 +121,36 @@ const chartDimensionsSection: ChartPropertySection = {
       name: "height",
       displayName: "Height(px)",
       type: "text",
-      value: "550",
-      output: "svg",
+      defaultValue: "550",
     },
     {
       name: "marginLeft",
       displayName: "Left margin(px)",
       type: "text",
-      value: "70",
-      output: "svg",
+      defaultValue: "70",
     },
     {
       name: "marginRight",
       displayName: "Right margin(px)",
       type: "text",
-      value: "0",
-      output: "svg",
+      defaultValue: "0",
     },
     {
       name: "marginTop",
       displayName: "Top margin(px)",
       type: "text",
-      value: "0",
-      output: "svg",
+      defaultValue: "0",
     },
     {
       name: "marginBottom",
       displayName: "Bottom margin(px)",
       type: "text",
-      value: "70",
-      output: "svg",
+      defaultValue: "70",
     },
   ],
 };
 
-const orientationSection: ChartPropertySection = {
+const orientationSection: ChartPropertySchemaSection = {
   name: "orientationProperties",
   displayName: "Chart orientation",
   sectionFor: "charts",
@@ -185,13 +160,12 @@ const orientationSection: ChartPropertySection = {
       displayName: "Bar chart orientation",
       type: "radio",
       options: ["vertical", "horizontal"],
-      value: "vertical",
-      output: "svg",
+      defaultValue: "vertical",
     },
   ],
 };
 
-const colorBarSection: ChartPropertySection = {
+const colorBarSection: ChartPropertySchemaSection = {
   name: "colorBarProperties",
   displayName: "Colorbar",
   sectionFor: "maps",
@@ -200,35 +174,31 @@ const colorBarSection: ChartPropertySection = {
       name: "colorBarTitle",
       displayName: "Title",
       type: "text",
-      value: "",
-      output: "svg",
+      defaultValue: "",
     },
     {
       name: "colorBarWidth",
       displayName: "Width(px)",
       type: "text",
-      value: "25",
-      output: "svg",
+      defaultValue: "25",
     },
     {
       name: "colorscale",
       displayName: "Color scale",
       type: "radio",
       options: ["Sequential", "Diverging"],
-      value: "Sequential",
-      output: "svg",
+      defaultValue: "Sequential",
     },
     {
       name: "autocolorscale",
       displayName: "Auto color scale",
       type: "checkbox",
-      value: false,
-      output: "svg",
+      defaultValue: false,
     },
   ],
 };
 
-const initialChartProperties: ChartPropertySection[] = [
+const chartPropertiesSchema: ChartPropertySchemaSection[] = [
   chartTypesSection,
   orientationSection,
   chartDimensionsSection,
@@ -240,4 +210,4 @@ const initialChartProperties: ChartPropertySection[] = [
   interactivitySection,
 ];
 
-export default initialChartProperties;
+export default chartPropertiesSchema;

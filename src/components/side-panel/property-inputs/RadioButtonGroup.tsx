@@ -1,19 +1,22 @@
-import { VoidFunctionComponent } from "react";
+import {VoidFunctionComponent} from "react";
+import {ChartPropertyRadio} from "../../../context/types";
 
-interface Props {
-  property: any;
-  sectionName: string;
-  updateProperty: (sectionName: string, property: any, value: any) => void;
+export interface RadioButtonGroupProps {
+    property: ChartPropertyRadio<any>;
+    sectionName: string;
+    updateProperty: (sectionName: string, property: string, value: number | boolean | string) => void;
+    value: number | string;
 }
 
-const RadioButtonGroup: VoidFunctionComponent<Props> = ({
+const RadioButtonGroup: VoidFunctionComponent<RadioButtonGroupProps> = ({
   property,
   sectionName,
   updateProperty,
+  value,
 }) => {
   const onRadioButtonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name: property, value } = e.target;
-    updateProperty(sectionName, property, value);
+    const { value } = e.target;
+    updateProperty(sectionName, property.name, value);
   };
 
   // if the displayName is empty then we don't want to display it
@@ -31,7 +34,7 @@ const RadioButtonGroup: VoidFunctionComponent<Props> = ({
             id={sectionName + "-" + property.name + option}
             name={property.name}
             value={option}
-            checked={property.value === option}
+            checked={value === option}
             onChange={onRadioButtonChange}
           />
           <label htmlFor={sectionName + "-" + property.name + option}>
