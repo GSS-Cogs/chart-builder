@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const baseConfig = {
   entry: './src/library.js',
-  mode: 'production',
+  mode: 'development',
   devtool: 'cheap-source-map',
   module: {
     rules: [
@@ -12,7 +12,15 @@ const baseConfig = {
         use: [{
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/typescript', '@babel/react'],
+            presets: [
+              '@babel/typescript',
+              [
+                '@babel/preset-react',
+                {
+                  'runtime': 'automatic'
+                },
+              ],
+            ],
             plugins: ['@babel/plugin-proposal-optional-chaining']
           }
         }],
@@ -27,6 +35,7 @@ const baseConfig = {
 
   externals: {
     react: 'react',
+    'react/jsx-runtime': 'react/jsx-runtime',
     'react-dom': 'react-dom',
     'react-plotly.js': 'react-plotly.js'
   },

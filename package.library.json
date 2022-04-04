@@ -6,7 +6,7 @@
   "dependencies": {
   },
   "peerDependencies": {
-    "react": "^17.0.2",
+    "react": ">=16.14.0",
     "react-plotly.js": "^2.5.1"
   }
 }
