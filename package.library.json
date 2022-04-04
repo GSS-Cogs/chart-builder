@@ -1,0 +1,12 @@
+{
+  "name": "gss-cogs-chart-builder",
+  "version": "${VERSION}",
+  "main": "./cjs/chart-builder.cjs.js",
+  "browser": "./umd/chart-builder.umd.js",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-plotly.js": "^2.5.1"
+  }
+}
