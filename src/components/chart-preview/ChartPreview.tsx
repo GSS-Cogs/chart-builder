@@ -1,8 +1,7 @@
-import { Suspense, useContext } from "react";
+import React, { Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
 import "./chart-preview.css";
 import NoDataIcon from "../../assets/icons/chart-preview/NoDataIcon.svg";
-import React from "react";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
