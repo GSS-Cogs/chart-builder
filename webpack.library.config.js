@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const baseConfig = {
   entry: './src/library.js',
-  mode: 'development',
+  mode: 'production',
   devtool: 'cheap-source-map',
   module: {
     rules: [
