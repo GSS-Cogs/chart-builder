@@ -54,9 +54,13 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
       autorange: true,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.Gridlines.showGridLines,
-      title: { text: chartProps.yAxisProperties.yAxisTitle, standoff: 15, font: { size: 14 } },
+      title: {
+        text: chartProps.yAxisProperties.yAxisTitle,
+        standoff: 15,
+        font: { size: 14 },
+      },
     },
-    legend: { orientation: "h", y: chartProps.xAxisProperties.xAxisOffset },
+    legend: { orientation: "h", y: chartProps.LegendSection.xAxisOffset },
     showlegend: chartProps.LegendSection.showLegend,
   };
   return { ...commonLayout, ...chartLayout };
