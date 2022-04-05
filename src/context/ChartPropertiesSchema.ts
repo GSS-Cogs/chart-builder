@@ -1,4 +1,4 @@
-import {ChartPropertySchemaSection} from "./types";
+import { ChartPropertySchemaSection } from "./types";
 
 const legendSection: ChartPropertySchemaSection = {
   name: "LegendSection",
@@ -15,7 +15,7 @@ const legendSection: ChartPropertySchemaSection = {
       name: "xAxisOffset",
       displayName: "X axis offset",
       type: "text",
-      defaultValue: -0.18,
+      defaultValue: -0.2,
     },
   ],
 };
@@ -121,31 +121,31 @@ const chartDimensionsSection: ChartPropertySchemaSection = {
       name: "height",
       displayName: "Height(px)",
       type: "text",
-      defaultValue: "550",
+      defaultValue: "630",
     },
     {
       name: "marginLeft",
       displayName: "Left margin(px)",
       type: "text",
-      defaultValue: "70",
+      defaultValue: "100",
     },
     {
       name: "marginRight",
       displayName: "Right margin(px)",
       type: "text",
-      defaultValue: "0",
+      defaultValue: "50",
     },
     {
       name: "marginTop",
       displayName: "Top margin(px)",
       type: "text",
-      defaultValue: "0",
+      defaultValue: "50",
     },
     {
       name: "marginBottom",
       displayName: "Bottom margin(px)",
       type: "text",
-      defaultValue: "70",
+      defaultValue: "110",
     },
   ],
 };
