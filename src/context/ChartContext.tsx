@@ -4,7 +4,7 @@ import {
   DataSelection,
   EeaData,
   PlotlyChartDefinition,
-  SelectedDimension
+  SelectedDimension,
 } from "./types";
 
 export interface ChartPropertySectionValues {
@@ -12,7 +12,7 @@ export interface ChartPropertySectionValues {
 }
 
 export interface ChartPropertyValues {
-  [section: string]: ChartPropertySectionValues
+  [section: string]: ChartPropertySectionValues;
 }
 
 export interface ChartContextState {
@@ -24,7 +24,11 @@ export interface ChartContextState {
   // chart property values.
   // The fields are all statically defined in ChartPropertiesSchema.
   chartProperties: ChartPropertyValues;
-  setChartProperties: (section: string, field: string, value: boolean | number | string) => void,
+  setChartProperties: (
+    section: string,
+    field: string,
+    value: boolean | number | string,
+  ) => void;
 
   // just a simple display var
   selectedFilename: string;
@@ -41,10 +45,10 @@ export interface ChartContextState {
   selectedColumns: string[];
   setSelectedColumns: Dispatch<SetStateAction<string[]>>;
 
-  mapData: any,
-  setMapData: any,
-  geoJson: any,
-  setGeoJson: any,
+  mapData: any;
+  setMapData: any;
+  geoJson: any;
+  setGeoJson: any;
 
   sparqlQuery: string;
   setSparqlQuery: Dispatch<SetStateAction<string>>;
@@ -52,9 +56,14 @@ export interface ChartContextState {
 
 export interface ChartContextProps {
   chartDefinition: PlotlyChartDefinition;
+  setChartDefinition: Dispatch<SetStateAction<PlotlyChartDefinition>>;
 
   chartProperties: ChartPropertyValues;
-  setChartProperties: (section: string, field: string, value: boolean | number | string) => void,
+  setChartProperties: (
+    section: string,
+    field: string,
+    value: boolean | number | string,
+  ) => void;
 
   selectedFilename: string;
   setSelectedFilename: Dispatch<SetStateAction<string>>;
@@ -74,10 +83,10 @@ export interface ChartContextProps {
   // with the available dimensions
   availableDimensions: string[];
 
-  mapData: any,
-  setMapData: any,
-  geoJson: any,
-  setGeoJson: any,
+  mapData: any;
+  setMapData: any;
+  geoJson: any;
+  setGeoJson: any;
 
   importCsvData: (data: File | string, filename: string) => void;
   importEeaData: (data: EeaData) => void;

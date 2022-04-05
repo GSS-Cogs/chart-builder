@@ -1,16 +1,11 @@
 #side-panel {
-  /* The 61px in calc below is the height of the side portal heading area */
-  height: calc(100vh - 61px);
+  /* The 61px in calc below is the height of the side bar portal heading area */
+  height: calc(100vh - 52px);
 
   min-width: calc(100% - 2rem);
   max-width: calc(100% -2rem);
 
-  /* Uncomment for standalone chart builder */
-  /* min-width: 27.5rem;
-  max-width: 27.5rem;
-
   overflow-y: scroll;
-  */
 }
 
 .chart-property {
@@ -54,7 +49,7 @@
 
 .textbox {
   padding: 0.35rem 0.2rem;
-  width: 20rem;
+  width: 15rem;
   margin-right: 2rem;
   border-style: solid;
   border-width: 0.08rem;
@@ -113,17 +108,4 @@
   display: flex;
   align-items: center;
   margin-top: 0.5rem;
-}
-
-#sparql-input {
-  width: 100%;
-  margin-top: 0.7rem;
-  padding: 0.2rem;
-  font-size: 0.8rem;
-  font-family: monospace;
-  border-style: solid;
-  background-color: whitesmoke;
-  outline: none;
-  overflow-y: auto;
-  resize: none;
 }

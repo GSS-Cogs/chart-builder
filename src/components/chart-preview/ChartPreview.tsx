@@ -1,6 +1,5 @@
 import { Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
-import "./chart-preview.css";
 import NoDataIcon from "../../assets/icons/chart-preview/NoDataIcon.svg";
 import React from "react";
 
@@ -12,11 +11,13 @@ const ChartPreview = (): JSX.Element => {
 const isClientSideRender = typeof window !== "undefined";
 
 const Plot = isClientSideRender
-    ? React.lazy(() => import("react-plotly.js"))
-    : null;
+  ? React.lazy(() => import("react-plotly.js"))
+  : null;
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
-  if (Object.keys(chartDefinition).length === 0)
+  const emptyDataState = Object.keys(chartDefinition).length === 0;
+
+  if (emptyDataState)
     return (
       <div id="no-data-container">
         <div id="no-data">
@@ -33,7 +34,7 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   layout.datarevision++;
 
   return (
-    <div id="chart-preview">
+    <div id="chart">
       {Plot ? (
         <Suspense fallback={<div />}>
           <Plot

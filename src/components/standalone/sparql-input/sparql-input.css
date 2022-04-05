@@ -1,0 +1,20 @@
+#sparql-wrapper {
+  display: flex;
+  justify-content: stretch;
+  width: 100%;
+}
+
+#sparql-input {
+  display: flex;
+  flex: 1;
+  margin: 2rem;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-family: monospace;
+  border-style: solid;
+  background-color: whitesmoke;
+  outline: none;
+  overflow-y: auto;
+  resize: none;
+  border-radius: 0.2rem;
+}

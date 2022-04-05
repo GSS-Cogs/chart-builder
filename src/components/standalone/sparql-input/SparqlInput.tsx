@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
+import "./sparql-input.css";
 
 const SparqlInput = () => {
   const { sparqlQuery, setSparqlQuery }: ChartContextProps =
     useContext(ChartContext);
 
   return (
-    <div className="property-section">
-      <div className="section-heading"> SPARQL Query</div>
+    <div id="sparql-wrapper">
       <textarea
         id="sparql-input"
+        placeholder="Enter a SPARQL query here..."
         rows={10}
         value={sparqlQuery}
         spellCheck={false}
