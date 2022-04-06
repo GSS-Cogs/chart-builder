@@ -22,10 +22,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "clean": "rimraf dist",
-    "library:copy": "cp README.md dist/",
-    "library": "yarn clean; webpack --config webpack.library.config.js; yarn envsub -p package.library.json dist/package.json; yarn library:copy",
-    "library:dev": "yarn clean; mkdir dist; cp package.library.json dist/package.json; webpack --watch --config webpack.library.config.js;"
+    "prelibrary": "rimraf dist",
+    "prelibrary-dev": "rimraf dist",
+    "library": "webpack --config webpack.library.config.js; yarn envsub -p package.library.json dist/package.json; cp README.md dist/",
+    "library-dev": "mkdir dist; cp package.library.json dist/package.json; webpack --watch --config webpack.library.config.js;"
   },
   "eslintConfig": {
     "extends": [
