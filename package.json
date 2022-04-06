@@ -24,7 +24,8 @@
     "eject": "react-scripts eject",
     "clean": "rimraf dist",
     "library:copy": "cp README.md dist/",
-    "library": "yarn clean; webpack --config webpack.library.config.js; yarn envsub -p package.library.json dist/package.json; yarn library:copy"
+    "library": "yarn clean; webpack --config webpack.library.config.js; yarn envsub -p package.library.json dist/package.json; yarn library:copy",
+    "library:dev": "yarn clean; mkdir dist; cp package.library.json dist/package.json; webpack --watch --config webpack.library.config.js;"
   },
   "eslintConfig": {
     "extends": [
