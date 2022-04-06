@@ -1,9 +1,12 @@
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
+const isProd = process.env.CHART_BUILDER_ENV === 'prod';
 
 const baseConfig = {
   entry: './src/library.js',
-  mode: 'development',
+  mode: isProd ? 'production' : 'development',
   devtool: 'cheap-source-map',
   module: {
     rules: [
@@ -43,7 +46,7 @@ const baseConfig = {
   optimization: {
     usedExports: false
   }
-}
+};
 
 module.exports = [
   // umd config
@@ -54,7 +57,19 @@ module.exports = [
       new MiniCssExtractPlugin({
         runtime: false,
         filename: '../gss-cogs-chart-builder.css'
-      })
+      }),
+      new CopyPlugin({
+        patterns: [
+          {from: 'README.md', to: '../README.md'},
+          {
+            from: 'package.library.json',
+            to: '../package.json',
+            transform(source) {
+              return source.toString().replace('VERSION', process.env.VERSION || 'unknown');
+            },
+          }
+        ]
+      }),
     ],
     module: {
       ...baseConfig.module,
@@ -62,7 +77,7 @@ module.exports = [
         ...baseConfig.module.rules,
         {
           test: /\.css$/,
-          use: [MiniCssExtractPlugin.loader, "css-loader"],
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
         }
       ]
     },
