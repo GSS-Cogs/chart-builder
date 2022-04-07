@@ -69,3 +69,22 @@ Automated build is triggered by changes to the main branch of the `chart-builder
 
 
 
+
+
+## Library Build
+
+The chart builder can be built as a reusable NPM package.  Start by choosing a version number, then run:
+
+```shell
+# set version
+export VERSION=<next version> 
+# use webpack.library.config.js to build the dist/ dir
+yarn library
+# publish it to NPM
+cd dist
+yarn publish
+# tag it and push the tag to origin
+git tag $VERSION
+git push --tags 
+``` 
+

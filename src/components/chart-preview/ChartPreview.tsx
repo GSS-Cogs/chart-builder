@@ -1,7 +1,6 @@
-import { Suspense, useContext } from "react";
+import { lazy, Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
 import NoDataIcon from "../../assets/icons/chart-preview/NoDataIcon.svg";
-import React from "react";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
@@ -11,8 +10,8 @@ const ChartPreview = (): JSX.Element => {
 const isClientSideRender = typeof window !== "undefined";
 
 const Plot = isClientSideRender
-  ? React.lazy(() => import("react-plotly.js"))
-  : null;
+    ? lazy(() => import("react-plotly.js"))
+    : null;
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   const emptyDataState = Object.keys(chartDefinition).length === 0;
