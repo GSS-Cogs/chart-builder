@@ -4,6 +4,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const isProd = process.env.CHART_BUILDER_ENV === 'prod';
 
+const basePath = path.resolve(process.env.CB_OUTPUT_PATH || 'dist');
+
 const baseConfig = {
   entry: './src/library.js',
   mode: isProd ? 'production' : 'development',
@@ -82,7 +84,7 @@ module.exports = [
       ]
     },
     output: {
-      path: path.resolve(__dirname, 'dist/umd'),
+      path: path.resolve(basePath, 'umd'),
       libraryTarget: 'umd',
       filename: 'chart-builder.umd.js',
       auxiliaryComment: 'chart-builder components'
@@ -105,7 +107,7 @@ module.exports = [
     },
 
     output: {
-      path: path.resolve(__dirname, 'dist/cjs'),
+      path: path.resolve(basePath, 'cjs'),
       libraryTarget: 'commonjs2',
       filename: 'chart-builder.cjs.js',
       auxiliaryComment: 'chart-builder components'
