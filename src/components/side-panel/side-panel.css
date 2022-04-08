@@ -1,6 +1,6 @@
 #side-panel {
   /* The 61px in calc below is the height of the side bar portal heading area */
-  height: calc(100vh - 52px);
+  height: calc(100vh - 61px);
   min-width: calc(100% - 2rem);
   max-width: calc(100% -2rem);
 }
