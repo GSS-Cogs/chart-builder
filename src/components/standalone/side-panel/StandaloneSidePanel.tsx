@@ -1,5 +1,6 @@
 import { ReactChildren, ReactChild, useContext } from "react";
 import StandaloneContext from "../../../context/StandaloneContext";
+import "./standalone-side-panel.css";
 
 interface Props {
   children: ReactChild | ReactChildren;
