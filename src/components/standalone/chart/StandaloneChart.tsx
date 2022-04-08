@@ -26,9 +26,12 @@ const ChartPreviewStandalone = ({ children }: Props) => {
   const onFullScreenClick = () => {
     setIsFullScreen(!isFullScreen);
     const { layout } = chartDefinition;
+
     // increment datarevision to force plotly to update the chart width.
-    layout.datarevision++;
-    setChartDefinition({ ...chartDefinition, layout: { ...layout } });
+    setChartDefinition({
+      ...chartDefinition,
+      layout: { ...layout, datarevision: layout.datarevision + 1 },
+    });
   };
 
   return (
