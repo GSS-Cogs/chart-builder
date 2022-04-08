@@ -1,6 +1,6 @@
 {
   "name": "gss-cogs-chart-builder",
-  "version": "${VERSION}",
+  "version": "VERSION",
   "main": "./cjs/chart-builder.cjs.js",
   "browser": "./umd/chart-builder.umd.js",
   "dependencies": {

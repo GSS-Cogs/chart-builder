@@ -1,0 +1,6 @@
+#side-panel-wrapper {
+  height: calc(100vh - 53px);
+  min-width: 22.5rem;
+  max-width: 22.5rem;
+  overflow-y: scroll;
+}

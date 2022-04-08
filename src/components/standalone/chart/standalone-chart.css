@@ -1,0 +1,31 @@
+/* Wrapper around the chart preview to allow scroll bars to work and to create the white-smoke margin around the preview */
+#preview-wrapper {
+  display: flex;
+  background-color: rgb(245, 245, 245);
+  height: calc(100vh - 52px);
+  overflow-y: scroll;
+  flex: 1;
+}
+
+/* The heading area and the actual chart preview */
+#chart-preview-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+  width: calc(100% - 4rem);
+}
+
+/* The 'Preview' heading and the 'View full screen' link located above the chart */
+#preview-heading-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.7rem 0.1rem;
+}
+
+/* The actual chart preview */
+#chart-preview {
+  background-color: rgb(255, 255, 255);
+}

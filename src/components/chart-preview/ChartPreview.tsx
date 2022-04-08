@@ -1,6 +1,5 @@
 import { lazy, Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
-import "./chart-preview.css";
 import NoDataIcon from "../../assets/icons/chart-preview/NoDataIcon.svg";
 
 const ChartPreview = (): JSX.Element => {
@@ -15,7 +14,9 @@ const Plot = isClientSideRender
     : null;
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
-  if (Object.keys(chartDefinition).length === 0)
+  const emptyDataState = Object.keys(chartDefinition).length === 0;
+
+  if (emptyDataState)
     return (
       <div id="no-data-container">
         <div id="no-data">
@@ -32,7 +33,7 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   layout.datarevision++;
 
   return (
-    <div id="chart-preview">
+    <div id="chart">
       {Plot ? (
         <Suspense fallback={<div />}>
           <Plot

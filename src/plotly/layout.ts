@@ -1,10 +1,10 @@
-import {ChartPropertyValues} from "../context/ChartContext";
+import { ChartPropertyValues } from "../context/ChartContext";
 
 // A plain 'Bar' chart can also act as grouped bar chart if it
 // has more than one series so we set barmode as 'group'
 // Otherwise if its a 'Stacked Bar' barmode is 'stack'.
-const inferBarMode = (chartType: string|null) => {
-  return (chartType || 'bar').toLowerCase() === "bar" ? "group" : "stack";
+const inferBarMode = (chartType: string | null) => {
+  return (chartType || "bar").toLowerCase() === "bar" ? "group" : "stack";
 };
 
 const getCommonLayout = (chartProps: ChartPropertyValues) => {
@@ -54,9 +54,13 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
       autorange: true,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.Gridlines.showGridLines,
-      title: { text: chartProps.yAxisProperties.yAxisTitle, standoff: 15, font: { size: 14 } },
+      title: {
+        text: chartProps.yAxisProperties.yAxisTitle,
+        standoff: 15,
+        font: { size: 14 },
+      },
     },
-    legend: { orientation: "h", y: chartProps.xAxisProperties.xAxisOffset },
+    legend: { orientation: "h", y: chartProps.LegendSection.xAxisOffset },
     showlegend: chartProps.LegendSection.showLegend,
   };
   return { ...commonLayout, ...chartLayout };

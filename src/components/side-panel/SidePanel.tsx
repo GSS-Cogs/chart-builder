@@ -1,46 +1,70 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import ChartContext, { ChartContextProps } from "../../context/ChartContext";
 import "./side-panel.css";
 import Checkbox from "./property-inputs/Checkbox";
 import RadioButtonGroup from "./property-inputs/RadioButtonGroup";
 import Textbox from "./property-inputs/Textbox";
 import TextArea from "./property-inputs/TextArea";
-import SparqlInput from "./property-inputs/SparqlInput";
-import DataSelectionSection from "./property-inputs/DataSelectionSection";
+import DataSource from "./property-inputs/DataSource";
 import chartPropertiesSchema from "../../context/ChartPropertiesSchema";
-import {ChartPropertySchema} from "../../context/types";
+import { ChartPropertySchema } from "../../context/types";
+import DataSelection from "./data-selection/DataSelection";
 
 interface ChartPropertyComponentProps {
   sectionName: string;
   property: ChartPropertySchema;
-  updateProperty: (sectionName: string, property: string, value: number | string | boolean) => void;
+  updateProperty: (
+    sectionName: string,
+    property: string,
+    value: number | string | boolean,
+  ) => void;
   // compromise here. I don't know how to narrow the type of
   // value according to property.type.
-  value: any,
+  value: any;
 }
 
 function ChartPropertyComponent({
   sectionName,
   property,
   updateProperty,
-  value
+  value,
 }: ChartPropertyComponentProps): JSX.Element {
   switch (property.type) {
-    case 'checkbox':
+    case "checkbox":
       return (
-        <Checkbox property={property} sectionName={sectionName} updateProperty={updateProperty} value={value}/>
+        <Checkbox
+          property={property}
+          sectionName={sectionName}
+          updateProperty={updateProperty}
+          value={value}
+        />
       );
-    case 'radio':
+    case "radio":
       return (
-        <RadioButtonGroup property={property} sectionName={sectionName} updateProperty={updateProperty} value={value}/>
+        <RadioButtonGroup
+          property={property}
+          sectionName={sectionName}
+          updateProperty={updateProperty}
+          value={value}
+        />
       );
-    case 'text':
+    case "text":
       return (
-        <Textbox property={property} sectionName={sectionName} updateProperty={updateProperty} value={value}/>
+        <Textbox
+          property={property}
+          sectionName={sectionName}
+          updateProperty={updateProperty}
+          value={value}
+        />
       );
-    case 'text-multi':
+    case "text-multi":
       return (
-        <TextArea property={property} sectionName={sectionName} updateProperty={updateProperty} value={value}/>
+        <TextArea
+          property={property}
+          sectionName={sectionName}
+          updateProperty={updateProperty}
+          value={value}
+        />
       );
     default:
       // noinspection TypeScriptUnresolvedVariable
@@ -52,8 +76,10 @@ function ChartPropertyComponent({
 }
 
 const SidePanel = (): JSX.Element => {
-  const { chartProperties, setChartProperties: updateProperty }: ChartContextProps =
-    useContext(ChartContext);
+  const {
+    chartProperties,
+    setChartProperties: updateProperty,
+  }: ChartContextProps = useContext(ChartContext);
 
   const isAMap = chartProperties?.chartTypes?.chartType === "Map";
 
@@ -67,14 +93,6 @@ const SidePanel = (): JSX.Element => {
 
         // Show sections relevant to the visualisation type (chart/map/all)
         if (!showSection) return null;
-
-        // get the data input component for either map or chart data
-        const getDataInput = () =>
-          isAMap ? (
-            <SparqlInput />
-          ) : (
-            <DataSelectionSection sectionName={section.name} />
-          );
 
         return (
           <div key={section.name + index}>
@@ -90,8 +108,15 @@ const SidePanel = (): JSX.Element => {
                 />
               ))}
             </div>
-            {/* if we've just rendered the chart type section then render the data selection section next */}
-            {section.name === "chartTypes" ? getDataInput() : null}
+            {/* if we've just rendered the chart type section render data source next */}
+            {section.name === "chartTypes" ? (
+              <DataSource sectionName={section.name} />
+            ) : null}
+
+            {/* and if its also not a map then render the data selection component */}
+            {section.name === "chartTypes" && !isAMap ? (
+              <DataSelection />
+            ) : null}
           </div>
         );
       })}
