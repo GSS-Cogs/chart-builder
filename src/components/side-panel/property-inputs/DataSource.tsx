@@ -1,5 +1,8 @@
 import { useContext } from "react";
 import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
+import StandaloneContext, {
+  StandaloneContextProps,
+} from "../../../context/StandaloneContext";
 import { NO_FILE_SELECTED_TEXT } from "../../constants/Common-constants";
 
 const DataSource = (sectionName: any) => {
@@ -7,9 +10,11 @@ const DataSource = (sectionName: any) => {
     selectedFilename,
     setSelectedFilename,
     setChartDefinition,
-    setSparqlQuery,
     setMapData,
   }: ChartContextProps = useContext(ChartContext);
+
+  const { setSparqlQuery }: StandaloneContextProps =
+    useContext(StandaloneContext);
 
   const resetChartState = () => {
     setSelectedFilename(NO_FILE_SELECTED_TEXT);

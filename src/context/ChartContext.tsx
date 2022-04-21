@@ -49,9 +49,6 @@ export interface ChartContextState {
   setMapData: any;
   geoJson: any;
   setGeoJson: any;
-
-  sparqlQuery: string;
-  setSparqlQuery: Dispatch<SetStateAction<string>>;
 }
 
 export interface ChartContextProps {
@@ -90,9 +87,7 @@ export interface ChartContextProps {
 
   importCsvData: (data: File | string, filename: string) => void;
   importEeaData: (data: EeaData) => void;
-
-  sparqlQuery: string;
-  setSparqlQuery: Dispatch<SetStateAction<string>>;
+  loadMapData: (mapData: any) => Promise<void>;
 }
 
 const ChartContext = React.createContext<ChartContextProps>(
