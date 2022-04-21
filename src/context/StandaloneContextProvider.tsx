@@ -2,6 +2,8 @@ import { ReactNode, useState, useContext, useEffect } from "react";
 import { getMapData } from "../services/map-data/mapDataLoader";
 import ChartContext from "./ChartContext";
 import StandaloneContext from "./StandaloneContext";
+import { getGeoJson } from "../services/map-data/geoJsonLoader";
+import LOCAL_AUTHORITY_BOUNDARY_QUERY from "../services/map-data/geoJsonQueries";
 
 interface Props {
   children: ReactNode;
@@ -10,16 +12,26 @@ interface Props {
 const StandaloneContextProvider = ({ children }: Props): JSX.Element => {
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const [sparqlQuery, setSparqlQuery] = useState<string>("");
-  const { loadMapData } = useContext(ChartContext);
+  const { mapData, setMapData, setGeoJson } = useContext(ChartContext);
 
   useEffect(() => {
     if (sparqlQuery === "") return;
     const populateMap = async () => {
       const mapData = await getMapData(sparqlQuery);
-      loadMapData(mapData);
+      setMapData(mapData);
     };
     populateMap();
-  }, [sparqlQuery, loadMapData]);
+  }, [sparqlQuery, setMapData]);
+
+  const loadGeoJson = async (query: string) => {
+    const geoJson = await getGeoJson(query);
+    setGeoJson(geoJson);
+  };
+
+  useEffect(() => {
+    if (!mapData) return;
+    loadGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
+  }, [mapData]);
 
   return (
     <StandaloneContext.Provider
