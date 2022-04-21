@@ -22,7 +22,6 @@ import {
   ChartPropertySchema,
 } from "./types";
 
-import { getMapData } from "../services/map-data/mapDataLoader";
 import { getGeoJson } from "../services/map-data/geoJsonLoader";
 import LOCAL_AUTHORITY_BOUNDARY_QUERY from "../services/map-data/geoJsonQueries";
 import { GeoJSON } from "geojson";
@@ -77,7 +76,6 @@ export function useChartContextState(): ChartContextState {
   >([]);
   const [mapData, setMapData] = useState<any>([]);
   const [geoJson, setGeoJson] = useState<GeoJSON>({} as GeoJSON);
-  const [sparqlQuery, setSparqlQuery] = useState<string>("");
 
   const setChartProperties = useCallback(
     (section: string, name: string, value: boolean | number | string): void => {
@@ -111,8 +109,6 @@ export function useChartContextState(): ChartContextState {
     setMapData,
     geoJson,
     setGeoJson,
-    sparqlQuery,
-    setSparqlQuery,
   };
 }
 
@@ -272,8 +268,6 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setMapData,
     geoJson,
     setGeoJson,
-    sparqlQuery,
-    setSparqlQuery,
   } = state;
 
   const dimensionValue = dataSelection?.dimension || "";
@@ -304,11 +298,9 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     availableDimensions = eeaDataAvailableDimensions;
   }
 
-  useEffect(() => {
-    if (sparqlQuery === "") return;
-    const loadMapData = async () => {
+  const loadMapData = useCallback(
+    async (mapData: any): Promise<void> => {
       try {
-        const mapData = await getMapData(sparqlQuery);
         const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
         setGeoJson(geoJson);
         setMapData(mapData);
@@ -318,9 +310,9 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
       } catch (e) {
         console.error(e);
       }
-    };
-    loadMapData();
-  }, [sparqlQuery]);
+    },
+    [setGeoJson],
+  );
 
   useEffect(() => {
     if (!chartData && mapData.length === 0) {
@@ -385,8 +377,7 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setMapData,
     geoJson,
     setGeoJson,
-    sparqlQuery,
-    setSparqlQuery,
+    loadMapData,
   };
 }
 

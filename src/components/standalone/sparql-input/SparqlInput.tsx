@@ -1,10 +1,12 @@
 import { useContext } from "react";
-import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
+import StandaloneContext, {
+  StandaloneContextProps,
+} from "../../../context/StandaloneContext";
 import "./sparql-input.css";
 
 const SparqlInput = () => {
-  const { sparqlQuery, setSparqlQuery }: ChartContextProps =
-    useContext(ChartContext);
+  const { sparqlQuery, setSparqlQuery }: StandaloneContextProps =
+    useContext(StandaloneContext);
 
   return (
     <div id="sparql-wrapper">
