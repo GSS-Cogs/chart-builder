@@ -30,7 +30,9 @@ const StandaloneContextProvider = ({ children }: Props): JSX.Element => {
 
   useEffect(() => {
     if (!mapData) return;
-    loadGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
+    // todo infer the applicable GeoJson boundary query from the map data or metadata and replace constant below
+    const geoJsonQuery = LOCAL_AUTHORITY_BOUNDARY_QUERY;
+    loadGeoJson(geoJsonQuery);
   }, [mapData]);
 
   return (
