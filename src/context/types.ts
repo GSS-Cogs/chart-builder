@@ -1,23 +1,23 @@
-interface Series {
+interface DataColumn {
   name: string;
   values: string[] | number[];
 }
 
 interface ChartData {
-  xSeries: Series;
-  ySeries: Series[];
+  xValues: DataColumn;
+  yValues: DataColumn[];
 }
 
 interface SelectedDimension {
-  Name: string;
-  DisplayName: string;
+  name: string;
+  displayName: string;
 }
 
 interface DataSelection {
-  xSeries: string;
+  xValues: string;
   measure: string;
   dimension: string;
-  ySeries: SelectedDimension[];
+  yValues: SelectedDimension[];
 }
 
 type TidyData = object[];
@@ -69,7 +69,7 @@ interface ChartDataProvider {
 }
 
 export type {
-  Series,
+  DataColumn,
   ChartData,
   SelectedDimension,
   DataSelection,

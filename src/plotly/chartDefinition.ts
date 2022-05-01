@@ -36,22 +36,22 @@ const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData
     ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
     : 9999;
 
-  // truncate the xSeries values to user specified length
-  const xSeries = chartData?.xSeries.values.map((value: string) => {
+  // truncate the xValues to user specified length
+  const xValues = chartData?.xValues.values.map((value: string) => {
     return String(value).substring(0, xTickLabelMaxLength);
   });
 
-  chartData?.ySeries.map((series: any, index: number) => {
+  chartData?.yValues.map((series: any, index: number) => {
     let trace: {};
     if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
-        y: xSeries,
+        y: xValues,
         orientation: "h",
       };
     } else {
       trace = {
-        x: xSeries,
+        x: xValues,
         y: series.values,
         orientation: "v",
       };

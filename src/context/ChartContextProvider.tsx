@@ -15,7 +15,7 @@ import {
   EeaData,
   PlotlyChartDefinition,
   SelectedDimension,
-  Series,
+  DataColumn,
   TidyData,
   ChartDataProvider,
   ChartPropertySchemaSection,
@@ -125,34 +125,34 @@ function useTidyDataToChartContext(
   const chartData = useMemo(() => {
     if (
       !dataSelection ||
-      !dataSelection.xSeries ||
+      !dataSelection.xValues ||
       !dataSelection.measure ||
       !dataSelection.dimension
     ) {
       return undefined;
     }
 
-    const xSeries = getDistinctValues(dataSelection.xSeries, tidyData);
-    const newXSeries: Series = {
-      name: dataSelection.xSeries,
-      values: xSeries,
+    const xValues = getDistinctValues(dataSelection.xValues, tidyData);
+    const newXValues: DataColumn = {
+      name: dataSelection.xValues,
+      values: xValues,
     };
 
-    if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
-      const result = dataSelection.ySeries.map((series: SelectedDimension) => {
-        const filteredDataBySeries = tidyData.filter(
-          (item: any) => item[dataSelection.dimension] === series.Name,
+    if (dataSelection.yValues && dataSelection.yValues.length > 0) {
+      const result = dataSelection.yValues.map((series: SelectedDimension) => {
+        const filteredDataByValues = tidyData.filter(
+          (item: any) => item[dataSelection.dimension] === series.name,
         );
         const currentSeries = arrayColumn(
-          filteredDataBySeries,
+          filteredDataByValues,
           dataSelection.measure,
         );
-        return { name: series.DisplayName, values: currentSeries } as Series;
+        return { name: series.displayName, values: currentSeries } as DataColumn;
       });
 
       let newChartData: ChartData = {
-        xSeries: newXSeries,
-        ySeries: result,
+        xValues: newXValues,
+        yValues: result,
       };
       return newChartData;
     }
@@ -190,7 +190,7 @@ function useEeaConnectorData(
   const chartData = useMemo(() => {
     if (
       !dataSelection ||
-      !dataSelection.xSeries ||
+      !dataSelection.xValues ||
       !dataSelection.measure ||
       !dataSelection.dimension ||
       !eeaData
@@ -198,16 +198,16 @@ function useEeaConnectorData(
       return undefined;
     }
 
-    const rawXSeries = eeaData?.data?.[dataSelection.xSeries];
+    const rawxValues = eeaData?.data?.[dataSelection.xValues];
     // can't quite make (string|number)[] become (number[]|string[]) here.
-    const xSeries = Array.from(new Set(rawXSeries as any));
-    const newXSeries: Series = {
-      name: dataSelection.xSeries,
-      values: xSeries as any,
+    const xValues = Array.from(new Set(rawxValues as any));
+    const newXValues: DataColumn = {
+      name: dataSelection.xValues,
+      values: xValues as any,
     };
 
-    if (dataSelection.ySeries && dataSelection.ySeries.length > 0) {
-      const result = dataSelection.ySeries.map((series: SelectedDimension) => {
+    if (dataSelection.yValues && dataSelection.yValues.length > 0) {
+      const result = dataSelection.yValues.map((series: SelectedDimension) => {
         const toFilter: number[] | string[] = Array.isArray(
           eeaData.data?.[dataSelection.measure],
         )
@@ -216,15 +216,15 @@ function useEeaConnectorData(
 
         const currentSeries = (toFilter as any[]).filter<string | number>(
           (_, index): _ is any =>
-            eeaData.data[dataSelection.dimension][index] === series.Name,
+            eeaData.data[dataSelection.dimension][index] === series.name,
         );
 
-        return { name: series.DisplayName, values: currentSeries } as Series;
+        return { name: series.displayName, values: currentSeries } as DataColumn;
       });
 
       let newChartData: ChartData = {
-        xSeries: newXSeries,
-        ySeries: result,
+        xValues: newXValues,
+        yValues: result,
       };
       return newChartData;
     }
@@ -331,7 +331,7 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
   useEffect(() => {
     setDataSelection((prevState: any) => ({
       ...prevState,
-      ySeries: selectedDimensions,
+      yValues: selectedDimensions,
     }));
   }, [selectedDimensions]);
 
