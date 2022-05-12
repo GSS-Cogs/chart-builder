@@ -9,9 +9,8 @@ const ChartPreview = (): JSX.Element => {
 
 const isClientSideRender = typeof window !== "undefined";
 
-const Plot = isClientSideRender
-    ? lazy(() => import("react-plotly.js"))
-    : null;
+// @ts-ignore - issue related to the way react-plotly Plot is exported
+const Plot = isClientSideRender ? lazy(() => import("react-plotly.js")) : null;
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   const emptyDataState = Object.keys(chartDefinition).length === 0;
