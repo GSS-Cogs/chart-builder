@@ -49,7 +49,7 @@ function getValues(list) {
   });
 }
 
-// convert a list of nested objects to a map of field-value arrays
+// convert a list of nested objects to a map of columns
 export function longify(list) {
   const map = {};
   for (let i = 0; i < list.length; ++i) {
@@ -65,5 +65,6 @@ export function longify(list) {
 export async function tidyResults(query) {
   let response = await sparql(query);
   let bindings = response.results.bindings;
+  // array of objects to a map of columns
   return longify(getValues(bindings));
 }
