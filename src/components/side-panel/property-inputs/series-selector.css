@@ -1,0 +1,13 @@
+#series-select {
+  margin-top: 1rem;
+  overflow-y: auto;
+  width: 100%;
+  list-style: none;
+  border: 1px solid #ccc;
+}
+
+.series-option {
+  padding: 0.4rem;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}

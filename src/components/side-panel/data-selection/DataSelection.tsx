@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import ChartContext, {ChartContextProps} from "../../../context/ChartContext";
+import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
 import DimensionSelection from "./dimension-selection/DimensionSelection";
 import "./data-selection.css";
+import SeriesSelector from "../property-inputs/SeriesSelector";
 
 const options = [
   {
@@ -50,17 +51,17 @@ const DataSelection = (): JSX.Element => {
         ...prevState,
       }));
       return;
-    } 
+    }
 
     let previousValue = "";
     switch (name) {
       case "xValues":
         previousValue = dataSelection!.xValues;
         break;
-    case "measure":
+      case "measure":
         previousValue = dataSelection!.measure;
         break;
-    case "dimension":
+      case "dimension":
         previousValue = dataSelection!.dimension;
         break;
     }
@@ -108,6 +109,7 @@ const DataSelection = (): JSX.Element => {
         ))}
       </div>
       <DimensionSelection availableDimensions={availableDimensions} />
+      <SeriesSelector />
     </>
   );
 };
