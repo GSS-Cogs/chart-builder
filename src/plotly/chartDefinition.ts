@@ -1,10 +1,10 @@
-import {getChartLayout, getMapLayout} from "./layout";
+import { getChartLayout, getMapLayout } from "./layout";
 import config from "./config";
-import {divergingColorScale, sequentialColorScale} from "./colorScales";
-import {GeoJSON} from "geojson";
+import { divergingColorScale, sequentialColorScale } from "./colorScales";
+import { GeoJSON } from "geojson";
 
-import {colors,} from "../helper-functions/chart-helpers";
-import {ChartPropertyValues,} from "../context/ChartContext";
+import { colors } from "../helper-functions/chart-helpers";
+import { ChartPropertyValues } from "../context/ChartContext";
 
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
@@ -12,9 +12,10 @@ const updateChartDefinition = (
   mapData: any,
   geoJson: GeoJSON,
 ) => {
-  const chartType = typeof chartProps?.chartTypes?.chartType === 'string'
-    ? chartProps.chartTypes.chartType.toLowerCase()
-    : 'line';
+  const chartType =
+    typeof chartProps?.chartTypes?.chartType === "string"
+      ? chartProps.chartTypes.chartType.toLowerCase()
+      : "line";
 
   let data;
   chartType === "map"
@@ -29,12 +30,17 @@ const updateChartDefinition = (
   return { data, layout, config };
 };
 
-const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData: any) => {
+const getChartData = (
+  chartType: any,
+  chartProps: ChartPropertyValues,
+  chartData: any,
+) => {
   const traces: any = [];
 
-  const xTickLabelMaxLength = typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === 'string'
-    ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
-    : 9999;
+  const xTickLabelMaxLength =
+    typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === "string"
+      ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
+      : 9999;
 
   // truncate the xValues to user specified length
   const xValues = chartData?.xValues.values.map((value: string) => {
@@ -71,7 +77,11 @@ const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData
   return traces;
 };
 
-const getMapData = (chartProps: ChartPropertyValues, mapData: any, geoJson: GeoJSON) => {
+const getMapData = (
+  chartProps: ChartPropertyValues,
+  mapData: any,
+  geoJson: GeoJSON,
+) => {
   let data: any = [
     {
       type: "choropleth",
