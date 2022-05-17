@@ -18,12 +18,6 @@ const selectLineStyleProps: CustomSelectProps = {
   width: 8,
 };
 
-const selectColorbarProps: CustomSelectProps = {
-  optionType: "colorbar",
-  placeholder: "Select colorbar",
-  width: 8,
-};
-
 const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
   const lineStyles = ["solid", "dashed", "dotted"];
   return (
