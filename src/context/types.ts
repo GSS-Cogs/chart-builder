@@ -11,6 +11,8 @@ interface ChartData {
 interface SelectedDimension {
   name: string;
   displayName: string;
+  color: string;
+  dashStyle: "none" | "dash" | "dot";
 }
 
 interface DataSelection {
@@ -24,10 +26,10 @@ type TidyData = object[];
 
 interface EeaData {
   "@id": string;
-  "data": {
+  data: {
     pk: number[];
     [col: string]: number[] | string[];
-  }
+  };
 }
 
 // should be whatever shape of props react-plotly receives.
@@ -53,7 +55,10 @@ export interface ChartPropertyText<Value> extends ChartProperty<Value> {
   type: "text" | "text-multi";
 }
 
-export type ChartPropertySchema = ChartPropertyRadio<number | string> | ChartPropertyCheckbox | ChartPropertyText<number | string>;
+export type ChartPropertySchema =
+  | ChartPropertyRadio<number | string>
+  | ChartPropertyCheckbox
+  | ChartPropertyText<number | string>;
 
 interface ChartPropertySchemaSection {
   name: string;
@@ -77,6 +82,5 @@ export type {
   EeaData,
   PlotlyChartDefinition,
   ChartPropertySchemaSection,
-  ChartDataProvider
+  ChartDataProvider,
 };
-

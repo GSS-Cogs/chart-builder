@@ -7,6 +7,7 @@ const colors = [
   "rgb(40, 161, 151)",
   "rgb(213, 56, 128)",
   "rgb(80, 90, 95)",
+  "rgb(0, 0, 0)",
 ];
 
 export { colors };

@@ -1,11 +1,20 @@
+import "./line-style-option.css";
+
 interface Props {
   lineStyle: string;
+  color: string;
 }
 
-const LineStyleOption = ({ lineStyle }: Props) => {
+const mapping: Record<string, string> = {
+  none: "solid",
+  dot: "dotted",
+  dash: "dashed",
+};
+
+const LineStyleOption = ({ lineStyle, color }: Props) => {
   return (
     <div className="styled-line-option">
-      <hr className={lineStyle} />
+      <hr className={mapping[lineStyle]} style={{ color: color }} />
     </div>
   );
 };

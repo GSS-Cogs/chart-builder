@@ -6,6 +6,8 @@ import ChartContext, {
 import "./dimension-selection.css";
 import { titleCase } from "../../../../helper-functions/string-helpers";
 
+import { colors } from "../../../../helper-functions/chart-helpers";
+
 export interface Props {
   availableDimensions: string[];
 }
@@ -61,6 +63,11 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
 
   const handleAddDimensionClick = () => {
     if (selectedDimensions.length === availableDimensions.length) return;
+    if (selectedDimensions.length === colors.length) {
+      alert(
+        "Series limit reached. We recommend reducing the visual complexity of the chart by showing fewer series.",
+      );
+    }
     if (selectedDimensions.length === 0) {
       const defaultSelectedDimension = availableDimensions[0];
       setSelectedDimensions([
@@ -68,6 +75,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         {
           name: defaultSelectedDimension,
           displayName: titleCase(defaultSelectedDimension),
+          color: colors[selectedDimensions.length],
+          dashStyle: "none",
         },
       ]);
     } else {
@@ -78,6 +87,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         {
           name: nonSelectedAvailableDimensions[0],
           displayName: titleCase(nonSelectedAvailableDimensions[0]),
+          color: colors[selectedDimensions.length],
+          dashStyle: "none",
         },
       ]);
     }
@@ -98,7 +109,9 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     const newSelectedDimension: SelectedDimension = {
       name: e.target.value,
       displayName: e.target.value,
-    }; //TBC
+      color: colors[selectedDimensions.length],
+      dashStyle: "none",
+    };
 
     const updatedDimensions = selectedDimensions.map((item) => {
       return item.name === e.target.name ? newSelectedDimension : item;
@@ -112,6 +125,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     const dimension: SelectedDimension = {
       name: name,
       displayName: value,
+      color: colors[selectedDimensions.length],
+      dashStyle: "none",
     };
     const updatedDimensions = newDimensions.map((item) => {
       return item.name === name ? dimension : item;

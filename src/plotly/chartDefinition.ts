@@ -62,15 +62,16 @@ const getChartData = (
         orientation: "v",
       };
     }
-
     traces.push({
       ...trace,
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: "lines",
       hoverinfo: chartProps.Interactivity.interactivity,
+      marker: { color: series.color },
       line: {
-        color: colors[index],
+        color: series.color,
+        dash: series.dashStyle,
       },
     });
   });

@@ -1,0 +1,15 @@
+/* line styles */
+.dashed{
+    border: none;
+    border-top: 0.1rem dashed;
+  }
+   
+  .solid{
+    border: none;
+    border-top: 0.1rem solid;
+  }
+  
+  .dotted{
+    border: none;
+    border-top: 0.1rem dotted;
+  }

@@ -147,7 +147,12 @@ function useTidyDataToChartContext(
           filteredDataByValues,
           dataSelection.measure,
         );
-        return { name: series.displayName, values: currentSeries } as DataColumn;
+        return {
+          name: series.displayName,
+          color: series.color,
+          dashStyle: series.dashStyle,
+          values: currentSeries,
+        } as DataColumn;
       });
 
       let newChartData: ChartData = {
@@ -219,7 +224,10 @@ function useEeaConnectorData(
             eeaData.data[dataSelection.dimension][index] === series.name,
         );
 
-        return { name: series.displayName, values: currentSeries } as DataColumn;
+        return {
+          name: series.displayName,
+          values: currentSeries,
+        } as DataColumn;
       });
 
       let newChartData: ChartData = {

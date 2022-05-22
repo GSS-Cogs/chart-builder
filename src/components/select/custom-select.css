@@ -3,7 +3,6 @@
 }
 
 .select-button {
-  margin-top: 1rem;
   display: flex;
   width: 100%;
   min-height: 1.2rem;
@@ -74,20 +73,4 @@
   width: 0.7rem;
   margin-left: 0.3rem;
   margin-right: 0.1rem;
-}
-
-/* line styles */
-.dashed{
-  border: none;
-  border-top: 0.1rem dashed rgb(72,113,247);;
-}
- 
-.solid{
-  border: none;
-  border-top: 0.1rem solid rgb(72,113,247);;
-}
-
-.dotted{
-  border: none;
-  border-top: 0.1rem dotted rgb(72,113,247);;
 }

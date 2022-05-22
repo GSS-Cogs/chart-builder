@@ -2,11 +2,20 @@ import "./series-selector.css";
 import "../side-panel.css";
 import SeriesProperties from "./SeriesProperties";
 import ChartContext from "../../../context/ChartContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-const SeriesSelector = (): JSX.Element => {
+const SeriesSelector: React.VFC = () => {
   const { selectedDimensions: selectedSeries } = useContext(ChartContext);
   const [activeSeries, setActiveSeries] = useState("");
+
+  const isActiveSeriesPresent =
+    selectedSeries.find((s) => s.name === activeSeries) && activeSeries !== "";
+
+  useEffect(() => {
+    if (selectedSeries.length === 1) setActiveSeries(selectedSeries[0].name);
+  }, []);
+
+  if (selectedSeries.length === 0) return null;
 
   return (
     <div className="property-section">
@@ -23,7 +32,9 @@ const SeriesSelector = (): JSX.Element => {
           </option>
         ))}
       </select>
-      <SeriesProperties activeSeries={activeSeries} />
+      {isActiveSeriesPresent && (
+        <SeriesProperties activeSeries={activeSeries} />
+      )}
     </div>
   );
 };
