@@ -5,6 +5,7 @@ interface Props {
   color: string;
 }
 
+// Map Plotly dash styles to CSS line styles
 const mapping: Record<string, string> = {
   none: "solid",
   dot: "dotted",
