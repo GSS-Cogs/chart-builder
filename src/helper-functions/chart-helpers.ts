@@ -10,4 +10,6 @@ const colors = [
   "rgb(0, 0, 0)",
 ];
 
-export { colors };
+const dashStyles = ["none", "dot", "dash"];
+
+export { colors, dashStyles };
