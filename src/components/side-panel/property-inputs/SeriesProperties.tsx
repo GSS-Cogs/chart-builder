@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "../../side-panel/side-panel.css";
-import { colors } from "../../../helper-functions/chart-helpers";
+import { colors, dashStyles } from "../../../helper-functions/chart-helpers";
 import CustomSelect, { CustomSelectProps } from "../../select/CustomSelect";
 import ChartContext from "../../../context/ChartContext";
 import ColorOption from "../../select/ColorOption";
@@ -14,12 +14,14 @@ const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
   const { selectedDimensions, setSelectedDimensions, chartProperties } =
     useContext(ChartContext);
 
+  // Get the selected dimension based on the active series prop
   const selectedDimension = selectedDimensions.find(
     (d) => d.name === activeSeries,
   );
 
   const isALineChart = chartProperties.chartTypes.chartType === "Line";
 
+  // Shared updater for updating the color and dashStyle properties on the selected dimension
   const updateDimension = (property: string, value: any) => {
     setSelectedDimensions((prev) =>
       prev.map((d) =>
@@ -36,7 +38,7 @@ const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
     width: 10,
     id: "series-color",
   };
-  const dashStyles = ["none", "dot", "dash"];
+
   const selectLineStyleProps: CustomSelectProps = {
     selectedValue: selectedDimension!.dashStyle,
     options: dashStyles,
@@ -56,6 +58,7 @@ const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
         </label>
         <CustomSelect {...selectColorProps} />
       </div>
+      {/* For line charts show a line style selector */}
       {isALineChart && (
         <div className="chart-property">
           <label className="chart-property-label" htmlFor="series-line-style">
