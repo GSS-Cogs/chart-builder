@@ -61,6 +61,7 @@ const CustomSelect = (props: CustomSelectProps) => {
       ref={selectContainerRef}
       className="custom-select"
       style={{ width: `${width}rem` }}
+      data-testid="custom-select"
     >
       <button
         type="button"
