@@ -1,5 +1,5 @@
 interface Props {
-  colorbar: string[];
+  colorbar: any;
 }
 
 const ColorbarOption = ({ colorbar }: Props) => {

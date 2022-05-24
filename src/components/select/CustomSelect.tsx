@@ -4,8 +4,8 @@ import { ReactComponent as DownArrow } from "./DownArrow.svg";
 import useCloseOnFocusLoss from "./useCloseOnFocusLoss";
 
 export interface CustomSelectProps {
-  selectedValue: string;
-  options: string[];
+  selectedValue: any;
+  options: any;
   optionComponent: (value: string) => ReactNode;
   onChange: (value: string) => void;
   width: number;
@@ -53,7 +53,6 @@ const CustomSelect = (props: CustomSelectProps) => {
         e.preventDefault();
         setIsOptionsOpen(false);
         break;
-      // arrow up and down?
     }
   };
 
@@ -82,7 +81,7 @@ const CustomSelect = (props: CustomSelectProps) => {
         tabIndex={-1}
         className={`options ${isOptionsOpen ? "show" : "options"}`}
       >
-        {options.map((option) => (
+        {options.map((option: any) => (
           <li
             className="option"
             key={option}
