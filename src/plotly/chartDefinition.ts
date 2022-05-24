@@ -47,19 +47,50 @@ const getChartData = (
     return String(value).substring(0, xTickLabelMaxLength);
   });
 
+  const getHoverTemplate = (
+    series: any,
+    orientation: string,
+    precision: number,
+    chartType: any,
+  ) => {
+    let template =
+      chartType === "stacked bar"
+        ? `Total: %{customdata:.${precision}f} <br>`
+        : "";
+    return (
+      template +
+      `${series.name}: %{${orientation}:.${precision}f}<extra></extra>`
+    );
+  };
+
+  // Initialise a totals array to contain the totals
+  const seriesLength = chartData?.ySeries[0].values.length;
+  let totals = new Array(seriesLength).fill(0);
+
+  // Iterate the available series and create a trace for each
   chartData?.ySeries.map((series: any, index: number) => {
+    // Calculate the Y value totals across all series
+    for (let i = 0; i < series.values.length; i++) {
+      totals[i] += series.values[i];
+    }
+
     let trace: {};
+
     if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
         y: xSeries,
         orientation: "h",
+        customdata: totals,
+        hovertemplate: getHoverTemplate(series, "x", 1, chartType),
       };
     } else {
       trace = {
         x: xSeries,
         y: series.values,
         orientation: "v",
+        customdata: totals,
+        hovertemplate: getHoverTemplate(series, "y", 1, chartType),
       };
     }
 
