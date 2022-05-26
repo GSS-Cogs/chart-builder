@@ -51,6 +51,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
             name={dimension.Name}
             className="remove-dimension"
             onClick={handleRemoveDimensionClick}
+            tabIndex={0}
           >
             &nbsp;{"-"}&nbsp;
           </button>
@@ -136,7 +137,11 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         {availableDimensions.length > selectedDimensions.length &&
           dataSelection &&
           dataSelection.dimension && (
-            <button className="add-dimension" onClick={handleAddDimensionClick}>
+            <button
+              className="add-dimension"
+              onClick={handleAddDimensionClick}
+              tabIndex={0}
+            >
               &nbsp;{"+"}&nbsp;
             </button>
           )}
