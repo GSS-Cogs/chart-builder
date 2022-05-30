@@ -14,7 +14,7 @@ const StandaloneSidePanel = ({ children }: Props) => {
       style={{ display: isFullScreen ? "none" : "block" }}
       id="side-panel-wrapper"
     >
-      <DataSource sectionName="data-source-section" />
+      <DataSource />
 
       {children}
     </div>
