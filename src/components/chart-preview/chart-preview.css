@@ -1,0 +1,12 @@
+#chart-empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#chart-empty-state{
+    display: flex;
+    opacity: 0.4;
+    width: 10rem;
+    height: 30rem;
+}

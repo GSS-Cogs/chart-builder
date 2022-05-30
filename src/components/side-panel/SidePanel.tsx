@@ -120,7 +120,7 @@ const SidePanel = ({ renderDataSelector, renderGeoJsonSelector, }: SidePanelProp
               renderGeoJsonSelector()
             ) : null}
 
-            {/* and if its also not a map then render the data selection component */}
+            {/* If its not a map then render the data selection component */}
             {section.name === "chartTypes" && !isAMap ? (
               <DataSelection />
             ) : null}
