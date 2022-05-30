@@ -1,4 +1,4 @@
-const NoDataIcon = () => {
+const ChartPlaceholderIcon = () => {
   return (
     <svg viewBox="0 0 39 35" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,4 +9,4 @@ const NoDataIcon = () => {
   );
 };
 
-export default NoDataIcon;
+export default ChartPlaceholderIcon;
