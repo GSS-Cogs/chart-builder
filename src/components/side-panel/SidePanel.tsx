@@ -110,7 +110,7 @@ const SidePanel = (): JSX.Element => {
             </div>
             {/* if we've just rendered the chart type section render data source next */}
             {section.name === "chartTypes" ? (
-              <DataSource sectionName={section.name} />
+              <DataSource />
             ) : null}
 
             {/* and if its also not a map then render the data selection component */}
