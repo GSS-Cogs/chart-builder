@@ -11,6 +11,7 @@ const ChartBuilder = (): JSX.Element => {
       <StandaloneSidePanel>
         <SidePanel
           renderDataSelector={() => <DataSource />}
+          renderGeoJsonSelector={() => null}/* chart builder shows the sparql editor in the chart area */
         />
       </StandaloneSidePanel>
       <StandaloneChart>

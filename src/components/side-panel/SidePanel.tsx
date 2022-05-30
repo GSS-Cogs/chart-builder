@@ -75,10 +75,11 @@ function ChartPropertyComponent({
 }
 
 interface SidePanelProps {
-  renderDataSelector: () => JSX.Element,
+  renderDataSelector: () => JSX.Element | null,
+  renderGeoJsonSelector: () => JSX.Element | null,
 }
 
-const SidePanel = ({ renderDataSelector, }: SidePanelProps): JSX.Element => {
+const SidePanel = ({ renderDataSelector, renderGeoJsonSelector, }: SidePanelProps): JSX.Element => {
   const {
     chartProperties,
     setChartProperties: updateProperty,
@@ -114,6 +115,9 @@ const SidePanel = ({ renderDataSelector, }: SidePanelProps): JSX.Element => {
             {/* if we've just rendered the chart type section render data source next */}
             {section.name === "chartTypes" ? (
               renderDataSelector()
+            ) : null}
+            {section.name === "chartTypes" && isAMap ? (
+              renderGeoJsonSelector()
             ) : null}
 
             {/* and if its also not a map then render the data selection component */}
