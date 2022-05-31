@@ -5,7 +5,7 @@ import StandaloneContext, {
 } from "../../../context/StandaloneContext";
 import { NO_FILE_SELECTED_TEXT } from "../../constants/Common-constants";
 
-const DataSource = (sectionName: any) => {
+const DataSource = () => {
   const {
     selectedFilename,
     setSelectedFilename,
@@ -23,14 +23,12 @@ const DataSource = (sectionName: any) => {
   };
 
   return (
-    <div key={`${sectionName}-data-selection`}>
-      <div className="property-section">
-        <div id="data-source"> Data source</div>
-        <label id="selected-filename">{selectedFilename}</label>
-        <button className="close-button" onClick={() => resetChartState()}>
-          {"Reset"}
-        </button>
-      </div>
+    <div className="property-section">
+      <div id="data-source"> Data source</div>
+      <label id="selected-filename">{selectedFilename}</label>
+      <button className="close-button" onClick={() => resetChartState()}>
+        {"Reset"}
+      </button>
     </div>
   );
 };

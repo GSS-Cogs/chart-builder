@@ -5,7 +5,6 @@ import Checkbox from "./property-inputs/Checkbox";
 import RadioButtonGroup from "./property-inputs/RadioButtonGroup";
 import Textbox from "./property-inputs/Textbox";
 import TextArea from "./property-inputs/TextArea";
-import DataSource from "./property-inputs/DataSource";
 import chartPropertiesSchema from "../../context/ChartPropertiesSchema";
 import { ChartPropertySchema } from "../../context/types";
 import DataSelection from "./data-selection/DataSelection";
@@ -75,7 +74,12 @@ function ChartPropertyComponent({
   }
 }
 
-const SidePanel = (): JSX.Element => {
+interface SidePanelProps {
+  renderDataSelector: () => JSX.Element | null,
+  renderGeoJsonSelector: () => JSX.Element | null,
+}
+
+const SidePanel = ({ renderDataSelector, renderGeoJsonSelector, }: SidePanelProps): JSX.Element => {
   const {
     chartProperties,
     setChartProperties: updateProperty,
@@ -108,6 +112,13 @@ const SidePanel = (): JSX.Element => {
                 />
               ))}
             </div>
+            {/* if we've just rendered the chart type section render data source next */}
+            {section.name === "chartTypes" ? (
+              renderDataSelector()
+            ) : null}
+            {section.name === "chartTypes" && isAMap ? (
+              renderGeoJsonSelector()
+            ) : null}
 
             {/* If its not a map then render the data selection component */}
             {section.name === "chartTypes" && !isAMap ? (
