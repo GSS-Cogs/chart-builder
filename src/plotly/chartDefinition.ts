@@ -1,10 +1,10 @@
-import {getChartLayout, getMapLayout} from "./layout";
+import { getChartLayout, getMapLayout } from "./layout";
 import config from "./config";
-import {divergingColorScale, sequentialColorScale} from "./colorScales";
-import {GeoJSON} from "geojson";
+import { divergingColorScale, sequentialColorScale } from "./colorScales";
+import { GeoJSON } from "geojson";
 
-import {colors,} from "../helper-functions/chart-helpers";
-import {ChartPropertyValues,} from "../context/ChartContext";
+import { colors } from "../helper-functions/chart-helpers";
+import { ChartPropertyValues } from "../context/ChartContext";
 
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
@@ -12,9 +12,10 @@ const updateChartDefinition = (
   mapData: any,
   geoJson: GeoJSON,
 ) => {
-  const chartType = typeof chartProps?.chartTypes?.chartType === 'string'
-    ? chartProps.chartTypes.chartType.toLowerCase()
-    : 'line';
+  const chartType =
+    typeof chartProps?.chartTypes?.chartType === "string"
+      ? chartProps.chartTypes.chartType.toLowerCase()
+      : "line";
 
   let data;
   chartType === "map"
@@ -29,31 +30,67 @@ const updateChartDefinition = (
   return { data, layout, config };
 };
 
-const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData: any) => {
+const getChartData = (
+  chartType: any,
+  chartProps: ChartPropertyValues,
+  chartData: any,
+) => {
   const traces: any = [];
 
-  const xTickLabelMaxLength = typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === 'string'
-    ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
-    : 9999;
+  const xTickLabelMaxLength =
+    typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === "string"
+      ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
+      : 9999;
 
   // truncate the xSeries values to user specified length
   const xSeries = chartData?.xSeries.values.map((value: string) => {
     return String(value).substring(0, xTickLabelMaxLength);
   });
 
+  const getHoverTemplate = (
+    series: any,
+    orientation: string,
+    precision: number,
+    chartType: any,
+  ) => {
+    let template =
+      chartType === "stacked bar"
+        ? `Total: %{customdata:.${precision}f} <br>`
+        : "";
+    return (
+      template +
+      `${series.name}: %{${orientation}:.${precision}f}<extra></extra>`
+    );
+  };
+
+  // Initialise a totals array to contain the totals
+  const seriesLength = chartData?.ySeries[0].values.length;
+  let totals = new Array(seriesLength).fill(0);
+
+  // Iterate the available series and create a trace for each
   chartData?.ySeries.map((series: any, index: number) => {
+    // Calculate the Y value totals across all series
+    for (let i = 0; i < series.values.length; i++) {
+      totals[i] += series.values[i];
+    }
+
     let trace: {};
+
     if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
         y: xSeries,
         orientation: "h",
+        customdata: totals,
+        hovertemplate: getHoverTemplate(series, "x", 1, chartType),
       };
     } else {
       trace = {
         x: xSeries,
         y: series.values,
         orientation: "v",
+        customdata: totals,
+        hovertemplate: getHoverTemplate(series, "y", 1, chartType),
       };
     }
 
@@ -71,7 +108,11 @@ const getChartData = (chartType: any, chartProps: ChartPropertyValues, chartData
   return traces;
 };
 
-const getMapData = (chartProps: ChartPropertyValues, mapData: any, geoJson: GeoJSON) => {
+const getMapData = (
+  chartProps: ChartPropertyValues,
+  mapData: any,
+  geoJson: GeoJSON,
+) => {
   let data: any = [
     {
       type: "choropleth",
