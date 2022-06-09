@@ -295,11 +295,19 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     availableDimensions = eeaDataAvailableDimensions;
   }
 
+
   useEffect(() => {
     if (!chartData && mapData.length === 0) {
       setChartDefinition({});
       return;
     }
+    const isAMap = chartProperties?.chartTypes?.chartType === "Map";
+
+    if (isAMap && !geoJson) {
+      setChartDefinition({});
+      return;
+    }
+
     const chartDefinition = updateChartDefinition(
       chartProperties,
       chartData,
