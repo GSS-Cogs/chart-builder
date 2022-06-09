@@ -6,6 +6,8 @@ import {
 import  ChartPropertiesSchema from './context/ChartPropertiesSchema';
 import  SidePanel from './components/side-panel/SidePanel';
 import { useChartContext, getInitialChartProperties } from './context/ChartContextProvider';
+import { convertSparqlToGeoJson } from './services/map-data/geoJsonLoader';
+
 
 export {
   ChartContext,
@@ -14,5 +16,6 @@ export {
   ChartPropertiesSchema,
   SidePanel,
   useChartContext,
-  getInitialChartProperties
+  getInitialChartProperties,
+  convertSparqlToGeoJson
 }

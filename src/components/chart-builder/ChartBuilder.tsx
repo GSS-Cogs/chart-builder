@@ -8,7 +8,10 @@ const ChartBuilder = (): JSX.Element => {
   return (
     <div id="chart-builder">
       <StandaloneSidePanel>
-        <SidePanel />
+        <SidePanel
+          renderDataSelector={() => null}
+          renderGeoJsonSelector={() => null}/* chart builder shows the sparql editor in the chart area */
+        />
       </StandaloneSidePanel>
       <StandaloneChart>
         <ChartPreview />

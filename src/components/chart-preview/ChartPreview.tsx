@@ -1,6 +1,7 @@
 import { lazy, Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
-import NoDataIcon from "../../assets/icons/chart-preview/NoDataIcon.svg";
+import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
+import "./chart-preview.css";
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
@@ -17,9 +18,9 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
 
   if (emptyDataState)
     return (
-      <div id="no-data-container">
-        <div id="no-data">
-          <NoDataIcon />
+      <div id="chart-empty-state-container">
+        <div id="chart-empty-state">
+          <ChartPlaceholderIcon />
         </div>
       </div>
     );

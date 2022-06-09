@@ -8,6 +8,7 @@ import ChartContext, {
 import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import chartPropertiesSchema from "./ChartPropertiesSchema";
 import useChartCsvData from "./useChartCsvData";
+import { GeoJSON } from "geojson";
 
 import {
   ChartData,
@@ -21,10 +22,6 @@ import {
   ChartPropertySchemaSection,
   ChartPropertySchema,
 } from "./types";
-
-import { getGeoJson } from "../services/map-data/geoJsonLoader";
-import LOCAL_AUTHORITY_BOUNDARY_QUERY from "../services/map-data/geoJsonQueries";
-import { GeoJSON } from "geojson";
 
 import {
   arrayColumn,
@@ -306,27 +303,19 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     availableDimensions = eeaDataAvailableDimensions;
   }
 
-  const loadMapData = useCallback(
-    async (mapData: any): Promise<void> => {
-      try {
-        const geoJson = await getGeoJson(LOCAL_AUTHORITY_BOUNDARY_QUERY);
-        setGeoJson(geoJson);
-        setMapData(mapData);
-        // todo: if dataSource != 'tidy' in the useTidyData.. hook, clear any temp state
-        // todo: same in useEeaConnectorData
-        // todo: same in any choropleth loading areas
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [setGeoJson],
-  );
 
   useEffect(() => {
     if (!chartData && mapData.length === 0) {
       setChartDefinition({});
       return;
     }
+    const isAMap = chartProperties?.chartTypes?.chartType === "Map";
+
+    if (isAMap && !geoJson) {
+      setChartDefinition({});
+      return;
+    }
+
     const chartDefinition = updateChartDefinition(
       chartProperties,
       chartData,
@@ -385,7 +374,6 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setMapData,
     geoJson,
     setGeoJson,
-    loadMapData,
   };
 }
 
