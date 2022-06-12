@@ -7,14 +7,14 @@ interface Props {
 
 // Map Plotly dash styles to CSS line styles
 const mapping: Record<string, string> = {
-  none: "solid",
-  dot: "dotted",
-  dash: "dashed",
+  none: "cb-solid",
+  dot: "cb-dotted",
+  dash: "cb-dashed",
 };
 
 const LineStyleOption = ({ lineStyle, color }: Props) => {
   return (
-    <div className="styled-line-option">
+    <div className="cb-styled-line-option">
       <hr className={mapping[lineStyle]} style={{ color: color }} />
     </div>
   );

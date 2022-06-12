@@ -151,7 +151,6 @@ function useTidyDataToChartContext(
           values: currentSeries,
         } as DataColumn;
       });
-
       let newChartData: ChartData = {
         xValues: newXValues,
         yValues: result,
@@ -224,6 +223,8 @@ function useEeaConnectorData(
         return {
           name: series.displayName,
           values: currentSeries,
+          color: series.color,
+          dashStyle: series.dashStyle,
         } as DataColumn;
       });
 
@@ -303,7 +304,6 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     availableDimensions = eeaDataAvailableDimensions;
   }
 
-
   useEffect(() => {
     if (!chartData && mapData.length === 0) {
       setChartDefinition({});
@@ -315,7 +315,6 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
       setChartDefinition({});
       return;
     }
-
     const chartDefinition = updateChartDefinition(
       chartProperties,
       chartData,

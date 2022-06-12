@@ -1,6 +1,6 @@
 import { ReactNode, useRef, useState } from "react";
 import "./custom-select.css";
-import { ReactComponent as DownArrow } from "./DownArrow.svg";
+import DownArrow from "./DownArrow.svg";
 import useCloseOnFocusLoss from "./useCloseOnFocusLoss";
 
 export interface CustomSelectProps {
@@ -8,13 +8,10 @@ export interface CustomSelectProps {
   options: any;
   optionComponent: (value: string) => ReactNode;
   onChange: (value: string) => void;
-  width: number;
-  id: string;
 }
 
 const CustomSelect = (props: CustomSelectProps) => {
-  const { selectedValue, options, optionComponent, onChange, width, id } =
-    props;
+  const { selectedValue, options, optionComponent, onChange } = props;
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const selectRef = useRef<HTMLButtonElement>(null);
@@ -59,32 +56,30 @@ const CustomSelect = (props: CustomSelectProps) => {
   return (
     <div
       ref={selectContainerRef}
-      className="custom-select"
-      style={{ width: `${width}rem` }}
+      className="cb-custom-select"
       data-testid="custom-select"
     >
       <button
         type="button"
-        className="select-button"
+        className="cb-select-button"
         aria-haspopup="listbox"
         aria-expanded={isOptionsOpen}
         onClick={toggleOptions}
         onKeyDown={handleListKeyDown}
         ref={selectRef}
-        id={id}
       >
         {optionComponent(selectedValue)}
-        <DownArrow className="down-arrow" />
+        <img src={DownArrow} alt="expand select" className="cb-down-arrow" />
       </button>
 
       <ul
         role="listbox"
         tabIndex={-1}
-        className={`options ${isOptionsOpen ? "show" : "options"}`}
+        className={`cb-options ${isOptionsOpen ? "show" : "cb-options"}`}
       >
         {options.map((option: any) => (
           <li
-            className="option"
+            className="cb-option"
             key={option}
             role="option"
             aria-selected={selectedValue == option}

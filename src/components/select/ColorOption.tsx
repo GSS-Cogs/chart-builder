@@ -5,7 +5,7 @@ interface Props {
 const ColorOption = ({ color }: Props) => {
   return (
     <div
-      className="styled-option"
+      className="cb-styled-option"
       style={{ backgroundColor: color }}
       tabIndex={-1}
     >

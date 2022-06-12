@@ -31,8 +31,6 @@ ColorSelect.args = {
   options: colors,
   optionComponent: (value) => <ColorOption color={value} />,
   onChange: (value) => console.log(value),
-  width: 10,
-  id: "series-color",
 };
 
 const LineStyleSelect = Template.bind({});
@@ -44,8 +42,6 @@ LineStyleSelect.args = {
     <LineStyleOption lineStyle={value} color={"rgb(40, 161, 151)"} />
   ),
   onChange: (value) => console.log(value),
-  width: 10,
-  id: "series-line-style",
 };
 
 const ColorbarSelect = Template.bind({});
@@ -59,8 +55,6 @@ ColorbarSelect.args = {
   options: [divergingColors, sequentialColors],
   optionComponent: (value) => <ColorbarOption colorbar={value} />,
   onChange: (value) => console.log(value),
-  width: 10,
-  id: "map-colorbar",
 };
 
 export default meta;

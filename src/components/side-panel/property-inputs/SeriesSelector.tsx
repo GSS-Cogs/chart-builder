@@ -4,7 +4,7 @@ import SeriesProperties from "./SeriesProperties";
 import ChartContext from "../../../context/ChartContext";
 import { useContext, useEffect, useState } from "react";
 
-const SeriesSelector: React.VFC = () => {
+const SeriesSelector: React.FC = () => {
   const { selectedDimensions: selectedSeries } = useContext(ChartContext);
   const [activeSeries, setActiveSeries] = useState("");
 

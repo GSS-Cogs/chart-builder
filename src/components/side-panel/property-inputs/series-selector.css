@@ -1,7 +1,7 @@
 #series-select {
   margin-top: 0.5rem;
   overflow-y: auto;
-  width: 10rem;
+  width: 100%;
   list-style: none;
   border: 1px solid #ccc;
 }

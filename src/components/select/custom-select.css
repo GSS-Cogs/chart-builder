@@ -1,23 +1,25 @@
-.custom-select{
+.cb-custom-select {
   position: relative;
+  box-sizing: content-box;
+  width: 100%;
 }
 
-.select-button {
+.cb-select-button.cb-select-button {
   display: flex;
-  width: 100%;
+  width: calc(100% - 0.8rem);
   min-height: 1.2rem;
   font-size: 0.8rem;
   border-width: 0.1rem;
   align-items: center;
   justify-content: space-between;
-  color: rgba(100, 100, 100, 0.9);;
+  color: rgba(100, 100, 100, 0.9);
   border-style: solid;
-  border-color: rgb(105,105,105);
+  border-color: rgb(105, 105, 105);
   cursor: pointer;
   padding: 0.3rem;
 }
 
-.options {
+.cb-options {
   position: absolute;
   z-index: 1;
   width: calc(100% - 0.16rem);
@@ -33,37 +35,37 @@
   cursor: pointer;
 }
 
-.options.show {
+.cb-options.show {
   display: block;
 }
 
-.options li:active,
-.options li:focus,
-.options li:hover,
-.options li[aria-selected="true"] {
+.cb-options li:active,
+.cb-options li:focus,
+.cb-options li:hover,
+.cb-options li[aria-selected="true"] {
   background-color: rgba(100, 100, 100, 0.1);
 }
 
-.option {
+.cb-option.cb-option {
   flex-grow: 1;
-  padding: 0.3rem; 
+  padding: 0.3rem;
   list-style: none;
-  outline-color: rgba(111, 160, 225, 0.827) ;  
+  outline-color: rgba(111, 160, 225, 0.827);
 }
 
-.styled-option{
+.cb-styled-option.cb-styled-option {
   flex-grow: 1;
   height: 0.8rem;
   padding: 0.2rem;
   border-radius: 0.1rem;
 }
 
-.option:hover{
+.cb-option:hover {
   background-color: rgba(100, 100, 100, 0.1);
   opacity: 1;
 }
 
-.down-arrow {
+.cb-down-arrow {
   height: 0.7rem;
   width: 0.7rem;
   margin-left: 0.3rem;

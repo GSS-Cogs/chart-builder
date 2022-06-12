@@ -5,7 +5,7 @@ interface Props {
 const ColorbarOption = ({ colorbar }: Props) => {
   return (
     <div
-      className="styled-option"
+      className="cb-styled-option"
       style={{
         backgroundImage: `linear-gradient(to right, ${colorbar.join(",")})`,
       }}

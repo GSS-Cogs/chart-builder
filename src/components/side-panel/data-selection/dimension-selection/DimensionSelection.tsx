@@ -20,8 +20,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   }: ChartContextProps = useContext(ChartContext);
 
   const createDimensionList = () => {
-    const nonSelectedAvailableDimensions: string[] =
-      getNonSelectedAvailableDimensions();
+    const nonSelectedAvailableDimensions: string[] = getNonSelectedAvailableDimensions();
     return selectedDimensions.map((dimension, index) => {
       return (
         <div key={index}>
@@ -81,8 +80,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         },
       ]);
     } else {
-      const nonSelectedAvailableDimensions =
-        getNonSelectedAvailableDimensions();
+      const nonSelectedAvailableDimensions = getNonSelectedAvailableDimensions();
       setSelectedDimensions([
         ...selectedDimensions,
         {

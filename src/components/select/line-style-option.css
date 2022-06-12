@@ -1,20 +1,20 @@
-.styled-line-option{
+.cb-styled-line-option {
   flex-grow: 1;
-  padding: 0.54rem 0.2rem;
+  padding: 0.14rem 0.2rem;
 }
 
 /* line styles */
-.dashed{
+.cb-dashed {
   border: none;
   border-top: 0.1rem dashed;
 }
-   
-.solid{
+
+.cb-solid {
   border: none;
   border-top: 0.1rem solid;
 }
 
-.dotted{
+.cb-dotted {
   border: none;
   border-top: 0.1rem dotted;
 }

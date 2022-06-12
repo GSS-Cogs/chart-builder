@@ -11,8 +11,11 @@ interface Props {
 }
 
 const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
-  const { selectedDimensions, setSelectedDimensions, chartProperties } =
-    useContext(ChartContext);
+  const {
+    selectedDimensions,
+    setSelectedDimensions,
+    chartProperties,
+  } = useContext(ChartContext);
 
   // Get the selected dimension based on the active series prop
   const selectedDimension = selectedDimensions.find(
@@ -35,8 +38,6 @@ const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
     options: colors,
     optionComponent: (value) => <ColorOption color={value} />,
     onChange: (value) => updateDimension("color", value),
-    width: 10,
-    id: "series-color",
   };
 
   const selectLineStyleProps: CustomSelectProps = {
@@ -46,8 +47,6 @@ const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
       <LineStyleOption lineStyle={value} color={selectedDimension!.color} />
     ),
     onChange: (value) => updateDimension("dashStyle", value),
-    width: 10,
-    id: "series-line-style",
   };
 
   return (

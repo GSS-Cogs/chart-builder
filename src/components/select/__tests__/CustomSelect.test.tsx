@@ -20,8 +20,6 @@ const colorProps: CustomSelectProps = {
   options: colors,
   optionComponent: (value) => <ColorOption color={value} />,
   onChange: () => {},
-  width: 10,
-  id: "series-color",
 };
 
 describe("Custom Select - Color", () => {
@@ -39,8 +37,6 @@ const lineStyleProps: CustomSelectProps = {
     <LineStyleOption lineStyle={value} color={"rgb(40, 161, 151)"} />
   ),
   onChange: (value) => console.log(value),
-  width: 10,
-  id: "series-line-style",
 };
 
 describe("Custom Select - Line Style", () => {
@@ -56,8 +52,6 @@ const colorBarProps: CustomSelectProps = {
   options: [divergingColors, sequentialColors],
   optionComponent: (value) => <ColorbarOption colorbar={value} />,
   onChange: () => {},
-  width: 10,
-  id: "map-colorbar",
 };
 
 describe("Custom Select - Colorbar", () => {
