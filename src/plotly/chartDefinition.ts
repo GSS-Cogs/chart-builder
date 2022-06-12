@@ -65,7 +65,7 @@ const getChartData = (
   };
 
   // Initialise a totals array to contain the totals
-  const seriesLength = chartData?.ySeries[0].values.length;
+  const seriesLength = chartData?.yValues[0].values.length;
   let totals = new Array(seriesLength).fill(0);
 
   // Iterate the available series and create a trace for each
