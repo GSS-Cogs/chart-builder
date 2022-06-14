@@ -71,7 +71,7 @@ const getChartData = (
   chartData?.ySeries.map((series: any, index: number) => {
     // Calculate the Y value totals across all series
     for (let i = 0; i < series.values.length; i++) {
-      totals[i] += parseInt(series.values[i]);
+      totals[i] += parseFloat(series.values[i]);
     }
     let trace: {};
 
