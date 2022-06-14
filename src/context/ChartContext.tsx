@@ -78,7 +78,7 @@ export interface ChartContextProps {
 
   // generated from the data
   columnNames: string[];
-  // when dataSelection. (xSeries, measure, dimension) are selected, gets populated
+  // when dataSelection. (xValues, measure, dimension) are selected, gets populated
   // with the available dimensions
   availableDimensions: string[];
 

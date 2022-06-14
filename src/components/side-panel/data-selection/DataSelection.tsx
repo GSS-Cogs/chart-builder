@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import ChartContext, {ChartContextProps} from "../../../context/ChartContext";
+import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
 import DimensionSelection from "./dimension-selection/DimensionSelection";
 import "./data-selection.css";
+import SeriesSelector from "../property-inputs/SeriesSelector";
 
 const options = [
   {
-    name: "xSeries",
+    name: "xValues",
     labelName: "Category axis:",
   },
   {
@@ -30,8 +31,8 @@ const DataSelection = (): JSX.Element => {
 
   const getPropertyValue = (name: string) => {
     switch (name) {
-      case "xSeries":
-        return dataSelection?.xSeries;
+      case "xValues":
+        return dataSelection?.xValues;
       case "measure":
         return dataSelection?.measure;
       case "dimension":
@@ -40,60 +41,65 @@ const DataSelection = (): JSX.Element => {
     return "";
   };
 
-  const onHandleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-
-    if (value === "" || selectedColumns.some((item) => item === value)) {
+    if (value !== "" && selectedColumns.some((item) => item === value)) {
       alert(
         `${value} has already been selected. Please choose a different column`,
       );
       setDataSelection((prevState: any) => ({
         ...prevState,
       }));
-    } else {
-      let previousValue = "";
-      if (name === "xSeries") {
-        previousValue = dataSelection!.xSeries;
-      } else if (name === "measure") {
-        previousValue = dataSelection!.measure;
-      } else if (name === "dimension") {
-        previousValue = dataSelection!.dimension;
-      }
-      if (previousValue) {
-        let newSelectedColumnNames = [];
-        const alreadySelectedColumnNames = selectedColumns.filter(
-          (item) => item !== previousValue,
-        );
-        newSelectedColumnNames.push(...alreadySelectedColumnNames);
-        newSelectedColumnNames.push(value);
-        setSelectedColumns(newSelectedColumnNames);
-      } else {
-        setSelectedColumns([...selectedColumns, value]);
-      }
-      setDataSelection((prevState: any) => ({
-        ...prevState,
-        [name]: value,
-      }));
+      return;
     }
+
+    let previousValue = "";
+    switch (name) {
+      case "xValues":
+        previousValue = dataSelection!.xValues;
+        break;
+      case "measure":
+        previousValue = dataSelection!.measure;
+        break;
+      case "dimension":
+        previousValue = dataSelection!.dimension;
+        break;
+    }
+
+    if (previousValue) {
+      let newSelectedColumnNames = [];
+      const alreadySelectedColumnNames = selectedColumns.filter(
+        (item) => item !== previousValue,
+      );
+      newSelectedColumnNames.push(...alreadySelectedColumnNames);
+      newSelectedColumnNames.push(value);
+      setSelectedColumns(newSelectedColumnNames);
+    } else {
+      setSelectedColumns([...selectedColumns, value]);
+    }
+    setDataSelection((prevState: any) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
     <>
       <div className="property-section">
         <div className="section-heading"> Data columns</div>
-        {options.map((item, index) => (
+        {options.map((item) => (
           <div key={item.name} className="chart-property">
             <label className="column-label">{item.labelName}</label>
             <select
               className="chart-dimension-select"
               name={item.name}
               value={dataSelection ? getPropertyValue(item.name) : ""}
-              onChange={onHandleChange}
+              onChange={onChange}
             >
               <option key="default" value="">
                 --
               </option>
-              {columnNames.map((columnName: string, index: number) => (
+              {columnNames.map((columnName: string) => (
                 <option key={columnName} value={columnName}>
                   {columnName}
                 </option>
@@ -103,6 +109,7 @@ const DataSelection = (): JSX.Element => {
         ))}
       </div>
       <DimensionSelection availableDimensions={availableDimensions} />
+      <SeriesSelector />
     </>
   );
 };

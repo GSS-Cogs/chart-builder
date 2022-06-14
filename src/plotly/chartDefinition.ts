@@ -42,11 +42,12 @@ const getChartData = (
       ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
       : 9999;
 
-  // truncate the xSeries values to user specified length
-  const xSeries = chartData?.xSeries.values.map((value: string) => {
+  // truncate the xValues to user specified length
+  const xValues = chartData?.xValues.values.map((value: string) => {
     return String(value).substring(0, xTickLabelMaxLength);
   });
 
+  
   const getHoverTemplate = (
     series: any,
     orientation: string,
@@ -64,44 +65,44 @@ const getChartData = (
   };
 
   // Initialise a totals array to contain the totals
-  const seriesLength = chartData?.ySeries[0].values.length;
+  const seriesLength = chartData?.yValues[0].values.length;
   let totals = new Array(seriesLength).fill(0);
 
   // Iterate the available series and create a trace for each
-  chartData?.ySeries.map((series: any, index: number) => {
+  chartData?.yValues.map((series: any, index: number) => {
     // Calculate the Y value totals across all series
     for (let i = 0; i < series.values.length; i++) {
-      totals[i] += series.values[i];
+      totals[i] += parseFloat(series.values[i]);
     }
-
     let trace: {};
 
     if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
-        y: xSeries,
+        y: xValues,
         orientation: "h",
         customdata: totals,
         hovertemplate: getHoverTemplate(series, "x", 1, chartType),
       };
     } else {
       trace = {
-        x: xSeries,
+        x: xValues,
         y: series.values,
         orientation: "v",
         customdata: totals,
         hovertemplate: getHoverTemplate(series, "y", 1, chartType),
       };
     }
-
     traces.push({
       ...trace,
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: "lines",
       hoverinfo: chartProps.Interactivity.interactivity,
+      marker: { color: series.color },
       line: {
-        color: colors[index],
+        color: series.color,
+        dash: series.dashStyle,
       },
     });
   });
