@@ -6,6 +6,8 @@ import ChartContext, {
 import "./dimension-selection.css";
 import { titleCase } from "../../../../helper-functions/string-helpers";
 
+import { colors } from "../../../../helper-functions/chart-helpers";
+
 export interface Props {
   availableDimensions: string[];
 }
@@ -18,19 +20,18 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   }: ChartContextProps = useContext(ChartContext);
 
   const createDimensionList = () => {
-    const nonSelectedAvailableDimensions: string[] =
-      getNonSelectedAvailableDimensions();
+    const nonSelectedAvailableDimensions: string[] = getNonSelectedAvailableDimensions();
     return selectedDimensions.map((dimension, index) => {
       return (
         <div key={index}>
           <select
             className="y-series-select"
-            name={dimension.Name}
-            value={dimension.Name}
+            name={dimension.name}
+            value={dimension.name}
             onChange={handleSelectedDimensionChange}
           >
-            <option key={dimension.Name} value={dimension.Name}>
-              {dimension.Name}
+            <option key={dimension.name} value={dimension.name}>
+              {dimension.name}
             </option>
             {nonSelectedAvailableDimensions.map(
               (columnName: string, index: number) => (
@@ -43,12 +44,12 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
           <input
             className="y-series-text"
             type="text"
-            name={dimension.Name}
-            value={dimension.DisplayName}
+            name={dimension.name}
+            value={dimension.displayName}
             onChange={handleInputChange}
           />
           <button
-            name={dimension.Name}
+            name={dimension.name}
             className="remove-dimension"
             onClick={handleRemoveDimensionClick}
             tabIndex={0}
@@ -62,23 +63,31 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
 
   const handleAddDimensionClick = () => {
     if (selectedDimensions.length === availableDimensions.length) return;
+    if (selectedDimensions.length === colors.length) {
+      alert(
+        "Series limit reached. We recommend reducing the visual complexity of the chart by showing fewer series.",
+      );
+    }
     if (selectedDimensions.length === 0) {
       const defaultSelectedDimension = availableDimensions[0];
       setSelectedDimensions([
         ...selectedDimensions,
         {
-          Name: defaultSelectedDimension,
-          DisplayName: titleCase(defaultSelectedDimension),
+          name: defaultSelectedDimension,
+          displayName: titleCase(defaultSelectedDimension),
+          color: colors[selectedDimensions.length],
+          dashStyle: "none",
         },
       ]);
     } else {
-      const nonSelectedAvailableDimensions =
-        getNonSelectedAvailableDimensions();
+      const nonSelectedAvailableDimensions = getNonSelectedAvailableDimensions();
       setSelectedDimensions([
         ...selectedDimensions,
         {
-          Name: nonSelectedAvailableDimensions[0],
-          DisplayName: titleCase(nonSelectedAvailableDimensions[0]),
+          name: nonSelectedAvailableDimensions[0],
+          displayName: titleCase(nonSelectedAvailableDimensions[0]),
+          color: colors[selectedDimensions.length],
+          dashStyle: "none",
         },
       ]);
     }
@@ -88,7 +97,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     return availableDimensions.filter(
       (possibleDimension: string) =>
         !selectedDimensions
-          .map((item) => item.Name)
+          .map((item) => item.name)
           .includes(possibleDimension),
     );
   };
@@ -97,12 +106,14 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const newSelectedDimension: SelectedDimension = {
-      Name: e.target.value,
-      DisplayName: e.target.value,
-    }; //TBC
+      name: e.target.value,
+      displayName: e.target.value,
+      color: colors[selectedDimensions.length],
+      dashStyle: "none",
+    };
 
     const updatedDimensions = selectedDimensions.map((item) => {
-      return item.Name === e.target.name ? newSelectedDimension : item;
+      return item.name === e.target.name ? newSelectedDimension : item;
     });
     setSelectedDimensions(updatedDimensions);
   };
@@ -111,11 +122,13 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     const { name, value } = e.target;
     const newDimensions = [...selectedDimensions];
     const dimension: SelectedDimension = {
-      Name: name,
-      DisplayName: value,
+      name: name,
+      displayName: value,
+      color: colors[selectedDimensions.length],
+      dashStyle: "none",
     };
     const updatedDimensions = newDimensions.map((item) => {
-      return item.Name === name ? dimension : item;
+      return item.name === name ? dimension : item;
     });
     setSelectedDimensions(updatedDimensions);
   };
@@ -124,7 +137,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     const alreadyOtherSelectedDimension = selectedDimensions.filter(
-      (item) => item.Name !== (e.target as HTMLButtonElement).name,
+      (item) => item.name !== (e.target as HTMLButtonElement).name,
     );
     setSelectedDimensions(alreadyOtherSelectedDimension);
   };
