@@ -72,9 +72,8 @@ const getChartData = (
   chartData?.yValues.map((series: any, index: number) => {
     // Calculate the Y value totals across all series
     for (let i = 0; i < series.values.length; i++) {
-      totals[i] += series.values[i];
+      totals[i] += parseFloat(series.values[i]);
     }
-
     let trace: {};
 
     if (chartProps.orientationProperties.orientation === "horizontal") {
