@@ -83,6 +83,13 @@ const xAxisSection: ChartPropertySchemaSection = {
       defaultValue: "",
     },
     {
+      name: "xAxisRangeMode",
+      displayName: "Range mode",
+      type: "radio",
+      options: ["normal", "tozero", "nonnegative"],
+      defaultValue: "normal",
+    },
+    {
       name: "xTickLabelMaxLength",
       displayName: "X axis tick label max. length",
       type: "text",
@@ -108,6 +115,13 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
+    },
+    {
+      name: "yAxisRangeMode",
+      displayName: "Range mode",
+      type: "radio",
+      options: ["normal", "tozero", "nonnegative"],
+      defaultValue: "normal",
     },
   ],
 };
