@@ -2,8 +2,6 @@ import { getChartLayout, getMapLayout } from "./layout";
 import config from "./config";
 import { divergingColorScale, sequentialColorScale } from "./colorScales";
 import { GeoJSON } from "geojson";
-
-import { colors } from "../helper-functions/chart-helpers";
 import { ChartPropertyValues } from "../context/ChartContext";
 
 const updateChartDefinition = (
