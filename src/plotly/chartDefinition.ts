@@ -47,7 +47,6 @@ const getChartData = (
     return String(value).substring(0, xTickLabelMaxLength);
   });
 
-  
   const getHoverTemplate = (
     series: any,
     orientation: string,
@@ -76,13 +75,22 @@ const getChartData = (
     }
     let trace: {};
 
+    const yHoverInfoPrecision = parseInt(
+      chartProps.yAxisProperties.yHoverInfoPrecision as string,
+    );
+
     if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
         y: xValues,
         orientation: "h",
         customdata: totals,
-        hovertemplate: getHoverTemplate(series, "x", 1, chartType),
+        hovertemplate: getHoverTemplate(
+          series,
+          "x",
+          yHoverInfoPrecision,
+          chartType,
+        ),
       };
     } else {
       trace = {
@@ -90,7 +98,12 @@ const getChartData = (
         y: series.values,
         orientation: "v",
         customdata: totals,
-        hovertemplate: getHoverTemplate(series, "y", 1, chartType),
+        hovertemplate: getHoverTemplate(
+          series,
+          "y",
+          yHoverInfoPrecision,
+          chartType,
+        ),
       };
     }
     traces.push({
