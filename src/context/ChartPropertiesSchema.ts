@@ -109,6 +109,12 @@ const yAxisSection: ChartPropertySchemaSection = {
       type: "text",
       defaultValue: "",
     },
+    {
+      name: "yHoverInfoPrecision",
+      displayName: "Hoverinfo decimal precision",
+      type: "text",
+      defaultValue: "2",
+    },
   ],
 };
 
