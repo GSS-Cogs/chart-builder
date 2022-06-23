@@ -41,6 +41,7 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
     barmode,
     xaxis: {
       autorange: true,
+      rangemode: chartProps.xAxisProperties.xAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.Gridlines.showGridLines,
       title: {
@@ -52,6 +53,7 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
     },
     yaxis: {
       autorange: true,
+      rangemode: chartProps.yAxisProperties.yAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.Gridlines.showGridLines,
       title: {
