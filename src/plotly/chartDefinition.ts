@@ -47,17 +47,19 @@ const getChartData = (
 
   const getHoverTemplate = (
     series: any,
-    orientation: string,
+    seriesValue: string,
+    categoryValue: string,
     precision: number,
     chartType: any,
   ) => {
-    let template =
-      chartType === "stacked bar"
-        ? `Total: %{customdata:.${precision}f} <br>`
-        : "";
+    let template = `<b>%{${categoryValue}}</b> <br>`;
+
+    if (chartType === "stacked bar")
+      template += `Total: %{customdata:.${precision}f} <br>`;
+
     return (
       template +
-      `${series.name}: %{${orientation}:.${precision}f}<extra></extra>`
+      `${series.name}: %{${seriesValue}:.${precision}f}<extra></extra>`
     );
   };
 
@@ -86,6 +88,7 @@ const getChartData = (
         hovertemplate: getHoverTemplate(
           series,
           "x",
+          "y",
           yHoverInfoPrecision,
           chartType,
         ),
@@ -99,6 +102,7 @@ const getChartData = (
         hovertemplate: getHoverTemplate(
           series,
           "y",
+          "x",
           yHoverInfoPrecision,
           chartType,
         ),
