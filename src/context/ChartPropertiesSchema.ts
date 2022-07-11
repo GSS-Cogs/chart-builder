@@ -83,6 +83,13 @@ const xAxisSection: ChartPropertySchemaSection = {
       defaultValue: "",
     },
     {
+      name: "xAxisType",
+      displayName: "Type",
+      type: "radio",
+      options: ["auto", "linear", "log", "date", "category", "multicategory"],
+      defaultValue: "auto",
+    },
+    {
       name: "xAxisRangeMode",
       displayName: "Range mode",
       type: "radio",
@@ -115,6 +122,13 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
+    },
+    {
+      name: "yAxisType",
+      displayName: "Type",
+      type: "radio",
+      options: ["auto", "linear", "log", "date", "category", "multicategory"],
+      defaultValue: "-",
     },
     {
       name: "yHoverInfoPrecision",
