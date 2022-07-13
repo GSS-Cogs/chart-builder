@@ -33,14 +33,22 @@ const getCommonLayout = (chartProps: ChartPropertyValues) => {
   };
 };
 
+// If the axis type is "auto" then set it to (non human readable) "-" that Plotly understands
+const getAxisType = (axisType: string) =>
+  axisType === "auto" ? "-" : axisType;
+
 const getChartLayout = (chartProps: ChartPropertyValues) => {
   const commonLayout = getCommonLayout(chartProps);
   const barmode = inferBarMode(chartProps.chartTypes.chartType as any);
+
+  const xAxisType = getAxisType(chartProps.xAxisProperties.xAxisType as string);
+  const yAxisType = getAxisType(chartProps.yAxisProperties.yAxisType as string);
 
   const chartLayout = {
     barmode,
     xaxis: {
       autorange: true,
+      type: xAxisType,
       rangemode: chartProps.xAxisProperties.xAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.Gridlines.showGridLines,
@@ -53,6 +61,7 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
     },
     yaxis: {
       autorange: true,
+      type: yAxisType,
       rangemode: chartProps.yAxisProperties.yAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
       showgrid: chartProps.Gridlines.showGridLines,
