@@ -128,7 +128,7 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Type",
       type: "radio",
       options: ["auto", "linear", "log", "date", "category", "multicategory"],
-      defaultValue: "-",
+      defaultValue: "auto",
     },
     {
       name: "yHoverInfoPrecision",
