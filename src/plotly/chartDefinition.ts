@@ -35,6 +35,8 @@ const getChartData = (
 ) => {
   const traces: any = [];
 
+  const isAStackedBar = chartType === "stacked bar";
+
   const xTickLabelMaxLength =
     typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === "string"
       ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
@@ -51,10 +53,9 @@ const getChartData = (
     precision: number,
     chartType: any,
   ) => {
-    let template =
-      chartType === "stacked bar"
-        ? `Total: %{customdata:.${precision}f} <br>`
-        : "";
+    let template = isAStackedBar
+      ? `Total: %{customdata:.${precision}f} <br>`
+      : "";
     return (
       template +
       `${series.name}: %{${orientation}:.${precision}f}<extra></extra>`
@@ -65,8 +66,10 @@ const getChartData = (
   const seriesLength = chartData?.yValues[0].values.length;
   let totals = new Array(seriesLength).fill(0);
 
+  const allYSeries = chartData?.yValues;
+
   // Iterate the available series and create a trace for each
-  chartData?.yValues.map((series: any, index: number) => {
+  allYSeries.map((series: any, index: number) => {
     // Calculate the Y value totals across all series
     for (let i = 0; i < series.values.length; i++) {
       totals[i] += parseFloat(series.values[i]);
@@ -104,7 +107,8 @@ const getChartData = (
         ),
       };
     }
-    traces.push({
+
+    const newSeries = {
       ...trace,
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
@@ -115,7 +119,8 @@ const getChartData = (
         color: series.color,
         dash: series.dashStyle,
       },
-    });
+    };
+    isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });
   return traces;
 };
