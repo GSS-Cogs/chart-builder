@@ -117,7 +117,7 @@ const xAxisSection: ChartPropertySchemaSection = {
       defaultValue: 40,
     },
     {
-      name: "xAxisDTick",
+      name: "xAxisTickInterval",
       displayName: "Tick interval",
       type: "text",
       defaultValue: 1,
@@ -131,6 +131,12 @@ const xAxisSection: ChartPropertySchemaSection = {
     {
       name: "xAxisLastTickLabel",
       displayName: "Last tick label",
+      type: "text",
+      defaultValue: "",
+    },
+    {
+      name: "xAxisNTicks",
+      displayName: "Show n ticks",
       type: "text",
       defaultValue: "",
     },
@@ -183,7 +189,7 @@ const yAxisSection: ChartPropertySchemaSection = {
       defaultValue: 40,
     },
     {
-      name: "yAxisDTick",
+      name: "yAxisTickInterval",
       displayName: "Tick interval",
       type: "text",
       defaultValue: 1,
@@ -205,6 +211,12 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Hoverinfo decimal precision",
       type: "text",
       defaultValue: "2",
+    },
+    {
+      name: "yAxisNTicks",
+      displayName: "Show n ticks",
+      type: "text",
+      defaultValue: "",
     },
   ],
 };
