@@ -1,4 +1,5 @@
 import { ChartPropertyValues } from "../context/ChartContext";
+import getXandYAxisLabelsConfig from "./axisTickLabels";
 
 // A plain 'Bar' chart can also act as grouped bar chart if it
 // has more than one series so we set barmode as 'group'
@@ -32,17 +33,21 @@ const getCommonLayout = (chartProps: ChartPropertyValues) => {
     plot_bgcolor: "transparent",
   };
 };
-
 // If the axis type is "auto" then set it to (non human readable) "-" that Plotly understands
 const getAxisType = (axisType: string) =>
   axisType === "auto" ? "-" : axisType;
 
-const getChartLayout = (chartProps: ChartPropertyValues) => {
+const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
   const commonLayout = getCommonLayout(chartProps);
   const barmode = inferBarMode(chartProps.chartTypes.chartType as any);
 
   const xAxisType = getAxisType(chartProps.xAxisProperties.xAxisType as string);
   const yAxisType = getAxisType(chartProps.yAxisProperties.yAxisType as string);
+
+  const [xAxisTickConfig, yAxisTickConfig] = getXandYAxisLabelsConfig(
+    chartProps,
+    data,
+  );
 
   const chartLayout = {
     barmode,
@@ -57,7 +62,7 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
         standoff: 20,
         font: { size: 14 },
       },
-      tickangle: chartProps.xAxisProperties.xAxisTickAngle,
+      ...xAxisTickConfig,
     },
     yaxis: {
       autorange: true,
@@ -70,6 +75,7 @@ const getChartLayout = (chartProps: ChartPropertyValues) => {
         standoff: 15,
         font: { size: 14 },
       },
+      ...yAxisTickConfig,
     },
     legend: { orientation: "h", y: chartProps.LegendSection.xAxisOffset },
     showlegend: chartProps.LegendSection.showLegend,
