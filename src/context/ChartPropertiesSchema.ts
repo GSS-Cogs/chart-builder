@@ -136,7 +136,7 @@ const xAxisSection: ChartPropertySchemaSection = {
     },
     {
       name: "xAxisNTicks",
-      displayName: "Show n ticks",
+      displayName: "Show N ticks",
       type: "text",
       defaultValue: "",
     },
@@ -214,7 +214,7 @@ const yAxisSection: ChartPropertySchemaSection = {
     },
     {
       name: "yAxisNTicks",
-      displayName: "Show n ticks",
+      displayName: "Show N ticks",
       type: "text",
       defaultValue: "",
     },
