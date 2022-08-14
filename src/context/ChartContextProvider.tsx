@@ -122,16 +122,16 @@ function useTidyDataToChartContext(
   const chartData = useMemo(() => {
     if (
       !dataSelection ||
-      !dataSelection.xValues ||
+      !dataSelection.category ||
       !dataSelection.measure ||
       !dataSelection.dimension
     ) {
       return undefined;
     }
 
-    const xValues = getDistinctValues(dataSelection.xValues, tidyData);
+    const xValues = getDistinctValues(dataSelection.category, tidyData);
     const newXValues: DataColumn = {
-      name: dataSelection.xValues,
+      name: dataSelection.category,
       values: xValues,
     };
 
@@ -191,7 +191,7 @@ function useEeaConnectorData(
   const chartData = useMemo(() => {
     if (
       !dataSelection ||
-      !dataSelection.xValues ||
+      !dataSelection.category ||
       !dataSelection.measure ||
       !dataSelection.dimension ||
       !eeaData
@@ -199,11 +199,11 @@ function useEeaConnectorData(
       return undefined;
     }
 
-    const rawxValues = eeaData?.data?.[dataSelection.xValues];
+    const rawxValues = eeaData?.data?.[dataSelection.category];
     // can't quite make (string|number)[] become (number[]|string[]) here.
     const xValues = Array.from(new Set(rawxValues as any));
     const newXValues: DataColumn = {
-      name: dataSelection.xValues,
+      name: dataSelection.category,
       values: xValues as any,
     };
 

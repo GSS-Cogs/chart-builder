@@ -16,7 +16,7 @@ interface SelectedDimension {
 }
 
 interface DataSelection {
-  xValues: string;
+  category: string;
   measure: string;
   dimension: string;
   yValues: SelectedDimension[];

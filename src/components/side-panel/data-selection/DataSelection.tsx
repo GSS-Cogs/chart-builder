@@ -6,7 +6,7 @@ import SeriesSelector from "../property-inputs/SeriesSelector";
 
 const options = [
   {
-    name: "xValues",
+    name: "category",
     labelName: "Category axis:",
   },
   {
@@ -31,8 +31,8 @@ const DataSelection = (): JSX.Element => {
 
   const getPropertyValue = (name: string) => {
     switch (name) {
-      case "xValues":
-        return dataSelection?.xValues;
+      case "category":
+        return dataSelection?.category;
       case "measure":
         return dataSelection?.measure;
       case "dimension":
@@ -55,8 +55,8 @@ const DataSelection = (): JSX.Element => {
 
     let previousValue = "";
     switch (name) {
-      case "xValues":
-        previousValue = dataSelection!.xValues;
+      case "category":
+        previousValue = dataSelection!.category;
         break;
       case "measure":
         previousValue = dataSelection!.measure;
