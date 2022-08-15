@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
-import DimensionSelection from "./dimension-selection/DimensionSelection";
+import SeriesSelection from "./series-selection/SeriesSelection";
 import "./data-selection.css";
-import SeriesSelector from "../property-inputs/SeriesSelector";
+import SeriesPropertiesSelector from "../property-inputs/SeriesPropertiesSelector";
 
 const options = [
   {
@@ -24,7 +24,7 @@ const DataSelection = (): JSX.Element => {
     dataSelection,
     setDataSelection,
     columnNames,
-    availableDimensions,
+    availableSeries,
     selectedColumns,
     setSelectedColumns,
   }: ChartContextProps = useContext(ChartContext);
@@ -108,8 +108,8 @@ const DataSelection = (): JSX.Element => {
           </div>
         ))}
       </div>
-      <DimensionSelection availableDimensions={availableDimensions} />
-      <SeriesSelector />
+      <SeriesSelection availableSeries={availableSeries} />
+      <SeriesPropertiesSelector />
     </>
   );
 };

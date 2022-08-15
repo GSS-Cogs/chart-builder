@@ -15,7 +15,7 @@ import {
   DataSelection,
   EeaData,
   PlotlyChartDefinition,
-  SelectedDimension,
+  SelectedSeries,
   DataColumn,
   TidyData,
   ChartDataProvider,
@@ -68,9 +68,7 @@ export function useChartContextState(): ChartContextState {
 
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 
-  const [selectedDimensions, setSelectedDimensions] = useState<
-    SelectedDimension[]
-  >([]);
+  const [selectedSeries, setSelectedSeries] = useState<SelectedSeries[]>([]);
   const [mapData, setMapData] = useState<any>([]);
   const [geoJson, setGeoJson] = useState<GeoJSON>({} as GeoJSON);
 
@@ -100,8 +98,8 @@ export function useChartContextState(): ChartContextState {
     setDataSelection,
     selectedColumns,
     setSelectedColumns,
-    selectedDimensions,
-    setSelectedDimensions,
+    selectedSeries,
+    setSelectedSeries,
     mapData,
     setMapData,
     geoJson,
@@ -136,7 +134,7 @@ function useTidyDataToChartContext(
     };
 
     if (dataSelection.yValues && dataSelection.yValues.length > 0) {
-      const result = dataSelection.yValues.map((series: SelectedDimension) => {
+      const result = dataSelection.yValues.map((series: SelectedSeries) => {
         const filteredDataByValues = tidyData.filter(
           (item: any) => item[dataSelection.dimension] === series.name,
         );
@@ -161,7 +159,7 @@ function useTidyDataToChartContext(
     return undefined;
   }, [tidyData, dataSelection]);
 
-  const availableDimensions = useMemo(() => {
+  const availableSeries = useMemo(() => {
     if (dimensionValue != "")
       return getDistinctValues(dimensionValue, tidyData);
     else return [];
@@ -170,7 +168,7 @@ function useTidyDataToChartContext(
   return {
     columnNames,
     chartData,
-    availableDimensions,
+    availableSeries,
   };
 }
 
@@ -208,7 +206,7 @@ function useEeaConnectorData(
     };
 
     if (dataSelection.yValues && dataSelection.yValues.length > 0) {
-      const result = dataSelection.yValues.map((series: SelectedDimension) => {
+      const result = dataSelection.yValues.map((series: SelectedSeries) => {
         const toFilter: number[] | string[] = Array.isArray(
           eeaData.data?.[dataSelection.measure],
         )
@@ -238,7 +236,7 @@ function useEeaConnectorData(
     return undefined;
   }, [eeaData, dataSelection]);
 
-  const availableDimensions = useMemo((): string[] => {
+  const availableSeries = useMemo((): string[] => {
     const vals = eeaData?.data?.[dimensionValue];
     if (dimensionValue != "" && Array.isArray(vals)) {
       return Array.from(new Set(vals as string[]));
@@ -248,7 +246,7 @@ function useEeaConnectorData(
   return {
     columnNames,
     chartData,
-    availableDimensions,
+    availableSeries,
   };
 }
 
@@ -268,8 +266,8 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     setDataSelection,
     selectedColumns,
     setSelectedColumns,
-    selectedDimensions,
-    setSelectedDimensions,
+    selectedSeries,
+    setSelectedSeries,
     mapData,
     setMapData,
     geoJson,
@@ -280,28 +278,28 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
 
   const {
     chartData: tidyDataChartData,
-    availableDimensions: tidyDataAvailableDimensions,
+    availableSeries: tidyDataAvailableDimensions,
     columnNames: tidyDataColumnNames,
   } = useTidyDataToChartContext(tidyData, dataSelection, dimensionValue);
 
   const {
     chartData: eeaDataChartData,
-    availableDimensions: eeaDataAvailableDimensions,
+    availableSeries: eeaDataAvailableDimensions,
     columnNames: eeaDataColumnNames,
   } = useEeaConnectorData(eeaData, dataSelection, dimensionValue);
 
   let chartData: ChartData | undefined = undefined,
     columnNames: string[] = [],
-    availableDimensions: string[] = [];
+    availableSeries: string[] = [];
 
   if (dataSource === "tidy") {
     chartData = tidyDataChartData;
-    availableDimensions = tidyDataAvailableDimensions;
+    availableSeries = tidyDataAvailableDimensions;
     columnNames = tidyDataColumnNames;
   } else if (dataSource === "eea") {
     chartData = eeaDataChartData;
     columnNames = eeaDataColumnNames;
-    availableDimensions = eeaDataAvailableDimensions;
+    availableSeries = eeaDataAvailableDimensions;
   }
 
   useEffect(() => {
@@ -327,9 +325,9 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
   useEffect(() => {
     setDataSelection((prevState: any) => ({
       ...prevState,
-      yValues: selectedDimensions,
+      yValues: selectedSeries,
     }));
-  }, [selectedDimensions]);
+  }, [selectedSeries]);
 
   const { importCsvData: importCsvHook } = useChartCsvData(
     setTidyData,
@@ -362,11 +360,11 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
     columnNames,
     dataSelection,
     setDataSelection,
-    availableDimensions,
+    availableSeries,
     selectedColumns,
     setSelectedColumns,
-    selectedDimensions,
-    setSelectedDimensions,
+    selectedSeries,
+    setSelectedSeries,
     importCsvData,
     importEeaData,
     mapData,

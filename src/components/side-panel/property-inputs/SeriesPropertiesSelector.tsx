@@ -4,8 +4,8 @@ import SeriesProperties from "./SeriesProperties";
 import ChartContext from "../../../context/ChartContext";
 import { useContext, useEffect, useState } from "react";
 
-const SeriesSelector: React.FC = () => {
-  const { selectedDimensions: selectedSeries } = useContext(ChartContext);
+const SeriesPropertiesSelector: React.FC = () => {
+  const { selectedSeries } = useContext(ChartContext);
   const [activeSeries, setActiveSeries] = useState("");
 
   let isPropertiesOpen = true;
@@ -62,4 +62,4 @@ const SeriesSelector: React.FC = () => {
   );
 };
 
-export default SeriesSelector;
+export default SeriesPropertiesSelector;

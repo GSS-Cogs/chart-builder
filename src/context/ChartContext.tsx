@@ -1,10 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react";
 import {
-  ChartPropertySchemaSection,
   DataSelection,
   EeaData,
   PlotlyChartDefinition,
-  SelectedDimension,
+  SelectedSeries,
 } from "./types";
 
 export interface ChartPropertySectionValues {
@@ -39,9 +38,9 @@ export interface ChartContextState {
   dataSelection: DataSelection | undefined;
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
 
-  // contains the selected dimensions
-  selectedDimensions: SelectedDimension[];
-  setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>;
+  // contains the selected series
+  selectedSeries: SelectedSeries[];
+  setSelectedSeries: Dispatch<SetStateAction<SelectedSeries[]>>;
 
   // UI state to ensure unique columns are selected in selectedDimensions
   selectedColumns: string[];
@@ -67,8 +66,8 @@ export interface ChartContextProps {
   selectedFilename: string;
   setSelectedFilename: Dispatch<SetStateAction<string>>;
 
-  selectedDimensions: SelectedDimension[];
-  setSelectedDimensions: Dispatch<SetStateAction<SelectedDimension[]>>;
+  selectedSeries: SelectedSeries[];
+  setSelectedSeries: Dispatch<SetStateAction<SelectedSeries[]>>;
 
   dataSelection: DataSelection | undefined;
   setDataSelection: Dispatch<SetStateAction<DataSelection | undefined>>;
@@ -78,9 +77,10 @@ export interface ChartContextProps {
 
   // generated from the data
   columnNames: string[];
-  // when dataSelection. (xValues, measure, dimension) are selected, gets populated
-  // with the available dimensions
-  availableDimensions: string[];
+
+  // when dataSelection. (category, measure, dimension) are selected, gets populated
+  // with the available series
+  availableSeries: string[];
 
   mapData: any;
   setMapData: any;

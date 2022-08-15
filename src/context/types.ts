@@ -8,7 +8,7 @@ interface ChartData {
   yValues: DataColumn[];
 }
 
-interface SelectedDimension {
+interface SelectedSeries {
   name: string;
   displayName: string;
   color: string;
@@ -19,7 +19,7 @@ interface DataSelection {
   category: string;
   measure: string;
   dimension: string;
-  yValues: SelectedDimension[];
+  yValues: SelectedSeries[];
 }
 
 type TidyData = object[];
@@ -69,14 +69,14 @@ interface ChartPropertySchemaSection {
 
 interface ChartDataProvider {
   columnNames: string[];
-  availableDimensions: string[];
+  availableSeries: string[];
   chartData: ChartData | undefined;
 }
 
 export type {
   DataColumn,
   ChartData,
-  SelectedDimension,
+  SelectedSeries,
   DataSelection,
   TidyData,
   EeaData,

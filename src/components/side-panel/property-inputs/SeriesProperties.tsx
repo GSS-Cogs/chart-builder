@@ -11,22 +11,17 @@ interface Props {
 }
 
 const SeriesProperties = ({ activeSeries }: Props): JSX.Element => {
-  const {
-    selectedDimensions,
-    setSelectedDimensions,
-    chartProperties,
-  } = useContext(ChartContext);
+  const { selectedSeries, setSelectedSeries, chartProperties } =
+    useContext(ChartContext);
 
   // Get the selected dimension based on the active series prop
-  const selectedDimension = selectedDimensions.find(
-    (d) => d.name === activeSeries,
-  );
+  const selectedDimension = selectedSeries.find((d) => d.name === activeSeries);
 
   const isALineChart = chartProperties.chartTypes.chartType === "Line";
 
   // Shared updater for updating the color and dashStyle properties on the selected dimension
   const updateDimension = (property: string, value: any) => {
-    setSelectedDimensions((prev) =>
+    setSelectedSeries((prev) =>
       prev.map((d) =>
         d.name === activeSeries ? { ...d, [property]: value } : d,
       ),
