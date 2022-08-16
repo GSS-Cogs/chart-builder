@@ -23,7 +23,7 @@ const updateChartDefinition = (
   let layout;
   chartType === "map"
     ? (layout = getMapLayout(chartProps))
-    : (layout = getChartLayout(chartProps));
+    : (layout = getChartLayout(chartProps, data));
 
   return { data, layout, config };
 };
@@ -37,22 +37,14 @@ const getChartData = (
 
   const isAStackedBar = chartType === "stacked bar";
 
-  const xTickLabelMaxLength =
-    typeof chartProps?.xAxisProperties?.xTickLabelMaxLength === "string"
-      ? parseInt(chartProps.xAxisProperties.xTickLabelMaxLength)
-      : 9999;
-
-  // truncate the xValues to user specified length
-  const xValues = chartData?.xValues.values.map((value: string) => {
-    return String(value).substring(0, xTickLabelMaxLength);
-  });
+  const xValues = chartData?.xValues.values;
 
   const getHoverTemplate = (
     series: any,
     seriesValue: string,
     categoryValue: string,
     precision: number,
-    isAStackedBar: boolean
+    isAStackedBar: boolean,
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
 
