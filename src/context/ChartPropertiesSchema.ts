@@ -83,6 +83,12 @@ const xAxisSection: ChartPropertySchemaSection = {
       defaultValue: "",
     },
     {
+      name: "xAxisGridLines",
+      displayName: "Show gridlines",
+      type: "checkbox",
+      defaultValue: true,
+    },
+    {
       name: "xAxisType",
       displayName: "Type",
       type: "radio",
@@ -153,6 +159,12 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
+    },
+    {
+      name: "yAxisGridLines",
+      displayName: "Show gridlines",
+      type: "checkbox",
+      defaultValue: true,
     },
     {
       name: "yAxisType",
@@ -313,7 +325,6 @@ const chartPropertiesSchema: ChartPropertySchemaSection[] = [
   chartDimensionsSection,
   xAxisSection,
   yAxisSection,
-  GridlinesSection,
   legendSection,
   colorBarSection,
   interactivitySection,

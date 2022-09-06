@@ -56,7 +56,7 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
       type: xAxisType,
       rangemode: chartProps.xAxisProperties.xAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
-      showgrid: chartProps.Gridlines.showGridLines,
+      showgrid: chartProps.xAxisProperties.xAxisGridLines,
       title: {
         text: chartProps.xAxisProperties.xAxisTitle,
         standoff: 20,
@@ -69,7 +69,7 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
       type: yAxisType,
       rangemode: chartProps.yAxisProperties.yAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
-      showgrid: chartProps.Gridlines.showGridLines,
+      showgrid: chartProps.yAxisProperties.yAxisGridLines,
       title: {
         text: chartProps.yAxisProperties.yAxisTitle,
         standoff: 15,
