@@ -15,6 +15,8 @@ const updateChartDefinition = (
       ? chartProps.chartTypes.chartType.toLowerCase()
       : "line";
 
+  if (chartType !== "map" && chartData === undefined) return {};
+
   let data;
   chartType === "map"
     ? (data = getMapData(chartProps, mapData, geoJson))
@@ -34,10 +36,7 @@ const getChartData = (
   chartData: any,
 ) => {
   const traces: any = [];
-
-  const isAStackedBar = chartType === "stacked bar";
-
-  const xValues = chartData?.xValues.values;
+  if (chartData === undefined) return traces;
 
   const getHoverTemplate = (
     series: any,
@@ -56,17 +55,31 @@ const getChartData = (
     );
   };
 
-  // Initialise a totals array to contain the totals
-  const seriesLength = chartData?.yValues[0].values.length;
-  let totals = new Array(seriesLength).fill(0);
-
+  const isAStackedBar = chartType === "stacked bar";
+  const xValues = chartData?.xValues;
   const allYSeries = chartData?.yValues;
 
+  // Get the unique X values
+  const allXValues = xValues.map((obj: any) => obj.values);
+  const uniqueXValues = Array.from(new Set(allXValues.flat()));
+
+  // Initialise an array to hold the cross-series totals for each point on the category axis
+  let totals = new Array(uniqueXValues.length).fill(0);
+
   // Iterate the available series and create a trace for each
-  allYSeries.map((series: any, index: number) => {
-    // Calculate the Y value totals across all series
-    for (let i = 0; i < series.values.length; i++) {
-      totals[i] += parseFloat(series.values[i]);
+  allYSeries.map((series: any, seriesIndex: number) => {
+    // If it's a stacked bar chart then calculate the cross-series totals
+    if (isAStackedBar) {
+      // Iterate through each of the unique X values (non sparse X values)
+      for (let i = 0; i < uniqueXValues.length; i++) {
+        const xValue = uniqueXValues[i];
+        const yValue = series.values[i];
+
+        // Update the total for this point on the category axis with the Y value if there's a sparse X match
+        if (xValues[seriesIndex].values.includes(xValue)) {
+          totals[i] += parseFloat(yValue);
+        }
+      }
     }
     let trace: {};
 
@@ -77,7 +90,7 @@ const getChartData = (
     if (chartProps.orientationProperties.orientation === "horizontal") {
       trace = {
         x: series.values,
-        y: xValues,
+        y: xValues[seriesIndex].values,
         orientation: "h",
         customdata: totals,
         hovertemplate: getHoverTemplate(
@@ -90,7 +103,7 @@ const getChartData = (
       };
     } else {
       trace = {
-        x: xValues,
+        x: xValues[seriesIndex].values,
         y: series.values,
         orientation: "v",
         customdata: totals,
