@@ -17,6 +17,13 @@ const legendSection: ChartPropertySchemaSection = {
       type: "text",
       defaultValue: -0.11,
     },
+    {
+      name: "mode",
+      displayName: "Lines and markers",
+      type: "radio",
+      options: ["lines", "lines+markers", "markers"],
+      defaultValue: "lines",
+    },
   ],
 };
 
@@ -81,6 +88,12 @@ const xAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
+    },
+    {
+      name: "xAxisGridLines",
+      displayName: "Show gridlines",
+      type: "checkbox",
+      defaultValue: true,
     },
     {
       name: "xAxisType",
@@ -153,6 +166,12 @@ const yAxisSection: ChartPropertySchemaSection = {
       displayName: "Title",
       type: "text",
       defaultValue: "",
+    },
+    {
+      name: "yAxisGridLines",
+      displayName: "Show gridlines",
+      type: "checkbox",
+      defaultValue: true,
     },
     {
       name: "yAxisType",
@@ -313,7 +332,6 @@ const chartPropertiesSchema: ChartPropertySchemaSection[] = [
   chartDimensionsSection,
   xAxisSection,
   yAxisSection,
-  GridlinesSection,
   legendSection,
   colorBarSection,
   interactivitySection,

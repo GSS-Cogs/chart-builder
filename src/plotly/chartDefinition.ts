@@ -108,7 +108,7 @@ const getChartData = (
       ...trace,
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
-      mode: "lines",
+      mode: chartProps?.LegendSection?.mode ?? "lines",
       hoverinfo: chartProps.Interactivity.interactivity,
       marker: { color: series.color },
       line: {
