@@ -17,6 +17,13 @@ const legendSection: ChartPropertySchemaSection = {
       type: "text",
       defaultValue: -0.11,
     },
+    {
+      name: "mode",
+      displayName: "Lines and markers",
+      type: "radio",
+      options: ["lines", "lines+markers", "markers"],
+      defaultValue: "lines",
+    },
   ],
 };
 
