@@ -4,7 +4,7 @@ interface DataColumn {
 }
 
 interface ChartData {
-  xValues: DataColumn;
+  xValues: DataColumn[];
   yValues: DataColumn[];
 }
 

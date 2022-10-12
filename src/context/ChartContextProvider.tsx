@@ -121,44 +121,53 @@ function useTidyDataToChartContext(
 
   const chartData = useMemo(() => {
     if (
-      !dataSelection ||
-      !dataSelection.xValues ||
+      !dataSelection?.xValues ||
       !dataSelection.measure ||
-      !dataSelection.dimension
+      !dataSelection.dimension ||
+      !dataSelection.yValues ||
+      dataSelection.yValues.length === 0
     ) {
       return undefined;
     }
 
-    const xValues = getDistinctValues(dataSelection.xValues, tidyData);
-    const newXValues: DataColumn = {
-      name: dataSelection.xValues,
-      values: xValues,
-    };
+    const { xValues: category, measure, dimension } = dataSelection;
+    const allSeries = dataSelection.yValues;
+    let newChartData: ChartData = { xValues: [], yValues: [] };
 
-    if (dataSelection.yValues && dataSelection.yValues.length > 0) {
-      const result = dataSelection.yValues.map((series: SelectedDimension) => {
-        const filteredDataByValues = tidyData.filter(
-          (item: any) => item[dataSelection.dimension] === series.name,
-        );
-        const currentSeries = arrayColumn(
-          filteredDataByValues,
-          dataSelection.measure,
-        );
-        return {
-          name: series.displayName,
-          color: series.color,
-          dashStyle: series.dashStyle,
-          values: currentSeries,
-        } as DataColumn;
-      });
-      let newChartData: ChartData = {
-        xValues: newXValues,
-        yValues: result,
+    // Iterate the array of series selected by the user for inclusion in the chart
+    // and extract from the source tidy data the sparse X and Y values for each series
+    for (let i = 0; i < allSeries.length; i++) {
+      const series = allSeries[i];
+
+      // Filter the tidyData to get the current series
+      const currentSeries = tidyData.filter(
+        (row: any) => row[dimension] === series.name,
+      );
+
+      // Extract the X and Y values from columns into arrays
+      const xArray = arrayColumn(currentSeries, category);
+      const yArray = arrayColumn(currentSeries, measure);
+
+      // Create X and Y values objects for the current series
+      const xValues = {
+        name: category,
+        values: xArray,
       };
-      return newChartData;
+
+      // The Y values object also passes through the user specified series properies from dataSelection
+      const yValues = {
+        name: series.displayName,
+        color: series.color,
+        dashStyle: series.dashStyle,
+        values: yArray,
+      };
+
+      // Push the X and Y values objects to the chart data
+      newChartData.xValues.push(xValues);
+      newChartData.yValues.push(yValues);
     }
 
-    return undefined;
+    return newChartData;
   }, [tidyData, dataSelection]);
 
   const availableDimensions = useMemo(() => {
@@ -190,52 +199,64 @@ function useEeaConnectorData(
 
   const chartData = useMemo(() => {
     if (
-      !dataSelection ||
-      !dataSelection.xValues ||
+      !dataSelection?.xValues ||
       !dataSelection.measure ||
       !dataSelection.dimension ||
+      !dataSelection.yValues ||
+      dataSelection.yValues.length === 0 ||
       !eeaData
     ) {
       return undefined;
     }
 
-    const rawxValues = eeaData?.data?.[dataSelection.xValues];
-    // can't quite make (string|number)[] become (number[]|string[]) here.
-    const xValues = Array.from(new Set(rawxValues as any));
-    const newXValues: DataColumn = {
-      name: dataSelection.xValues,
-      values: xValues as any,
-    };
+    const data = eeaData.data;
+    const allSeries = dataSelection.yValues;
+    const { xValues: category, measure, dimension } = dataSelection;
 
-    if (dataSelection.yValues && dataSelection.yValues.length > 0) {
-      const result = dataSelection.yValues.map((series: SelectedDimension) => {
-        const toFilter: number[] | string[] = Array.isArray(
-          eeaData.data?.[dataSelection.measure],
-        )
-          ? eeaData.data[dataSelection.measure]
-          : [];
+    let newChartData: ChartData = { xValues: [], yValues: [] };
 
-        const currentSeries = (toFilter as any[]).filter<string | number>(
-          (_, index): _ is any =>
-            eeaData.data[dataSelection.dimension][index] === series.name,
-        );
+    // Iterate the array of series selected by the user for inclusion in the chart
+    // and extract from the source tidy data the sparse X and Y values for each series
+    for (let i = 0; i < allSeries.length; i++) {
+      const series = allSeries[i];
 
-        return {
-          name: series.displayName,
-          values: currentSeries,
-          color: series.color,
-          dashStyle: series.dashStyle,
-        } as DataColumn;
-      });
+      let toFilter: number[] | string[];
+      // Select the category column
+      toFilter = Array.isArray(data?.[category]) ? data[category] : [];
 
-      let newChartData: ChartData = {
-        xValues: newXValues,
-        yValues: result,
-      };
-      return newChartData;
+      // Filter the category column to get the (X) values for the current series
+      const xArray = (toFilter as any[]).filter<string | number>(
+        (_, index): _ is any => data[dimension][index] === series.name,
+      );
+
+      // Select the measure column
+      toFilter = Array.isArray(data?.[measure]) ? data[measure] : [];
+
+      // Filter the measure column to get the (Y) values for the current series
+      const yArray = (toFilter as any[]).filter<string | number>(
+        (_, index): _ is any => data[dimension][index] === series.name,
+      );
+
+      // Build the X and Y values objects for the current series
+      const xValues = {
+        name: category,
+        values: xArray,
+      } as DataColumn;
+
+      // The Y values object also passes through the user specified series properies from dataSelection
+      const yValues = {
+        name: series.displayName,
+        values: yArray,
+        color: series.color,
+        dashStyle: series.dashStyle,
+      } as DataColumn;
+
+      // Push the X and Y values objects to the chart data
+      newChartData.xValues.push(xValues);
+      newChartData.yValues.push(yValues);
     }
 
-    return undefined;
+    return newChartData;
   }, [eeaData, dataSelection]);
 
   const availableDimensions = useMemo((): string[] => {
