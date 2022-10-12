@@ -70,15 +70,16 @@ const getChartData = (
   allYSeries.map((series: any, seriesIndex: number) => {
     // If it's a stacked bar chart then calculate the cross-series totals
     if (isAStackedBar) {
-      // Iterate through each of the unique X values (non sparse X values)
-      for (let i = 0; i < uniqueXValues.length; i++) {
-        const xValue = uniqueXValues[i];
+      const currentXValues = xValues[seriesIndex].values;
+      // // Iterate through each of the X values in the current (potentially sparse) series
+      for (let i = 0; i < currentXValues.length; i++) {
+        // Get the current X and Y values in the (potentially sparse) series
+        const xValue = currentXValues[i];
         const yValue = series.values[i];
 
-        // Update the total for this point on the category axis with the Y value if there's a sparse X match
-        if (xValues[seriesIndex].values.includes(xValue)) {
-          totals[i] += parseFloat(yValue);
-        }
+        // Find which index to update in the (non sparse) totals array.
+        const indexToUpdate = uniqueXValues.indexOf(xValue);
+        totals[indexToUpdate] += parseFloat(yValue);
       }
     }
     let trace: {};
