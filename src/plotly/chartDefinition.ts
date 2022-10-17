@@ -129,6 +129,7 @@ const getChartData = (
         color: series.color,
         dash: series.dashStyle,
       },
+      fill: chartType === "filled area" ? "tonexty" : "none",
     };
     isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });

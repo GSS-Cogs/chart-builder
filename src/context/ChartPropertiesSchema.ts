@@ -51,7 +51,7 @@ const chartTypesSection: ChartPropertySchemaSection = {
       displayName: "",
       showPropertyLabel: false,
       type: "radio",
-      options: ["Line", "Bar", "Stacked Bar", "Map"],
+      options: ["Line", "Filled Area", "Bar", "Stacked Bar", "Map"],
       defaultValue: "Line",
     },
   ],
