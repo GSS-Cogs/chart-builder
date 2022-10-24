@@ -120,6 +120,7 @@ const getChartData = (
 
     const newSeries = {
       ...trace,
+      stackgroup: chartType === "stacked filled area" ? "one" : undefined,
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: chartProps?.LegendSection?.mode ?? "lines",
@@ -129,7 +130,10 @@ const getChartData = (
         color: series.color,
         dash: series.dashStyle,
       },
-      fill: chartType === "filled area" ? "tonexty" : "none",
+      fill:
+        chartType === "filled area" || chartType === "stacked filled area"
+          ? "tonexty"
+          : "none",
     };
     isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });
