@@ -27,7 +27,7 @@ const updateChartDefinition = (
     ? (layout = getMapLayout(chartProps))
     : (layout = getChartLayout(chartProps, data));
 
-  return { data, layout, config };
+  return { data, layout, config, chartType };
 };
 
 const getChartData = (
