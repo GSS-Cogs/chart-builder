@@ -334,6 +334,26 @@ const colorBarSection: ChartPropertySchemaSection = {
   ],
 };
 
+const compactBarChartSection: ChartPropertySchemaSection = {
+  name: "compactBarChartProperties",
+  displayName: "Compact bar chart",
+  sectionFor: "compactBarCharts",
+  properties: [
+    {
+      name: "unitOfMeasurement",
+      displayName: "Unit of measurement",
+      type: "text",
+      defaultValue: "",
+    },
+    {
+      name: "decimalPrecision",
+      displayName: "Decimal precision",
+      type: "text",
+      defaultValue: "",
+    },
+  ],
+};
+
 const chartPropertiesSchema: ChartPropertySchemaSection[] = [
   chartTypesSection,
   orientationSection,
@@ -343,6 +363,7 @@ const chartPropertiesSchema: ChartPropertySchemaSection[] = [
   legendSection,
   colorBarSection,
   interactivitySection,
+  compactBarChartSection,
 ];
 
 export default chartPropertiesSchema;
