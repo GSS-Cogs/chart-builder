@@ -13,7 +13,7 @@ const categoryAnnotationProps = {
   xanchor: "left",
   font: {
     color: "#505a5f",
-    size: "16",
+    size: "14",
     family: "Arial",
   },
 };
@@ -81,7 +81,7 @@ const getCompactBarLayout = (data: any, chartProps: ChartPropertyValues) => {
     grid: {
       rows: data.xValues[0].values.length,
       columns: 1,
-      ygap: 0.1,
+      ygap: 0.15,
     },
     ...annotations,
   };
@@ -99,7 +99,7 @@ const getCompactBarTraces = (data: any) => {
       text: [data.yValues[0].values[i]],
       textposition: "auto",
       textfont: {
-        size: "16",
+        size: "14",
         family: "Arial",
       },
       yaxis: i === 0 ? "y" : "y" + (i + 1),
