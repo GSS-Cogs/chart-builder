@@ -29,13 +29,8 @@ const updateChartDefinition = (
     ? (layout = getMapLayout(chartProps))
     : (layout = getChartLayout(chartProps, data));
 
-  const isHorizontal =
-    chartProps.orientationProperties.orientation === "horizontal";
-
-  const allYSeries = chartData?.yValues;
-
   if (chartType === "compact bar") {
-    data = getCompactBarTraces(chartData);
+    data = getCompactBarTraces(chartData, chartProps);
     layout = getCompactBarLayout(chartData, chartProps);
   }
 

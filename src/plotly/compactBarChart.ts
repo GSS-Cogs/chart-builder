@@ -89,14 +89,21 @@ const getCompactBarLayout = (data: any, chartProps: ChartPropertyValues) => {
   return layout;
 };
 
-const getCompactBarTraces = (data: any) => {
+const getCompactBarTraces = (data: any, chartProps: any) => {
   let traces: any = [];
+
+  const barChartProps = chartProps.compactBarChartProperties;
+  const { unitOfMeasurement, decimalPrecision } = barChartProps;
   const seriesColor = data.yValues[0].color;
+
   for (let i = 0; i < data.xValues[0].values.length; i++) {
+    const value = [data.yValues[0].values[i]].toString();
+    const formattedValue = parseFloat(value).toFixed(decimalPrecision);
+
     let trace: any = {
       y: [data.xValues[0].values[i]],
       x: [data.yValues[0].values[i]],
-      text: [data.yValues[0].values[i]],
+      text: formattedValue + unitOfMeasurement + " ",
       textposition: "auto",
       textfont: {
         size: "14",

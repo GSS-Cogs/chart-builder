@@ -132,7 +132,9 @@ const SidePanel = ({
 
   const shouldShowSection = ({ name, sectionFor }: any): boolean => {
     if (isACompactBar) {
-      return name === "chartDimensionProperties" || name === "chartTypes"
+      return name === "chartDimensionProperties" ||
+        name === "chartTypes" ||
+        name === "compactBarChartProperties"
         ? true
         : false;
     }
