@@ -3,6 +3,8 @@ import config from "./config";
 import { divergingColorScale, sequentialColorScale } from "./colorScales";
 import { GeoJSON } from "geojson";
 import { ChartPropertyValues } from "../context/ChartContext";
+import SeriesProperties from "../components/side-panel/property-inputs/SeriesProperties";
+import { getCompactBarTraces, getCompactBarLayout } from "./compactBarChart";
 
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
@@ -26,6 +28,16 @@ const updateChartDefinition = (
   chartType === "map"
     ? (layout = getMapLayout(chartProps))
     : (layout = getChartLayout(chartProps, data));
+
+  const isHorizontal =
+    chartProps.orientationProperties.orientation === "horizontal";
+
+  const allYSeries = chartData?.yValues;
+
+  if (chartType === "compact bar") {
+    data = getCompactBarTraces(chartData);
+    layout = getCompactBarLayout(chartData, chartProps);
+  }
 
   return { data, layout, config };
 };
@@ -66,6 +78,9 @@ const getChartData = (
   // Initialise an array to hold the cross-series totals for each point on the category axis
   let totals = new Array(uniqueXValues.length).fill(0);
 
+  const isHorizontal =
+    chartProps.orientationProperties.orientation === "horizontal";
+
   // Iterate the available series and create a trace for each
   allYSeries.map((series: any, seriesIndex: number) => {
     // If it's a stacked bar chart then calculate the cross-series totals
@@ -88,7 +103,7 @@ const getChartData = (
       chartProps.yAxisProperties.yHoverInfoPrecision as string,
     );
 
-    if (chartProps.orientationProperties.orientation === "horizontal") {
+    if (isHorizontal) {
       trace = {
         x: series.values,
         y: xValues[seriesIndex].values,
