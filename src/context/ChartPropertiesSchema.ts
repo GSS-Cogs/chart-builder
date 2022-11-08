@@ -55,6 +55,7 @@ const chartTypesSection: ChartPropertySchemaSection = {
         "Line",
         "Bar",
         "Stacked Bar",
+        "Compact Bar",
         "Map",
         "Filled Area",
         "Stacked Filled Area",
