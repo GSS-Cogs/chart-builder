@@ -81,7 +81,7 @@ const getCompactBarLayout = (data: any, chartProps: ChartPropertyValues) => {
     grid: {
       rows: data.xValues[0].values.length,
       columns: 1,
-      ygap: 0.15,
+      ygap: 0.05,
     },
     ...annotations,
   };
