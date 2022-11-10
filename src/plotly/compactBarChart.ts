@@ -3,7 +3,7 @@ import { ChartPropertyValues } from "../context/ChartContext";
 const categoryAnnotationProps = {
   xref: "x",
   x: 0,
-  y: 0.65,
+  y: 0.67,
   showarrow: false,
   xanchor: "left",
   font: {
@@ -57,7 +57,7 @@ const getCompactBarLayout = (data: any, chartProps: ChartPropertyValues) => {
     grid: {
       rows: data.xValues[0].values.length,
       columns: 1,
-      ygap: 0.05,
+      ygap: 0.08,
     },
     ...annotations,
   };
