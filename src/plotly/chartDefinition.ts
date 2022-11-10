@@ -30,7 +30,7 @@ const updateChartDefinition = (
 
   if (chartType === "compact bar") {
     data = getCompactBarTraces(chartData, chartProps);
-    const compactBarLayout = getCompactBarLayout(chartData, chartProps);
+    const compactBarLayout = getCompactBarLayout(chartData);
     const commonLayout = getCommonLayout(chartProps);
     layout = { ...commonLayout, ...compactBarLayout };
   }
