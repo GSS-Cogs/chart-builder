@@ -340,8 +340,14 @@ const compactBarChartSection: ChartPropertySchemaSection = {
   sectionFor: "compactBarCharts",
   properties: [
     {
+      name: "valuePrefix",
+      displayName: "Prefix",
+      type: "text",
+      defaultValue: "",
+    },
+    {
       name: "unitOfMeasurement",
-      displayName: "Unit of measurement",
+      displayName: "Unit",
       type: "text",
       defaultValue: "",
     },

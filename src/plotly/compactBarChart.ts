@@ -93,7 +93,7 @@ const getCompactBarTraces = (data: any, chartProps: any) => {
   let traces: any = [];
 
   const barChartProps = chartProps.compactBarChartProperties;
-  const { unitOfMeasurement, decimalPrecision } = barChartProps;
+  const { valuePrefix, unitOfMeasurement, decimalPrecision } = barChartProps;
   const seriesColor = data.yValues[0].color;
 
   for (let i = 0; i < data.xValues[0].values.length; i++) {
@@ -103,7 +103,7 @@ const getCompactBarTraces = (data: any, chartProps: any) => {
     let trace: any = {
       y: [data.xValues[0].values[i]],
       x: [data.yValues[0].values[i]],
-      text: formattedValue + unitOfMeasurement + " ",
+      text: valuePrefix + formattedValue + unitOfMeasurement + " ",
       textposition: "auto",
       textfont: {
         size: "14",
