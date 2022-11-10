@@ -1,9 +1,8 @@
-import { getChartLayout, getMapLayout } from "./layout";
+import { getChartLayout, getCommonLayout, getMapLayout } from "./layout";
 import config from "./config";
 import { divergingColorScale, sequentialColorScale } from "./colorScales";
 import { GeoJSON } from "geojson";
 import { ChartPropertyValues } from "../context/ChartContext";
-import SeriesProperties from "../components/side-panel/property-inputs/SeriesProperties";
 import { getCompactBarTraces, getCompactBarLayout } from "./compactBarChart";
 
 const updateChartDefinition = (
@@ -31,7 +30,9 @@ const updateChartDefinition = (
 
   if (chartType === "compact bar") {
     data = getCompactBarTraces(chartData, chartProps);
-    layout = getCompactBarLayout(chartData, chartProps);
+    const compactBarLayout = getCompactBarLayout(chartData, chartProps);
+    const commonLayout = getCommonLayout(chartProps);
+    layout = { ...commonLayout, ...compactBarLayout };
   }
 
   return { data, layout, config };

@@ -1,10 +1,5 @@
 import { ChartPropertyValues } from "../context/ChartContext";
 
-const commonTraceProps = {
-  type: "bar",
-  orientation: "h",
-};
-
 const categoryAnnotationProps = {
   xref: "x",
   x: 0,
@@ -40,35 +35,16 @@ const getYAxesLayout = (seriesCount: number) => {
 };
 
 const getCompactBarLayout = (data: any, chartProps: ChartPropertyValues) => {
-  let annotations;
   let categoryAnnotations = [];
 
   for (let i = 0; i < data.xValues[0].values.length; i++) {
     categoryAnnotations.push(getCategoryAnnotation(data, i));
   }
 
-  annotations = { annotations: [...categoryAnnotations] };
-
-  const {
-    height: rawHeight,
-    marginLeft,
-    marginRight,
-    marginBottom,
-    marginTop,
-  } = chartProps.chartDimensionProperties;
-
-  const height: number = parseInt(rawHeight as any);
+  const annotations = { annotations: [...categoryAnnotations] };
 
   const yAxesLayout = getYAxesLayout(data.xValues[0].values.length);
   const layout = {
-    height: height,
-    margin: {
-      l: marginLeft,
-      r: marginRight,
-      b: marginBottom,
-      t: marginTop,
-      pad: 4,
-    },
     showlegend: false,
     autosize: true,
     xaxis: {
@@ -112,7 +88,8 @@ const getCompactBarTraces = (data: any, chartProps: any) => {
       yaxis: i === 0 ? "y" : "y" + (i + 1),
       marker: { color: seriesColor },
       hoverinfo: "none",
-      ...commonTraceProps,
+      type: "bar",
+      orientation: "h",
     };
 
     traces.push(trace);
