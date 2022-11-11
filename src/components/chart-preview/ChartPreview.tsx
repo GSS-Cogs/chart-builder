@@ -2,6 +2,8 @@ import { lazy, Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
+import Tabs from "../tabs/Tabs";
+import Tab from "../tabs/Tab";
 
 // @ts-ignore
 const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
@@ -35,16 +37,34 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
 
   return (
     <div id="chart">
-      <Suspense fallback={<div />}>
-        {isClientSideRender ? (
-          chartType === "map" ? (
-            <PlotlyGeo chartDefinition={chartDefinition} />
-          ) : (
-            <PlotlyBasic chartDefinition={chartDefinition} />
-          )
-        ) : null}
-      </Suspense>
+      <Tabs>
+        <Tab title="Visualisation">
+          <Suspense fallback={<div />}>
+            {isClientSideRender ? (
+              chartType === "map" ? (
+                <PlotlyGeo chartDefinition={chartDefinition} />
+              ) : (
+                <PlotlyBasic chartDefinition={chartDefinition} />
+              )
+            ) : null}
+          </Suspense>
+        </Tab>
+        <Tab title="Data">#todo add table</Tab>
+      </Tabs>
     </div>
   );
 };
 export default ChartPreview;
+
+{
+  /*       
+      <Suspense fallback={<div />}>
+          {isClientSideRender ? (
+            chartType === "map" ? (
+              <PlotlyGeo chartDefinition={chartDefinition} />
+            ) : (
+              <PlotlyBasic chartDefinition={chartDefinition} />
+            )
+          ) : null}
+      </Suspense> */
+}
