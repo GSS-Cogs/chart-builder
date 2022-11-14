@@ -7,7 +7,7 @@ import TableFooter from "./TableFooter";
 
 const Table = ({ headers, data, rowsPerPage }) => {
   const [page, setPage] = useState(1);
-  const { slice, range } = useTable(data, page, rowsPerPage);
+  const { slice, range, totalResults } = useTable(data, page, rowsPerPage);
   return (
     <>
       <div className={styles.tableWrapper}>
@@ -34,7 +34,13 @@ const Table = ({ headers, data, rowsPerPage }) => {
           </tbody>
         </table>
       </div>
-      <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
+      <TableFooter
+        range={range}
+        slice={slice}
+        setPage={setPage}
+        page={page}
+        totalResults={totalResults}
+      />
     </>
   );
 };

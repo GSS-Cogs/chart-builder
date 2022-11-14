@@ -18,6 +18,7 @@ const sliceData = (data, page, rowsPerPage) => {
 const useTable = (data, page, rowsPerPage) => {
   const [tableRange, setTableRange] = useState([]);
   const [slice, setSlice] = useState([]);
+  const [totalResults, setTotalResults] = useState(0);
 
   useEffect(() => {
     const range = calculateRange(data, rowsPerPage);
@@ -25,9 +26,11 @@ const useTable = (data, page, rowsPerPage) => {
 
     const slice = sliceData(data, page, rowsPerPage);
     setSlice([...slice]);
+
+    setTotalResults(data.length);
   }, [data, setTableRange, page, setSlice]);
 
-  return { slice, range: tableRange };
+  return { slice, range: tableRange, totalResults };
 };
 
 export default useTable;

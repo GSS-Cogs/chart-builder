@@ -1,33 +1,43 @@
 .tableFooter {
-  background-color: #f1f1f1;
-  padding: 8px 0px;
+  /* padding: 8px 0px; */
   width: 100%;
   font-weight: 500;
   text-align: left;
-  font-size: 16px;
-  color: #2c3e50;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .button {
   border: none;
-  padding: 7px 14px;
-  border-radius: 10px;
+  padding: 16px 8px;
   cursor: pointer;
   margin-right: 4px;
   margin-left: 4px;
+
+  font-family: "GDS Transport Website";
+  font-style: normal;
+  font-size: 19px;
+  line-height: 24px;
+
+  background: transparent;
+  color: #0b0c0c;
 }
 
 .activeButton {
-  color: white;
-  background: #185adb;
+  font-weight: 700;
+  /* font-weight: bold; */
 }
 
 .inactiveButton {
-  color: #2c3e50;
-  background: #f9f9f9;
+  font-weight: 300;
+  color: #1d70b8;
+}
+
+.results {
+  font-family: "GDS Transport Website";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 19px;
+  color: #505a5f;
 }

@@ -17,32 +17,23 @@
 }
 
 .tableHeader {
-  background-color: #f1f1f1;
-  padding: 12px;
-  font-weight: 500;
+  padding: 8px;
+  font-weight: bold;
   text-align: left;
-  font-size: 14px;
-  color: #2c3e50;
-}
-
-.tableHeader:first-child {
-  border-top-left-radius: 15px;
-}
-
-.tableHeader:last-child {
-  border-top-right-radius: 15px;
+  font-size: 19px;
+  color: #0b0c0c;
+  border-bottom: 1px solid #b1b4b6;
 }
 
 .tableRowItems {
   cursor: auto;
-}
-
-.tableRowItems:nth-child(odd) {
-  background-color: #f9f9f9;
+  border-bottom: 1px solid #b1b4b6;
+  font-family: "GDS Transport Website";
 }
 
 .tableCell {
-  padding: 12px;
-  font-size: 14px;
-  color: grey;
+  padding: 8px;
+  font-size: 19px;
+  color: #0b0c0c;
+  font-family: "GDS Transport Website";
 }
