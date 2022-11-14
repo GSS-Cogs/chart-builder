@@ -2,6 +2,7 @@ import { lazy, Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
+import TabularData from "./TabularData";
 import Tabs from "../tabs/Tabs";
 import Tab from "../tabs/Tab";
 
@@ -9,6 +10,7 @@ import Tab from "../tabs/Tab";
 const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
 // @ts-ignore
 const PlotlyGeo = lazy(() => import("./PlotlyGeo"));
+//const TabularData = lazy(() => import("./TabularData"));
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
@@ -49,7 +51,9 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
             ) : null}
           </Suspense>
         </Tab>
-        <Tab title="Data">#todo add table</Tab>
+        <Tab title="Data">
+          <TabularData chartDefinition={chartDefinition} />
+        </Tab>
       </Tabs>
     </div>
   );
