@@ -14,6 +14,7 @@ const Tabs: React.FC<Props> = ({ children }) => {
         style={{
           marginBottom: 40,
           display: "flex",
+          listStyle: "none",
         }}
       >
         {children.map((item, index) => (
