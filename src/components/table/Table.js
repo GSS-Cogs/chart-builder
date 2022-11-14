@@ -10,28 +10,30 @@ const Table = ({ headers, data, rowsPerPage }) => {
   const { slice, range } = useTable(data, page, rowsPerPage);
   return (
     <>
-      <table className={styles.table}>
-        <thead className={styles.tableRowHeader}>
-          <tr>
-            {headers.map((head, index) => (
-              <th className={styles.tableHeader} key={index}>
-                {head}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {slice.map((el, index) => (
-            <tr className={styles.tableRowItems} key={index + "#"}>
-              {el.map((col, index) => (
-                <td className={styles.tableCell} key={index + "##"}>
-                  {col}
-                </td>
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <thead className={styles.tableRowHeader}>
+            <tr>
+              {headers.map((head, index) => (
+                <th className={styles.tableHeader} key={index}>
+                  {head}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {slice.map((el, index) => (
+              <tr className={styles.tableRowItems} key={index + "#"}>
+                {el.map((col, index) => (
+                  <td className={styles.tableCell} key={index + "##"}>
+                    {col}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
     </>
   );

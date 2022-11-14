@@ -1,11 +1,13 @@
 /* @/src/components/Table/Table.module.css */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .table {
   border-collapse: collapse;
   border: none;
   width: 100%;
-  display: block;
-  overflow: auto;
-  white-space: nowrap;
 }
 
 .tableRowHeader {
