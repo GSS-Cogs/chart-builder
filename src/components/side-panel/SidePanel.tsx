@@ -90,6 +90,9 @@ const SidePanel = ({
 
   const isAMap = chartProperties?.chartTypes?.chartType === "Map";
 
+  const isACompactBar =
+    chartProperties?.chartTypes?.chartType === "Compact Bar";
+
   const isAutoXTickMode =
     chartProperties.xAxisProperties.xAxisTickMode === "auto";
 
@@ -127,14 +130,26 @@ const SidePanel = ({
     return true;
   };
 
+  const shouldShowSection = ({ name, sectionFor }: any): boolean => {
+    if (isACompactBar) {
+      return name === "chartDimensionProperties" ||
+        name === "chartTypes" ||
+        name === "compactBarChartProperties"
+        ? true
+        : false;
+    }
+
+    return (
+      sectionFor === "all" ||
+      (sectionFor === "maps" && isAMap) ||
+      (sectionFor === "charts" && !isAMap)
+    );
+  };
+
   return (
     <div id="side-panel">
       {chartPropertiesSchema.map((section: any, index: number) => {
-        const showSection =
-          section.sectionFor === "all" ||
-          (section.sectionFor === "maps" && isAMap) ||
-          (section.sectionFor === "charts" && !isAMap);
-
+        const showSection = shouldShowSection(section);
         // Show sections relevant to the visualisation type (chart/map/all)
         if (!showSection) return null;
 
