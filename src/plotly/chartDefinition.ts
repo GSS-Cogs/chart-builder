@@ -35,7 +35,7 @@ const updateChartDefinition = (
     layout = { ...commonLayout, ...compactBarLayout };
   }
 
-  return { data, layout, config };
+  return { data, layout, config , chartType};
 };
 
 const getChartData = (

@@ -3,15 +3,17 @@ import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
 
+// @ts-ignore
+const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
+// @ts-ignore
+const PlotlyGeo = lazy(() => import("./PlotlyGeo"));
+
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition }: any = useContext(ChartContext);
   return <ActualChart chartDefinition={chartDefinition} />;
 };
 
 const isClientSideRender = typeof window !== "undefined";
-
-// @ts-ignore - issue related to the way react-plotly Plot is exported
-const Plot = isClientSideRender ? lazy(() => import("react-plotly.js")) : null;
 
 export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
   const emptyDataState = Object.keys(chartDefinition).length === 0;
@@ -25,8 +27,7 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
       </div>
     );
 
-  let { data, layout, config } = chartDefinition;
-
+  const { chartType, layout } = chartDefinition;
   // Incrementing the datarevision forces plotly to update the chart.
   // This is a workaround for an issue where plotly loses its
   // autorange calculations on component re-render.
@@ -34,17 +35,15 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
 
   return (
     <div id="chart">
-      {Plot ? (
-        <Suspense fallback={<div />}>
-          <Plot
-            data={data}
-            layout={layout}
-            config={config}
-            useResizeHandler={true}
-            style={{ width: "100%" }}
-          />
-        </Suspense>
-      ) : null}
+      <Suspense fallback={<div />}>
+        {isClientSideRender ? (
+          chartType === "map" ? (
+            <PlotlyGeo chartDefinition={chartDefinition} />
+          ) : (
+            <PlotlyBasic chartDefinition={chartDefinition} />
+          )
+        ) : null}
+      </Suspense>
     </div>
   );
 };
