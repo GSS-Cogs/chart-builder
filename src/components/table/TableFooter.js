@@ -19,6 +19,24 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
     }
   };
 
+  const rangeStart = () => {
+    let start = page - 3;
+    if (start < 0) {
+      start = 0;
+    } else if (start >= range.length - 4) {
+      start = range.length - 5;
+    }
+    return start;
+  };
+
+  const rangeEnd = () => {
+    let end = page + 2;
+    if (page < 3) {
+      end += 3 - page;
+    }
+    return end;
+  };
+
   return (
     <div className={styles.tableFooter}>
       <div>
@@ -27,10 +45,10 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
             className={`${styles.button} ${styles.inactiveButton}`}
             onClick={() => setPage(page - 1)}
           >
-            {"< Previous"}
+            {"< Prev"}
           </button>
         )}
-        {range.map((el, index) => (
+        {range.slice(rangeStart(), rangeEnd()).map((el, index) => (
           <button
             key={index}
             className={`${styles.button} ${
