@@ -48,25 +48,32 @@ export const ActualChart = ({
 
   return (
     <div id="chart">
-      <Tabs>
-        <Tab title="Visualisation">
-          <Suspense fallback={<div />}>
-            {isClientSideRender ? (
-              chartType === "map" ? (
-                <PlotlyGeo chartDefinition={chartDefinition} />
-              ) : (
-                <PlotlyBasic chartDefinition={chartDefinition} />
-              )
-            ) : null}
-          </Suspense>
-        </Tab>
-        <Tab title="Data">
-          <TabularData
-            chartDefinition={chartDefinition}
-            selectedColumns={selectedColumns}
-          />
-        </Tab>
-      </Tabs>
+      {chartType !== "table" ? (
+        <Tabs>
+          <Tab title="Visualisation">
+            <Suspense fallback={<div />}>
+              {isClientSideRender ? (
+                chartType === "map" ? (
+                  <PlotlyGeo chartDefinition={chartDefinition} />
+                ) : (
+                  <PlotlyBasic chartDefinition={chartDefinition} />
+                )
+              ) : null}
+            </Suspense>
+          </Tab>
+          <Tab title="Data">
+            <TabularData
+              chartDefinition={chartDefinition}
+              selectedColumns={selectedColumns}
+            />
+          </Tab>
+        </Tabs>
+      ) : (
+        <TabularData
+          chartDefinition={chartDefinition}
+          selectedColumns={selectedColumns}
+        />
+      )}
     </div>
   );
 };
