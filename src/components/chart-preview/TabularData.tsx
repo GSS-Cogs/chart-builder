@@ -3,7 +3,7 @@
 // import createPlotlyComponent from "react-plotly.js/factory";
 import Table from "../table/Table";
 
-const TabularData = ({ chartDefinition }: any) => {
+const TabularData = ({ chartDefinition, selectedColumns }: any) => {
   let { data, layout, config } = chartDefinition;
   console.log(data);
   let jarray = combineArrays(data[0].x, data[0].y);
@@ -24,7 +24,7 @@ const TabularData = ({ chartDefinition }: any) => {
   }
   console.log(jarray);
 
-  const headers = [""].concat(
+  const headers = [selectedColumns?.[0]].concat(
     data.map((dataset: { name: string }) => dataset.name),
   );
 

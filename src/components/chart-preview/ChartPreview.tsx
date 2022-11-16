@@ -13,13 +13,22 @@ const PlotlyGeo = lazy(() => import("./PlotlyGeo"));
 //const TabularData = lazy(() => import("./TabularData"));
 
 const ChartPreview = (): JSX.Element => {
-  const { chartDefinition }: any = useContext(ChartContext);
-  return <ActualChart chartDefinition={chartDefinition} />;
+  const { chartDefinition, selectedColumns }: any = useContext(ChartContext);
+
+  return (
+    <ActualChart
+      chartDefinition={chartDefinition}
+      selectedColumns={selectedColumns}
+    />
+  );
 };
 
 const isClientSideRender = typeof window !== "undefined";
 
-export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
+export const ActualChart = ({
+  chartDefinition,
+  selectedColumns,
+}: any): JSX.Element => {
   const emptyDataState = Object.keys(chartDefinition).length === 0;
 
   if (emptyDataState)
@@ -52,7 +61,10 @@ export const ActualChart = ({ chartDefinition }: any): JSX.Element => {
           </Suspense>
         </Tab>
         <Tab title="Data">
-          <TabularData chartDefinition={chartDefinition} />
+          <TabularData
+            chartDefinition={chartDefinition}
+            selectedColumns={selectedColumns}
+          />
         </Tab>
       </Tabs>
     </div>
