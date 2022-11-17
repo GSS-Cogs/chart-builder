@@ -1,9 +1,14 @@
 @font-face {
   font-family: GDSTransportWebsite;
   src: url(./fonts/GDSTransportWebsite.ttf);
-  font-family: GDSTransportWebsite-Bold;
-  src: url(./fonts/GDSTransportWebsite-Bold.ttf);
+  font-weight: normal;
 }
+@font-face {
+  font-family: GDSTransportWebsite;
+  src: url(./fonts/GDSTransportWebsite-Bold.ttf);
+  font-weight: bold;
+}
+
 /* css reset  */
 * {
   padding: 0px;

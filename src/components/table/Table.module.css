@@ -28,12 +28,10 @@
 .tableRowItems {
   cursor: auto;
   border-bottom: 1px solid #b1b4b6;
-  font-family: "GDS Transport Website";
 }
 
 .tableCell {
   padding: 8px;
   font-size: 19px;
   color: #0b0c0c;
-  font-family: "GDS Transport Website";
 }
