@@ -8825,6 +8825,11 @@ glslify@^7.0.0, glslify@^7.1.1:
     through2 "^2.0.1"
     xtend "^4.0.0"
 
+govuk-frontend@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.4.0.tgz#36531ae3b12798267e5a72409c7e4b3b10565102"
+  integrity sha512-3Hg4GePCdlynd7F6a3YPOEJx0lDPPP6iBv1S893tv3+efYGWLGvsSFdCG0uob8Xc1O7ckL19dSsFpFhBWUkTNA==
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
