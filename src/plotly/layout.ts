@@ -101,4 +101,4 @@ const getMapLayout = (chartProps: ChartPropertyValues) => {
   return { ...commonLayout, ...mapLayout };
 };
 
-export { getMapLayout, getChartLayout };
+export { getMapLayout, getChartLayout, getCommonLayout };
