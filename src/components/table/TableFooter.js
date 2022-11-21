@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import styles from "./TableFooter.module.css";
 
 const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
-  useEffect(() => {
-    if (slice.length < 1 && page !== 1) {
-      setPage(page - 1);
-    }
-  }, [slice, page, setPage]);
+  useEffect(() => {}, []);
+  // useEffect(() => {
+  //   console.log("reloading footer: " + page);
+  //   if (slice.length < 1 && page !== 1) {
+  //     setPage(page - 1);
+  //   }
+  // }, [slice, page, setPage]);
 
   const calculateResulstsPosition = () => {
     if (page === range.length) {
@@ -19,35 +21,119 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
     }
   };
 
+  const PAGINATION_LENGTH = 7;
+
   const rangeStart = () => {
     let start = page - 3;
     if (start < 0) {
       start = 0;
-    } else if (start >= range.length - 4) {
-      start = range.length - 5;
+    }
+    if (page > range.length - 4) {
+      start -= 4 - (range.length - page);
     }
     return start;
   };
 
   const rangeEnd = () => {
     let end = page + 2;
-    if (page < 3) {
-      end += 3 - page;
+    if (page < 6) {
+      end = page + (7 - page);
     }
     return end;
+  };
+
+  const LeftPagination = () => {
+    let lPaginationComponentArray = [];
+    lPaginationComponentArray.push(
+      <button
+        className={`${styles.endButton} ${styles.inactiveButton}`}
+        onClick={() => setPage(page - 1)}
+        disabled={!(page > 1)}
+      >
+        {"< Prev"}
+      </button>,
+    );
+    if (page > 3) {
+      lPaginationComponentArray.push(
+        <button
+          className={`${styles.button} ${styles.inactiveButton}`}
+          onClick={() => setPage(1)}
+        >
+          {"1"}
+        </button>,
+      );
+
+      if (page === 5) {
+        lPaginationComponentArray.push(
+          <button
+            className={`${styles.button} ${styles.inactiveButton}`}
+            onClick={() => setPage(2)}
+          >
+            {"2"}
+          </button>,
+        );
+      } else if (page > 5) {
+        lPaginationComponentArray.push(
+          <button
+            className={`${styles.button} ${styles.inactiveButton}`}
+            onClick={() => setPage(page - 2)}
+          >
+            {"..."}
+          </button>,
+        );
+      }
+    }
+    return <>{lPaginationComponentArray}</>;
+  };
+
+  const RightPagination = () => {
+    let rPaginationComponentArray = [];
+    if (page < range.length - 2) {
+      if (page === range.length - 4) {
+        rPaginationComponentArray.push(
+          <button
+            className={`${styles.button} ${styles.inactiveButton}`}
+            onClick={() => setPage(2)}
+          >
+            {range.length - 1}
+          </button>,
+        );
+      } else if (page < range.length - 4) {
+        rPaginationComponentArray.push(
+          <button
+            className={`${styles.button} ${styles.inactiveButton}`}
+            onClick={() => setPage(page - 2)}
+          >
+            {"..."}
+          </button>,
+        );
+      }
+
+      rPaginationComponentArray.push(
+        <button
+          className={`${styles.button} ${styles.inactiveButton}`}
+          onClick={() => setPage(range.length)}
+        >
+          {range.length}
+        </button>,
+      );
+    }
+    rPaginationComponentArray.push(
+      <button
+        className={`${styles.endButton} ${styles.inactiveButton}`}
+        onClick={() => setPage(page + 1)}
+        disabled={page === range.length}
+      >
+        {"Next >"}
+      </button>,
+    );
+    return rPaginationComponentArray;
   };
 
   return (
     <div className={styles.tableFooter}>
       <div>
-        {page > 1 && (
-          <button
-            className={`${styles.button} ${styles.inactiveButton}`}
-            onClick={() => setPage(page - 1)}
-          >
-            {"< Prev"}
-          </button>
-        )}
+        <LeftPagination />
         {range.length > 1 &&
           range.slice(rangeStart(), rangeEnd()).map((el, index) => (
             <button
@@ -60,14 +146,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
               {el}
             </button>
           ))}
-        {page < range.length && (
-          <button
-            className={`${styles.button} ${styles.inactiveButton}`}
-            onClick={() => setPage(page + 1)}
-          >
-            {"Next >"}
-          </button>
-        )}
+        <RightPagination />
       </div>
       <div className={styles.results}>
         Showing results {calculateResulstsPosition()}{" "}
