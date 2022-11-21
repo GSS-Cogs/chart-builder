@@ -25,6 +25,10 @@
   border-bottom: 1px solid #b1b4b6;
 }
 
+.tableHeader:empty::after {
+  content: "\00a0";
+}
+
 .tableRowItems {
   cursor: auto;
   border-bottom: 1px solid #b1b4b6;
@@ -34,4 +38,8 @@
   padding: 8px;
   font-size: 19px;
   color: #0b0c0c;
+}
+
+.tableCell:empty::after {
+  content: "\00a0";
 }
