@@ -48,17 +48,18 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
             {"< Prev"}
           </button>
         )}
-        {range.slice(rangeStart(), rangeEnd()).map((el, index) => (
-          <button
-            key={index}
-            className={`${styles.button} ${
-              page === el ? styles.activeButton : styles.inactiveButton
-            }`}
-            onClick={() => setPage(el)}
-          >
-            {el}
-          </button>
-        ))}
+        {range.length > 1 &&
+          range.slice(rangeStart(), rangeEnd()).map((el, index) => (
+            <button
+              key={index}
+              className={`${styles.button} ${
+                page === el ? styles.activeButton : styles.inactiveButton
+              }`}
+              onClick={() => setPage(el)}
+            >
+              {el}
+            </button>
+          ))}
         {page < range.length && (
           <button
             className={`${styles.button} ${styles.inactiveButton}`}
@@ -69,7 +70,8 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         )}
       </div>
       <div className={styles.results}>
-        Showing results {calculateResulstsPosition()} of {totalResults} results
+        Showing results {calculateResulstsPosition()}{" "}
+        {range.length > 1 && " of " + totalResults + " results"}
       </div>
     </div>
   );
