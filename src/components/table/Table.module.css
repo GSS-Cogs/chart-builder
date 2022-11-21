@@ -19,7 +19,7 @@
 .tableHeader {
   padding: 8px;
   font-weight: bold;
-  text-align: left;
+  text-align: right;
   font-size: 19px;
   color: #0b0c0c;
   border-bottom: 1px solid #b1b4b6;
@@ -27,6 +27,10 @@
 
 .tableHeader:empty::after {
   content: "\00a0";
+}
+
+.tableHeader:first-child {
+  text-align: left;
 }
 
 .tableRowItems {
@@ -37,7 +41,12 @@
 .tableCell {
   padding: 8px;
   font-size: 19px;
+  text-align: right;
   color: #0b0c0c;
+}
+
+.tableCell:first-child {
+  text-align: left;
 }
 
 .tableCell:empty::after {
