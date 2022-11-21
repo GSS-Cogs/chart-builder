@@ -31,10 +31,11 @@ const configureData = (data, selectedColumns) => {
     jarray = combineArrays(prepArray, data[0].z);
 
     let secondColumnHeader = "";
-    if (data?.colorbar?.title?.text) {
-      secondColumnHeader = data?.colorbar?.title?.text;
-    } else if (data?.colorbar?.title.length > 0) {
-      secondColumnHeader = data?.colorbar?.title;
+    const colorbar = data[0]?.colorbar;
+    if (colorbar?.title?.text) {
+      secondColumnHeader = colorbar?.title?.text;
+    } else if (colorbar?.title.length > 0) {
+      secondColumnHeader = colorbar?.title;
     }
     const cleansedSecondColumnHeader =
       secondColumnHeader !== null
