@@ -10,7 +10,9 @@
 
 .button {
   border: none;
-  padding: 16px 8px;
+  width: 22px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   cursor: pointer;
   margin-right: 4px;
   margin-left: 4px;
@@ -26,11 +28,27 @@
 
 .activeButton {
   font-weight: 700;
-  /* font-weight: bold; */
 }
 
 .inactiveButton {
   font-weight: 300;
+  color: #1d70b8;
+}
+
+.endButton {
+  border: none;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  cursor: pointer;
+  margin-right: 4px;
+  margin-left: 4px;
+
+  font-family: "GDS Transport Website";
+  font-style: normal;
+  font-size: 19px;
+  line-height: 24px;
+
+  background: transparent;
   color: #1d70b8;
 }
 
