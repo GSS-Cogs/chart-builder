@@ -42,7 +42,9 @@ const FakeTable = () => (
 
 const FakeTableHeader = () => (
   <thead className={styles.tableRowHeader}>
-    <th className={styles.tableHeader}></th>
+    <tr>
+      <th className={styles.tableHeader} />
+    </tr>
   </thead>
 );
 

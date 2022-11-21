@@ -76,7 +76,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
 };
 
 TableFooter.propTypes = {
-  range: PropTypes.number,
+  range: PropTypes.array,
   setPage: PropTypes.any,
   page: PropTypes.number,
   slice: PropTypes.any,
