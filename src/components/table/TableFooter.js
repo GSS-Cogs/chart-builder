@@ -49,6 +49,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         className={`${styles.endButton} ${styles.inactiveButton}`}
         onClick={() => setPage(page - 1)}
         disabled={!(page > 1)}
+        key={"#prev"}
       >
         {"< Prev"}
       </button>,
@@ -58,6 +59,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         <button
           className={`${styles.button} ${styles.inactiveButton}`}
           onClick={() => setPage(1)}
+          key={"#left1"}
         >
           {"1"}
         </button>,
@@ -68,6 +70,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
           <button
             className={`${styles.button} ${styles.inactiveButton}`}
             onClick={() => setPage(2)}
+            key={"#left2"}
           >
             {"2"}
           </button>,
@@ -77,6 +80,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
           <button
             className={`${styles.button} ${styles.inactiveButton}`}
             onClick={() => setPage(page - 2)}
+            key={"#left..."}
           >
             {"..."}
           </button>,
@@ -94,6 +98,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
           <button
             className={`${styles.button} ${styles.inactiveButton}`}
             onClick={() => setPage(2)}
+            key={"#rightsemifinal"}
           >
             {range.length - 1}
           </button>,
@@ -103,6 +108,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
           <button
             className={`${styles.button} ${styles.inactiveButton}`}
             onClick={() => setPage(page - 2)}
+            key={"#right..."}
           >
             {"..."}
           </button>,
@@ -113,6 +119,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         <button
           className={`${styles.button} ${styles.inactiveButton}`}
           onClick={() => setPage(range.length)}
+          key={"#rightfinal"}
         >
           {range.length}
         </button>,
@@ -123,6 +130,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         className={`${styles.endButton} ${styles.inactiveButton}`}
         onClick={() => setPage(page + 1)}
         disabled={page === range.length}
+        key={"#next"}
       >
         {"Next >"}
       </button>,
@@ -133,20 +141,23 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
   return (
     <div className={styles.tableFooter}>
       <div>
-        <LeftPagination />
-        {range.length > 1 &&
-          range.slice(rangeStart(), rangeEnd()).map((el, index) => (
-            <button
-              key={index}
-              className={`${styles.button} ${
-                page === el ? styles.activeButton : styles.inactiveButton
-              }`}
-              onClick={() => setPage(el)}
-            >
-              {el}
-            </button>
-          ))}
-        <RightPagination />
+        {range.length > 1 && (
+          <>
+            <LeftPagination />
+            {range.slice(rangeStart(), rangeEnd()).map((el, index) => (
+              <button
+                key={index}
+                className={`${styles.button} ${
+                  page === el ? styles.activeButton : styles.inactiveButton
+                }`}
+                onClick={() => setPage(el)}
+              >
+                {el}
+              </button>
+            ))}
+            <RightPagination />
+          </>
+        )}
       </div>
       <div className={styles.results}>
         Showing results {calculateResulstsPosition()}{" "}
