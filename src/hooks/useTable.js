@@ -44,12 +44,15 @@ const configureData = (data, selectedColumns) => {
 
     headers = ["Location", cleansedSecondColumnHeader];
   } else {
-    const prepArray = data[0].x.map((item) => [item]);
-    jarray = combineArrays(prepArray, data[0].y);
+    const firstColumn = data[0].orientation === "v" ? "x" : "y";
+    const seriesColumns = data[0].orientation === "v" ? "y" : "x";
+
+    const prepArray = data[0][firstColumn].map((item) => [item]);
+    jarray = combineArrays(prepArray, data[0][seriesColumns]);
 
     if (data.length > 1) {
       for (let i = 1; i < data.length; i++) {
-        jarray = combineArrays(jarray, data[i].y);
+        jarray = combineArrays(jarray, data[i][seriesColumns]);
       }
     }
 
