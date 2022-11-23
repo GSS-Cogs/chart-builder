@@ -13,6 +13,33 @@ function combineArrays(arr1, arr2) {
   return tempArr;
 }
 
+function combineSparseDataArrays(arr1, arr2, arr3) {
+  let tempArr = arr1;
+  let xArr = arr2;
+  let yArr = arr3;
+  for (let i = 0; i < arr1.length; i++) {
+    const index = xArr.indexOf(arr1[i][0]);
+    if (index !== -1) {
+      tempArr[i].push(yArr[index]);
+      xArr.slice(index, 1);
+      yArr.slice(index, 1);
+    } else {
+      tempArr[i].push("");
+    }
+  }
+  return tempArr;
+}
+
+function getAllXValues(arr) {
+  // gets all unique values within a 2d array
+  let tempArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    tempArr.push(arr[i].x);
+  }
+  const uniqueArr = [...new Set(tempArr.flat())];
+  return uniqueArr;
+}
+
 function sortFunction(a, b) {
   if (a[0] === b[0]) {
     return 0;
@@ -47,20 +74,22 @@ const configureData = (data, selectedColumns) => {
     const firstColumn = data[0].orientation === "v" ? "x" : "y";
     const seriesColumns = data[0].orientation === "v" ? "y" : "x";
 
-    const prepArray = data[0][firstColumn].map((item) => [item]);
-    jarray = combineArrays(prepArray, data[0][seriesColumns]);
+    const allXValues = getAllXValues(data);
+    const prepXValuesArray = allXValues.map((item) => [item]);
+    jarray = prepXValuesArray;
 
-    if (data.length > 1) {
-      for (let i = 1; i < data.length; i++) {
-        jarray = combineArrays(jarray, data[i][seriesColumns]);
-      }
+    for (let i = 0; i < data.length; i++) {
+      jarray = combineSparseDataArrays(
+        jarray,
+        data[i][firstColumn],
+        data[i][seriesColumns],
+      );
     }
 
     headers = [selectedColumns?.[0]].concat(
       data.map((dataset) => dataset.name),
     );
   }
-
   jarray.sort(sortFunction);
 
   return [jarray, headers];
