@@ -81,7 +81,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         lPaginationComponentArray.push(
           <button
             className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
-            onClick={() => setPage(page - 2)}
+            onClick={() => setPage(page - 3)}
             key={"#left..."}
           >
             {"..."}
@@ -109,7 +109,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         rPaginationComponentArray.push(
           <button
             className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
-            onClick={() => setPage(page - 2)}
+            onClick={() => setPage(page + 3)}
             key={"#right..."}
           >
             {"..."}
