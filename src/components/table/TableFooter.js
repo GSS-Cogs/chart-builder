@@ -26,7 +26,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
   const PAGINATION_LENGTH = 7;
 
   const rangeStart = () => {
-    let start = page - 3;
+    let start = range.length > 4 ? page - 3 : page;
     if (start < 0) {
       start = 0;
     }
@@ -56,7 +56,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
         {"< Prev"}
       </button>,
     );
-    if (page > 3) {
+    if (page > 3 && range.length > 7) {
       lPaginationComponentArray.push(
         <button
           className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
@@ -94,7 +94,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
 
   const RightPagination = () => {
     let rPaginationComponentArray = [];
-    if (page < range.length - 2) {
+    if (page < range.length - 2 && range.length > 7) {
       if (page === range.length - 4) {
         rPaginationComponentArray.push(
           <button
