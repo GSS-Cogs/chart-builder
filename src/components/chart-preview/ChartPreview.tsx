@@ -61,7 +61,7 @@ export const ActualChart = ({
               ) : null}
             </Suspense>
           </Tab>
-          <Tab title="Data">
+          <Tab title="Chart Data">
             <TabularData
               chartDefinition={chartDefinition}
               selectedColumns={selectedColumns}
