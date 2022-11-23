@@ -10,7 +10,6 @@
 
 .button {
   border: none;
-  width: 22px;
   padding-top: 16px;
   padding-bottom: 16px;
   cursor: pointer;
@@ -24,6 +23,14 @@
 
   background: transparent;
   color: #0b0c0c;
+}
+
+.buttonNormalWidth {
+  width: 22px;
+}
+
+.buttonWideWidth {
+  width: 32px;
 }
 
 .activeButton {

@@ -11,6 +11,8 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
   //     setPage(page - 1);
   //   }
   // }, [slice, page, setPage]);
+  const buttonWidthStyle =
+    range.length > 99 ? styles.buttonWideWidth : styles.buttonNormalWidth;
 
   const calculateResulstsPosition = () => {
     if (page === range.length) {
@@ -57,7 +59,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
     if (page > 3) {
       lPaginationComponentArray.push(
         <button
-          className={`${styles.button} ${styles.inactiveButton}`}
+          className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
           onClick={() => setPage(1)}
           key={"#left1"}
         >
@@ -68,7 +70,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
       if (page === 5) {
         lPaginationComponentArray.push(
           <button
-            className={`${styles.button} ${styles.inactiveButton}`}
+            className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
             onClick={() => setPage(2)}
             key={"#left2"}
           >
@@ -78,7 +80,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
       } else if (page > 5) {
         lPaginationComponentArray.push(
           <button
-            className={`${styles.button} ${styles.inactiveButton}`}
+            className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
             onClick={() => setPage(page - 2)}
             key={"#left..."}
           >
@@ -96,7 +98,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
       if (page === range.length - 4) {
         rPaginationComponentArray.push(
           <button
-            className={`${styles.button} ${styles.inactiveButton}`}
+            className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
             onClick={() => setPage(2)}
             key={"#rightsemifinal"}
           >
@@ -106,7 +108,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
       } else if (page < range.length - 4) {
         rPaginationComponentArray.push(
           <button
-            className={`${styles.button} ${styles.inactiveButton}`}
+            className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
             onClick={() => setPage(page - 2)}
             key={"#right..."}
           >
@@ -117,7 +119,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
 
       rPaginationComponentArray.push(
         <button
-          className={`${styles.button} ${styles.inactiveButton}`}
+          className={`${styles.button} ${buttonWidthStyle} ${styles.inactiveButton}`}
           onClick={() => setPage(range.length)}
           key={"#rightfinal"}
         >
@@ -147,7 +149,7 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
             {range.slice(rangeStart(), rangeEnd()).map((el, index) => (
               <button
                 key={index}
-                className={`${styles.button} ${
+                className={`${styles.button} ${buttonWidthStyle} ${
                   page === el ? styles.activeButton : styles.inactiveButton
                 }`}
                 onClick={() => setPage(el)}
