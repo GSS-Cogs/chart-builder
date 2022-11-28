@@ -30,11 +30,11 @@ function combineSparseDataArrays(arr1, arr2, arr3) {
   return tempArr;
 }
 
-function getAllXValues(arr) {
+function getAllXValues(arr, axis) {
   // gets all unique values within a 2d array
   let tempArr = [];
   for (let i = 0; i < arr.length; i++) {
-    tempArr.push(arr[i].x);
+    tempArr.push(arr[i][axis]);
   }
   const uniqueArr = [...new Set(tempArr.flat())];
   return uniqueArr;
@@ -76,7 +76,7 @@ const configureData = (data, selectedColumns) => {
     const firstColumn = data[0].orientation === "v" ? "x" : "y";
     const seriesColumns = data[0].orientation === "v" ? "y" : "x";
 
-    const allXValues = getAllXValues(data);
+    const allXValues = getAllXValues(data, firstColumn);
     const prepXValuesArray = allXValues.map((item) => [item]);
     jarray = prepXValuesArray;
 
