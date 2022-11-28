@@ -16,7 +16,7 @@
   margin-right: 4px;
   margin-left: 4px;
 
-  font-family: "GDSTransportWebsite";
+  font-family: "GDS Transport";
   font-style: normal;
   font-size: 19px;
   line-height: 24px;
@@ -50,7 +50,7 @@
   margin-right: 4px;
   margin-left: 4px;
 
-  font-family: GDSTransportWebsite;
+  font-family: "GDS Transport";
   font-style: normal;
   font-size: 19px;
   line-height: 24px;
@@ -60,7 +60,6 @@
 }
 
 .results {
-  font-family: GDSTransportWebsite;
   font-style: normal;
   font-weight: 300;
   font-size: 19px;
