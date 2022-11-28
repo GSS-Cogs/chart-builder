@@ -48,7 +48,7 @@ const FakeTableHeader = () => (
   </thead>
 );
 
-const CreateHeadersComponent = ({ arr }) => {
+const TableHeadersComponent = ({ arr }) => {
   const [head, setHead] = useState(null);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const CreateHeadersComponent = ({ arr }) => {
   );
 };
 
-const CreateBodyComponent = ({ arr }) => {
+const TableBodyComponent = ({ arr }) => {
   const [body, setBody] = useState(null);
   useEffect(() => {
     const temp =
@@ -111,8 +111,8 @@ const Table = ({ data, selectedColumns, rowsPerPage }) => {
         <table className={styles.table}>
           {slice.length > 0 ? (
             <>
-              <CreateHeadersComponent arr={headers} />
-              <CreateBodyComponent arr={slice} />
+              <TableHeadersComponent arr={headers} />
+              <TableBodyComponent arr={slice} />
             </>
           ) : (
             <>
@@ -139,11 +139,11 @@ Table.propTypes = {
   rowsPerPage: PropTypes.number,
 };
 
-CreateHeadersComponent.propTypes = {
+TableHeadersComponent.propTypes = {
   arr: PropTypes.any,
 };
 
-CreateBodyComponent.propTypes = {
+TableBodyComponent.propTypes = {
   arr: PropTypes.any,
 };
 
