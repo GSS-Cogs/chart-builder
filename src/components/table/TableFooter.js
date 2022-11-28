@@ -33,6 +33,9 @@ const TableFooter = ({ range, setPage, page, slice, totalResults }) => {
     if (page > range.length - 4) {
       start -= 4 - (range.length - page);
     }
+    if (start < 0) {
+      start = 0;
+    }
     return start;
   };
 
