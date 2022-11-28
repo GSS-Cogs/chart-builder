@@ -54,8 +54,10 @@ const configureData = (data, selectedColumns) => {
   let headers = [];
 
   if (altChartType === "choropleth") {
-    const prepArray = data[0].text.map((item) => [item]);
-    jarray = combineArrays(prepArray, data[0].z);
+    if (data[0].z.length > 0) {
+      const prepArray = data[0].text.map((item) => [item]);
+      jarray = combineArrays(prepArray, data[0].z);
+    }
 
     let secondColumnHeader = "";
     const colorbar = data[0]?.colorbar;
