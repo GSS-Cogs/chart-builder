@@ -74,7 +74,7 @@ const CreateBodyComponent = ({ arr }) => {
   const [body, setBody] = useState(null);
   useEffect(() => {
     const temp =
-      arr.length > 1
+      arr.length > 0
         ? arr.map((el, index) => (
             <tr className={styles.tableRowItems} key={index + "#"}>
               {el.map((col, index) => (
