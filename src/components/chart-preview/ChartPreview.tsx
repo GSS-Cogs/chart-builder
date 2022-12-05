@@ -58,8 +58,9 @@ export const ActualChart = ({
           )
         ) : null}
         <button
-          className="govuk-button govuk-button--secondary non-content"
+          className="govuk-button govuk-button--secondary non-content cb-download-button"
           data-module="govuk-button"
+          style={{ marginTop: "32px", marginBottom: "32px" }}
           onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
         >
           Download Data
