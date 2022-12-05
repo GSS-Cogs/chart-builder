@@ -7,7 +7,6 @@
     "axios": "^0.24.0",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
-    "govuk-frontend": "^4.4.0",
     "lodash.startcase": "^4.4.0",
     "lodash.upperfirst": "^4.3.1",
     "plotly.js": "^2.8.3",
