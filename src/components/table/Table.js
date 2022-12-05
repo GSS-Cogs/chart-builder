@@ -104,10 +104,7 @@ const Table = ({ data, selectedColumns, rowsPerPage }) => {
 
   return (
     <>
-      <div
-        className={styles.tableWrapper}
-        style={{ minHeight: 45 + 43 * slice.length }}
-      >
+      <div className={styles.tableWrapper}>
         <table className={styles.table}>
           {slice.length > 0 ? (
             <>
