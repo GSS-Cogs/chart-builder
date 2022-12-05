@@ -43,7 +43,8 @@ export const ActualChart = ({
   layout.datarevision++;
 
   const onDownloadClick = (chartDefinition: any, selectedColumns: any) => {
-    useCsvExport(chartDefinition.data, selectedColumns[0]);
+    const category = selectedColumns[0];
+    useCsvExport(chartDefinition.data, category, chartType);
   };
 
   return (

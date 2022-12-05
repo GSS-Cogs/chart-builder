@@ -40,6 +40,21 @@ const getDataRows = (
   return dataRows;
 };
 
+// Special case for compact bar charts that have a single series spread across
+// multiple Plotly traces in order to create the subplots for each category.
+// To get the values for each category we loop through the traces and get the
+// value for the first x value in each trace.
+// Note the values are x rather than y because the x and y axes are flipped.
+const getCompactBarChartDataRows = (series: any, uniqueXValues: any) => {
+  let dataRows: any = [];
+  for (let i = 0; i < series.length; i++) {
+    const category = uniqueXValues[i];
+    const value = series[i].x[0];
+    dataRows.push([category, value]);
+  }
+  return dataRows;
+};
+
 const saveToCsv = (csv: any, fileName: string) => {
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
@@ -52,12 +67,21 @@ const saveToCsv = (csv: any, fileName: string) => {
   document.body.removeChild(link);
 };
 
-const useCsvExport = (series: any, category: any) => {
+const useCsvExport = (series: any, category: string, chartType: any) => {
+  const isCompactBarData = chartType === "compact bar";
   const seriesNames = series.map((s: any) => s.name);
-  const headers = [category, ...seriesNames];
+
+  const headers = isCompactBarData
+    ? [category, seriesNames[0]]
+    : [category, ...seriesNames];
+
   const verticalChart = series[0].orientation === "v";
   const uniqueXValues = getUniqueXValues(series, verticalChart);
-  const dataRows = getDataRows(series, uniqueXValues, verticalChart);
+
+  let dataRows: any;
+  isCompactBarData
+    ? (dataRows = getCompactBarChartDataRows(series, uniqueXValues))
+    : (dataRows = getDataRows(series, uniqueXValues, verticalChart));
 
   const csv = Papa.unparse({
     fields: headers,
