@@ -5,6 +5,7 @@ import "./chart-preview.css";
 import TabularData from "./TabularData";
 import Tabs from "../tabs/Tabs";
 import Tab from "../tabs/Tab";
+import useCsvExport from "../../hooks/useCsvExport";
 
 // @ts-ignore
 const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
@@ -14,7 +15,6 @@ const PlotlyGeo = lazy(() => import("./PlotlyGeo"));
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition, selectedColumns }: any = useContext(ChartContext);
-
   return (
     <ActualChart
       chartDefinition={chartDefinition}
@@ -46,6 +46,11 @@ export const ActualChart = ({
   // autorange calculations on component re-render.
   layout.datarevision++;
 
+  const onDownloadClick = (chartDefinition: any, selectedColumns: any) => {
+    const category = selectedColumns[0];
+    useCsvExport(chartDefinition.data, category, chartType);
+  };
+
   return (
     <div id="chart">
       {chartType !== "table" ? (
@@ -59,6 +64,14 @@ export const ActualChart = ({
                   <PlotlyBasic chartDefinition={chartDefinition} />
                 )
               ) : null}
+              <button
+                className="govuk-button govuk-button--secondary non-content cb-download-button"
+                data-module="govuk-button"
+                style={{ marginTop: "32px", marginBottom: "32px" }}
+                onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
+              >
+                Download Data
+              </button>
             </Suspense>
           </Tab>
           <Tab title="Chart Data">
