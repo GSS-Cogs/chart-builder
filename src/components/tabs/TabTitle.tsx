@@ -17,9 +17,9 @@ const TabTitle: React.FC<Props> = ({
     index === currIndex
       ? { borderBottom: "3px solid #1D70B8", fontWeight: "bold" }
       : null;
-  //console.log("index: " + index + " and currIndex: " + currIndex);
+
   return (
-    <li style={{ width: 180 }}>
+    <li style={{ width: 180 }} className="non-content">
       <div
         onClick={() => setSelectedTab(index)}
         style={{
