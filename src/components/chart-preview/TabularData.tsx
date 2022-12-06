@@ -10,7 +10,12 @@ const TabularData = ({ chartDefinition, selectedColumns }: any) => {
   useEffect(() => {}, []);
 
   return (
-    <Table selectedColumns={selectedColumns} data={data} rowsPerPage={10} />
+    <Table
+      selectedColumns={selectedColumns}
+      data={data}
+      rowsPerPage={10}
+      chartType={chartType}
+    />
   );
 };
 

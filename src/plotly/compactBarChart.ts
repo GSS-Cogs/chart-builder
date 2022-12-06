@@ -128,6 +128,7 @@ const getCompactBarTraces = (data: any, chartProps: any) => {
       hoverinfo: "none",
       type: "bar",
       orientation: "h",
+      name: data.yValues[0].name
     };
 
     traces.push(trace);

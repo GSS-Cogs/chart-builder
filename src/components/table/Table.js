@@ -91,13 +91,14 @@ const TableBodyComponent = ({ arr }) => {
   return <tbody>{body}</tbody>;
 };
 
-const Table = ({ data, selectedColumns, rowsPerPage }) => {
+const Table = ({ data, selectedColumns, rowsPerPage, chartType }) => {
   const [page, setPage] = useState(1);
   const { slice, range, totalResults, headers } = useTable(
     data,
     selectedColumns,
     page,
     rowsPerPage,
+    chartType,
   );
 
   useEffect(() => {}, []);
@@ -134,6 +135,7 @@ Table.propTypes = {
   selectedColumns: PropTypes.any,
   data: PropTypes.any,
   rowsPerPage: PropTypes.number,
+  chartType: PropTypes.string,
 };
 
 TableHeadersComponent.propTypes = {

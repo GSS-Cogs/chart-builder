@@ -30,6 +30,16 @@ function combineSparseDataArrays(arr1, arr2, arr3) {
   return tempArr;
 }
 
+const combineCompactDataArrays = (series, uniqueXValues) => {
+  let dataRows = [];
+  for (let i = 0; i < series.length; i++) {
+    const category = uniqueXValues[i];
+    const value = series[i].x[0];
+    dataRows.push([category, value]);
+  }
+  return dataRows;
+};
+
 function getAllXValues(arr, axis) {
   // gets all unique values within a 2d array
   let tempArr = [];
@@ -48,7 +58,7 @@ function sortFunction(a, b) {
   }
 }
 
-const configureData = (data, selectedColumns) => {
+const configureData = (data, selectedColumns, chartType) => {
   const altChartType = data[0].type; // temp fix for missing chartType
   let jarray = [];
   let headers = [];
@@ -77,20 +87,26 @@ const configureData = (data, selectedColumns) => {
     const seriesColumns = data[0].orientation === "v" ? "y" : "x";
 
     const allXValues = getAllXValues(data, firstColumn);
-    const prepXValuesArray = allXValues.map((item) => [item]);
-    jarray = prepXValuesArray;
 
-    for (let i = 0; i < data.length; i++) {
-      jarray = combineSparseDataArrays(
-        jarray,
-        data[i][firstColumn],
-        data[i][seriesColumns],
+    if (chartType === "compact bar") {
+      jarray = combineCompactDataArrays(data, allXValues);
+      headers = [selectedColumns?.[0], data[0]?.name];
+    } else {
+      const prepXValuesArray = allXValues.map((item) => [item]);
+      jarray = prepXValuesArray;
+
+      for (let i = 0; i < data.length; i++) {
+        jarray = combineSparseDataArrays(
+          jarray,
+          data[i][firstColumn],
+          data[i][seriesColumns],
+        );
+      }
+
+      headers = [selectedColumns?.[0]].concat(
+        data.map((dataset) => dataset.name),
       );
     }
-
-    headers = [selectedColumns?.[0]].concat(
-      data.map((dataset) => dataset.name),
-    );
   }
   jarray.sort(sortFunction);
 
@@ -111,14 +127,14 @@ const sliceData = (data, page, rowsPerPage) => {
   return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 };
 
-const useTable = (data, selectedColumns, page, rowsPerPage) => {
+const useTable = (data, selectedColumns, page, rowsPerPage, chartType) => {
   const [tableRange, setTableRange] = useState([]);
   const [slice, setSlice] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [totalResults, setTotalResults] = useState(0);
 
   useEffect(() => {
-    const updatedDataAll = configureData(data, selectedColumns);
+    const updatedDataAll = configureData(data, selectedColumns, chartType);
     const updatedData = updatedDataAll[0];
     const updatedHeaders = updatedDataAll[1];
     setHeaders(updatedHeaders);
@@ -130,7 +146,7 @@ const useTable = (data, selectedColumns, page, rowsPerPage) => {
     setSlice([...slice]);
 
     setTotalResults(updatedData.length);
-  }, [data, setTableRange, page, setSlice, selectedColumns]);
+  }, [data, setTableRange, page, setSlice, selectedColumns, chartType]);
 
   return { slice, range: tableRange, totalResults, headers };
 };
