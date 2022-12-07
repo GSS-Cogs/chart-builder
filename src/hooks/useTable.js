@@ -1,5 +1,6 @@
 // @/src/hooks/useTable.js
 import { useState, useEffect } from "react";
+import { getMapColorBarTitle } from "./utils";
 
 function combineArrays(arr1, arr2) {
   let tempArr = [];
@@ -65,19 +66,8 @@ const configureData = (data, selectedColumns, chartType) => {
       jarray = combineArrays(prepArray, data[0].z);
     }
 
-    let secondColumnHeader = "";
-    const colorbar = data[0]?.colorbar;
-    if (colorbar?.title?.text) {
-      secondColumnHeader = colorbar?.title?.text;
-    } else if (colorbar?.title.length > 0) {
-      secondColumnHeader = colorbar?.title;
-    }
-    const cleansedSecondColumnHeader =
-      secondColumnHeader !== null
-        ? secondColumnHeader.replace(/ *\<[^)]*\> */g, " ")
-        : secondColumnHeader;
-
-    headers = ["Location", cleansedSecondColumnHeader];
+    const mapValuesColumnHeader = getMapColorBarTitle(data);
+    headers = ["Location", mapValuesColumnHeader];
   } else {
     const firstColumn = data[0].orientation === "v" ? "x" : "y";
     const seriesColumns = data[0].orientation === "v" ? "y" : "x";
