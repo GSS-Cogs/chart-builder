@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import { getMapColorBarTitle } from "./utils";
 
 const getUniqueXValues = (series: any, verticalChart: boolean) => {
   let xValues: any = [];
@@ -67,7 +68,19 @@ const saveToCsv = (csv: any, fileName: string) => {
   document.body.removeChild(link);
 };
 
-const useCsvExport = (series: any, category: string, chartType: any) => {
+const getMapCsv = (series: any) => {
+  const mapValuesHeader = getMapColorBarTitle(series);
+  const headers = ["Location", mapValuesHeader];
+  console.log(series);
+  const dataRows = series[0].locations.map((location: any, index: number) => [
+    series[0].text[index],
+    series[0].z[index],
+  ]);
+  console.log(series);
+  return [headers, dataRows];
+};
+
+const getChartCsv = (series: any, category: string, chartType: any) => {
   const isCompactBarData = chartType === "compact bar";
   const seriesNames = series.map((s: any) => s.name);
 
@@ -82,6 +95,15 @@ const useCsvExport = (series: any, category: string, chartType: any) => {
   isCompactBarData
     ? (dataRows = getCompactBarChartDataRows(series, uniqueXValues))
     : (dataRows = getDataRows(series, uniqueXValues, verticalChart));
+
+  return [headers, dataRows];
+};
+
+const useCsvExport = (series: any, category: string, chartType: any) => {
+  const [headers, dataRows] =
+    chartType === "map"
+      ? getMapCsv(series)
+      : getChartCsv(series, category, chartType);
 
   const csv = Papa.unparse({
     fields: headers,
