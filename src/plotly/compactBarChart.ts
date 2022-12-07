@@ -117,7 +117,6 @@ const getCompactBarTraces = (data: any, chartProps: any) => {
     let trace: any = {
       y: [data.xValues[0].values[i]],
       x: [data.yValues[0].values[i]],
-      name: data.yValues[0].name,
       text: valuePrefix + formattedValue + unitOfMeasurement + " ",
       textposition: "auto",
       textfont: {
@@ -129,6 +128,7 @@ const getCompactBarTraces = (data: any, chartProps: any) => {
       hoverinfo: "none",
       type: "bar",
       orientation: "h",
+      name: data.yValues[0].name
     };
 
     traces.push(trace);

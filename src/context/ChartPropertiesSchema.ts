@@ -59,6 +59,7 @@ const chartTypesSection: ChartPropertySchemaSection = {
         "Map",
         "Filled Area",
         "Stacked Filled Area",
+        "Table"
       ],
       defaultValue: "Line",
     },

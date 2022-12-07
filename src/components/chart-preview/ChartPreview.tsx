@@ -2,12 +2,16 @@ import { lazy, Suspense, useContext } from "react";
 import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
+import TabularData from "./TabularData";
+import Tabs from "../tabs/Tabs";
+import Tab from "../tabs/Tab";
 import useCsvExport from "../../hooks/useCsvExport";
 
 // @ts-ignore
 const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
 // @ts-ignore
 const PlotlyGeo = lazy(() => import("./PlotlyGeo"));
+//const TabularData = lazy(() => import("./TabularData"));
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition, selectedColumns }: any = useContext(ChartContext);
@@ -49,24 +53,54 @@ export const ActualChart = ({
 
   return (
     <div id="chart">
-      <Suspense fallback={<div />}>
-        {isClientSideRender ? (
-          chartType === "map" ? (
-            <PlotlyGeo chartDefinition={chartDefinition} />
-          ) : (
-            <PlotlyBasic chartDefinition={chartDefinition} />
-          )
-        ) : null}
-        <button
-          className="govuk-button govuk-button--secondary non-content cb-download-button"
-          data-module="govuk-button"
-          style={{ marginTop: "32px", marginBottom: "32px" }}
-          onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
-        >
-          Download Data
-        </button>
-      </Suspense>
+      {chartType !== "table" ? (
+        <Tabs>
+          <Tab title="Visualisation">
+            <Suspense fallback={<div />}>
+              {isClientSideRender ? (
+                chartType === "map" ? (
+                  <PlotlyGeo chartDefinition={chartDefinition} />
+                ) : (
+                  <PlotlyBasic chartDefinition={chartDefinition} />
+                )
+              ) : null}
+            </Suspense>
+          </Tab>
+          <Tab title="Chart Data">
+            <TabularData
+              chartDefinition={chartDefinition}
+              selectedColumns={selectedColumns}
+            />
+          </Tab>
+        </Tabs>
+      ) : (
+        <TabularData
+          chartDefinition={chartDefinition}
+          selectedColumns={selectedColumns}
+        />
+      )}
+      <button
+        className="govuk-button govuk-button--secondary non-content cb-download-button"
+        data-module="govuk-button"
+        style={{ marginTop: "32px", marginBottom: "32px" }}
+        onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
+      >
+        Download Data
+      </button>
     </div>
   );
 };
 export default ChartPreview;
+
+{
+  /*       
+      <Suspense fallback={<div />}>
+          {isClientSideRender ? (
+            chartType === "map" ? (
+              <PlotlyGeo chartDefinition={chartDefinition} />
+            ) : (
+              <PlotlyBasic chartDefinition={chartDefinition} />
+            )
+          ) : null}
+      </Suspense> */
+}

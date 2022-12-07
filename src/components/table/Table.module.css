@@ -1,0 +1,54 @@
+/* @/src/components/Table/Table.module.css */
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  border: none;
+  width: 100%;
+}
+
+.tableRowHeader {
+  background-color: transparent;
+  transition: all 0.25s ease;
+  border-radius: 10px;
+}
+
+.tableHeader {
+  padding: 8px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 19px;
+  color: #0b0c0c;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.tableHeader:empty::after {
+  content: "\00a0";
+}
+
+.tableHeader:first-child {
+  text-align: left;
+}
+
+.tableRowItems {
+  cursor: auto;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.tableCell {
+  padding: 8px;
+  font-size: 19px;
+  text-align: right;
+  color: #0b0c0c;
+}
+
+.tableCell:first-child {
+  text-align: left;
+}
+
+.tableCell:empty::after {
+  content: "\00a0";
+}

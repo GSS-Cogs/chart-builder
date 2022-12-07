@@ -44,12 +44,13 @@ const SeriesSelector: React.FC = () => {
         id="series-select"
         size={selectedSeries.length}
         onKeyDown={handleSelectKeyDown}
+        defaultValue={activeSeries}
       >
         {selectedSeries.map((series, index) => (
           <option
             key={index}
             value={series.name}
-            selected={series.name === activeSeries}
+            //selected={series.name === activeSeries}
             className="series-option"
             onClick={() => setActiveSeries(series.name)}
           >
