@@ -1,10 +1,6 @@
 // @/src/hooks/useTable.js
 import { useState, useEffect } from "react";
 
-// function combineArrays(arr1, arr2) {
-//   return arr1.map((item, i) => [item, arr2[i]]);
-// }
-
 function combineArrays(arr1, arr2) {
   let tempArr = [];
   for (let i = 0; i < arr1.length; i++) {
