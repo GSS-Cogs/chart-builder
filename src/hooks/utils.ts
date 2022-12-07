@@ -1,5 +1,5 @@
 const getMapColorBarTitle = (data: any) => {
-  let secondColumnHeader = "";
+  let secondColumnHeader = "Value";
   const colorbar = data[0]?.colorbar;
   if (colorbar?.title?.text) {
     secondColumnHeader = colorbar?.title?.text;
