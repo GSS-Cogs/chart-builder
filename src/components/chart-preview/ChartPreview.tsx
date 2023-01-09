@@ -5,13 +5,13 @@ import "./chart-preview.css";
 import TabularData from "./TabularData";
 import Tabs from "../tabs/Tabs";
 import Tab from "../tabs/Tab";
-import useCsvExport from "../../hooks/useCsvExport";
+import useChartDataToCsv from "../../hooks/useChartDataToCsv";
+import useSaveCsvData from "../../hooks/useSaveCsvData";
 
 // @ts-ignore
 const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
 // @ts-ignore
 const PlotlyGeo = lazy(() => import("./PlotlyGeo"));
-//const TabularData = lazy(() => import("./TabularData"));
 
 const ChartPreview = (): JSX.Element => {
   const { chartDefinition, selectedColumns }: any = useContext(ChartContext);
@@ -48,7 +48,8 @@ export const ActualChart = ({
 
   const onDownloadClick = (chartDefinition: any, selectedColumns: any) => {
     const category = selectedColumns[0];
-    useCsvExport(chartDefinition.data, category, chartType);
+    const csv = useChartDataToCsv(chartDefinition.data, category, chartType);
+    useSaveCsvData(csv, "chart-data");
   };
 
   return (
@@ -91,16 +92,3 @@ export const ActualChart = ({
   );
 };
 export default ChartPreview;
-
-{
-  /*       
-      <Suspense fallback={<div />}>
-          {isClientSideRender ? (
-            chartType === "map" ? (
-              <PlotlyGeo chartDefinition={chartDefinition} />
-            ) : (
-              <PlotlyBasic chartDefinition={chartDefinition} />
-            )
-          ) : null}
-      </Suspense> */
-}
