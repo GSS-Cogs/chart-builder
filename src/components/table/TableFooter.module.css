@@ -1,0 +1,69 @@
+.tableFooter {
+  /* padding: 8px 0px; */
+  width: 100%;
+  font-weight: 500;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button {
+  border: none;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  cursor: pointer;
+  margin-right: 4px;
+  margin-left: 4px;
+
+  font-family: "GDS Transport";
+  font-style: normal;
+  font-size: 19px;
+  line-height: 24px;
+
+  background: transparent;
+  color: #0b0c0c;
+}
+
+.buttonNormalWidth {
+  width: 22px;
+}
+
+.buttonWideWidth {
+  width: 32px;
+}
+
+.activeButton {
+  font-weight: 700;
+}
+
+.inactiveButton {
+  font-weight: 300;
+  color: #1d70b8;
+}
+
+.endButton {
+  border: none;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  cursor: pointer;
+  margin-right: 4px;
+  margin-left: 4px;
+
+  font-family: "GDS Transport";
+  font-style: normal;
+  font-size: 19px;
+  line-height: 24px;
+
+  background: transparent;
+  color: #1d70b8;
+}
+
+.results {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 19px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  color: #505a5f;
+}
