@@ -59,12 +59,10 @@ const getCompactBarChartDataRows = (series: any, uniqueXValues: any) => {
 const getMapCsv = (series: any) => {
   const mapValuesHeader = getMapColorBarTitle(series);
   const headers = ["Location", mapValuesHeader];
-  console.log(series);
   const dataRows = series[0].locations.map((location: any, index: number) => [
     series[0].text[index],
     series[0].z[index],
   ]);
-  console.log(series);
   return [headers, dataRows];
 };
 
