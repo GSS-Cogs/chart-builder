@@ -56,27 +56,13 @@ const getCompactBarChartDataRows = (series: any, uniqueXValues: any) => {
   return dataRows;
 };
 
-const saveToCsv = (csv: any, fileName: string) => {
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.setAttribute("href", url);
-  link.setAttribute("download", `${fileName}.csv`);
-  link.style.visibility = "hidden";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
 const getMapCsv = (series: any) => {
   const mapValuesHeader = getMapColorBarTitle(series);
   const headers = ["Location", mapValuesHeader];
-  console.log(series);
   const dataRows = series[0].locations.map((location: any, index: number) => [
     series[0].text[index],
     series[0].z[index],
   ]);
-  console.log(series);
   return [headers, dataRows];
 };
 
@@ -99,7 +85,7 @@ const getChartCsv = (series: any, category: string, chartType: any) => {
   return [headers, dataRows];
 };
 
-const useCsvExport = (series: any, category: string, chartType: any) => {
+const useChartDataToCsv = (series: any, category: string, chartType: any) => {
   const [headers, dataRows] =
     chartType === "map"
       ? getMapCsv(series)
@@ -109,7 +95,7 @@ const useCsvExport = (series: any, category: string, chartType: any) => {
     fields: headers,
     data: dataRows,
   });
-  saveToCsv(csv, "chart-data");
+  return csv;
 };
 
-export default useCsvExport;
+export default useChartDataToCsv;
