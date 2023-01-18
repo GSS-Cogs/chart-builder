@@ -2,6 +2,7 @@ import { useContext } from "react";
 import ChartContext, { ChartContextProps } from "../../context/ChartContext";
 import "./side-panel.css";
 import Checkbox from "./property-inputs/Checkbox";
+import Range from "./property-inputs/Range";
 import RadioButtonGroup from "./property-inputs/RadioButtonGroup";
 import Textbox from "./property-inputs/Textbox";
 import TextArea from "./property-inputs/TextArea";
@@ -41,6 +42,15 @@ function ChartPropertyComponent({
     case "radio":
       return (
         <RadioButtonGroup
+          property={property}
+          sectionName={sectionName}
+          updateProperty={updateProperty}
+          value={value}
+        />
+      );
+    case "range":
+      return (
+        <Range
           property={property}
           sectionName={sectionName}
           updateProperty={updateProperty}
@@ -92,7 +102,7 @@ const SidePanel = ({
 
   const isACompactBar =
     chartProperties?.chartTypes?.chartType === "Compact Bar";
-
+  const isLineChart = chartProperties?.chartTypes?.chartType === "Line";
   const isAutoXTickMode =
     chartProperties.xAxisProperties.xAxisTickMode === "auto";
 
@@ -135,6 +145,14 @@ const SidePanel = ({
       return name === "chartDimensionProperties" ||
         name === "chartTypes" ||
         name === "compactBarChartProperties"
+        ? true
+        : false;
+    }
+
+    if (isLineChart) {
+      return name === "chartDimensionProperties" ||
+        name === "chartTypes" ||
+        name === "confidenceIntervalsProperties"
         ? true
         : false;
     }
