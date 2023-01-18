@@ -59,7 +59,7 @@ const chartTypesSection: ChartPropertySchemaSection = {
         "Map",
         "Filled Area",
         "Stacked Filled Area",
-        "Table"
+        "Table",
       ],
       defaultValue: "Line",
     },
@@ -83,6 +83,35 @@ const interactivitySection: ChartPropertySchemaSection = {
       displayName: "Hoverinfo unit",
       type: "text",
       defaultValue: "",
+    },
+  ],
+};
+
+const confidenceIntervalsSection: ChartPropertySchemaSection = {
+  name: "confidenceIntervalsProperties",
+  displayName: "Confidence Intervals",
+  sectionFor: "lineCharts",
+  properties: [
+    {
+      name: "displayIntervals",
+      displayName: "Display intervals",
+      type: "checkbox",
+      defaultValue: false,
+    },
+    {
+      name: "displayBars",
+      displayName: "Display error bars",
+      type: "checkbox",
+      defaultValue: false,
+    },
+    {
+      name: "confidenceLevel",
+      displayName: "Confidence level",
+      type: "range",
+      defaultValue: "0.95",
+      min: 0,
+      max: 1,
+      step: 0.05,
     },
   ],
 };
@@ -371,6 +400,7 @@ const chartPropertiesSchema: ChartPropertySchemaSection[] = [
   colorBarSection,
   interactivitySection,
   compactBarChartSection,
+  confidenceIntervalsSection,
 ];
 
 export default chartPropertiesSchema;
