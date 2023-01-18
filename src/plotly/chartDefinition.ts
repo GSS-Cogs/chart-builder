@@ -35,7 +35,7 @@ const updateChartDefinition = (
     layout = { ...commonLayout, ...compactBarLayout };
   }
 
-  return { data, layout, config , chartType};
+  return { data, layout, config, chartType };
 };
 
 const getChartData = (
@@ -64,6 +64,7 @@ const getChartData = (
   };
 
   const isAStackedBar = chartType === "stacked bar";
+  const isLineChart = chartType === "line";
   const xValues = chartData?.xValues;
   const allYSeries = chartData?.yValues;
 
@@ -129,7 +130,7 @@ const getChartData = (
       };
     }
 
-    const newSeries = {
+    let newSeries = {
       ...trace,
       stackgroup: chartType === "stacked filled area" ? "one" : undefined,
       name: series.name,
@@ -146,10 +147,95 @@ const getChartData = (
           ? "tonexty"
           : "none",
     };
+
+    if (isLineChart) {
+      const confidenceLevel = parseFloat(
+        chartProps.confidenceIntervalsProperties.confidenceLevel.toString(),
+      );
+      const confid = confidenceInterval(
+        xValues[seriesIndex].values,
+        series.values,
+        confidenceLevel,
+        series.color,
+      );
+
+      if (chartProps.confidenceIntervalsProperties.displayBars) {
+        newSeries = { ...newSeries, ...calculateErrorBars(confid.y) };
+      }
+      if (chartProps.confidenceIntervalsProperties.displayIntervals) {
+        traces.push(confid);
+      }
+    }
+
     isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });
+
   return traces;
 };
+function calculateErrorBars(yArr: number[]) {
+  let arr: any[] = [];
+  for (let i = 0; i < yArr.length / 2; i++) {
+    const diff = yArr[i] - yArr[yArr.length - 1 - i];
+    arr.push(diff);
+  }
+  const err = {
+    error_y: {
+      type: "data",
+      array: arr,
+      visible: true,
+    },
+  };
+  return err;
+}
+function confidenceInterval(
+  xArr: any,
+  yArr: any,
+  level: number,
+  color: string,
+) {
+  const zScore = 1.01 + level;
+  const newColor = color.replace(")", ", 0.2)").replace("rgb", "rgba");
+  const intervals: {
+    x: Array<number>;
+    y: Array<number>;
+    fill: string;
+    fillcolor: string;
+    line: { color: string };
+    // name: string;
+    showlegend: boolean;
+    type: string;
+  } = {
+    x: [],
+    y: [],
+    fill: "tozerox",
+    fillcolor: newColor,
+    line: { color: "transparent" },
+    // name: "Fair",
+    showlegend: false,
+    type: "scatter",
+  };
+  // const stdDev = standardDeviationn(yArr)
+  for (let i = 0; i < yArr.length; i++) {
+    const num = yArr[i];
+    const stdDev = Math.sqrt(num);
+    const marginOfError = zScore * (stdDev / Math.sqrt(yArr.length));
+    const upper = num + marginOfError;
+
+    intervals.x.push(xArr[i]);
+    intervals.y.push(upper);
+  }
+  for (let i = yArr.length - 1; i >= 0; i--) {
+    const num = yArr[i];
+    const stdDev = Math.sqrt(num);
+    const marginOfError = zScore * (stdDev / Math.sqrt(yArr.length));
+
+    const lower = num - marginOfError;
+
+    intervals.x.push(xArr[i]);
+    intervals.y.push(lower);
+  }
+  return intervals;
+}
 
 const getMapData = (
   chartProps: ChartPropertyValues,
