@@ -162,12 +162,15 @@ const getChartData = (
       if (chartProps.confidenceIntervalsProperties.displayBars) {
         newSeries = { ...newSeries, ...calculateErrorBars(confid.y) };
       }
+
+      isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
+
       if (chartProps.confidenceIntervalsProperties.displayIntervals) {
         traces.push(confid);
       }
+    } else {
+      isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
     }
-
-    isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });
 
   return traces;

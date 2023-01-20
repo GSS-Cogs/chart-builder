@@ -48,11 +48,11 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
     chartProps,
     data,
   );
-
-  const chartLayout = {
+  let chartLayout = {
     barmode,
     xaxis: {
       autorange: true,
+      range: [0, 10],
       type: xAxisType,
       rangemode: chartProps.xAxisProperties.xAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
@@ -80,6 +80,14 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
     legend: { orientation: "h", y: chartProps.LegendSection.xAxisOffset },
     showlegend: chartProps.LegendSection.showLegend,
   };
+
+  if (chartProps.chartTypes.chartType === "Line") {
+    // this is to stop the autorange adding white space to the left and right of line charts
+    // when confidence intervals and/or error bars are on
+    chartLayout.xaxis.autorange = false;
+    chartLayout.xaxis.range = [0, data[0].x.length - 1];
+  }
+
   return { ...commonLayout, ...chartLayout };
 };
 
