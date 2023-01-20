@@ -82,6 +82,14 @@ const configureData = (data, selectedColumns, chartType) => {
       jarray = prepXValuesArray;
 
       for (let i = 0; i < data.length; i++) {
+        if (data[i].fill === "tozerox") {
+          jarray = combineSparseDataArrays(
+            jarray,
+            data[i][firstColumn],
+            data[i][seriesColumns].reverse(),
+          );
+          data[i][seriesColumns].reverse();
+        }
         jarray = combineSparseDataArrays(
           jarray,
           data[i][firstColumn],

@@ -33,6 +33,33 @@
   text-align: left;
 }
 
+.tableHeader__lineChart {
+  padding: 8px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 19px;
+  color: #0b0c0c;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.tableHeader__lineChart:nth-child(odd) {
+  text-align: center;
+}
+
+.tableHeader__lineChart:first-child {
+  text-align: left;
+}
+
+.tableSubHeader {
+  padding: 8px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 19px;
+  color: #0b0c0c;
+  border-bottom: 2px solid #b1b4b6;
+  border-top: 2px solid #b1b4b6;
+}
+
 .tableRowItems {
   cursor: auto;
   border-bottom: 1px solid #b1b4b6;

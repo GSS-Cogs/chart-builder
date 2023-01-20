@@ -48,9 +48,22 @@ const FakeTableHeader = () => (
   </thead>
 );
 
+const getTableHeaderComponent = (arr, data) => {
+  if (data[0].type !== "line") {
+    // return basic header if the chart isn't a line chart
+    return <TableHeadersComponent arr={arr} />;
+  }
+  if (data.length === 1 || data[1].type !== "scatter") {
+    // return basic header component if there's no interval data
+    // interval data is set to type scatter
+    return <TableHeadersComponent arr={arr} />;
+  }
+  // if the chart type is line and confidence intervals are displayed then return alternative header component
+  return <TableHeadersLineChartComponent arr={arr} />;
+};
+
 const TableHeadersComponent = ({ arr }) => {
   const [head, setHead] = useState(null);
-
   useEffect(() => {
     const temp =
       arr.length > 1
@@ -66,6 +79,51 @@ const TableHeadersComponent = ({ arr }) => {
   return (
     <thead className={styles.tableRowHeader}>
       <tr>{head}</tr>
+    </thead>
+  );
+};
+
+const TableHeadersLineChartComponent = ({ arr }) => {
+  const [head, setHead] = useState(null);
+
+  useEffect(() => {
+    const temp =
+      arr.length > 1
+        ? arr.map((head, index) => (
+            <th
+              className={styles.tableHeader__lineChart}
+              key={index}
+              colSpan={index > 1 && index % 2 === 0 ? "2" : "1"}
+            >
+              {head}
+            </th>
+          ))
+        : null;
+    setHead(temp);
+  }, [arr]);
+
+  return (
+    <thead className={styles.tableRowHeader}>
+      <tr>{head}</tr>
+      <tr>
+        <th className={styles.tableSubHeader} colSpan="1"></th>
+        {arr.slice(1).map((h, i) => {
+          if ((i + 1) % 2 === 0) {
+            return (
+              <>
+                <th className={styles.tableSubHeader} colSpan="1">
+                  Lower
+                </th>
+                <th className={styles.tableSubHeader} colSpan="1">
+                  Upper
+                </th>
+              </>
+            );
+          } else {
+            return <th className={styles.tableSubHeader} colSpan="1"></th>;
+          }
+        })}
+      </tr>
     </thead>
   );
 };
@@ -109,7 +167,7 @@ const Table = ({ data, selectedColumns, rowsPerPage, chartType }) => {
         <table className={styles.table}>
           {slice.length > 0 ? (
             <>
-              <TableHeadersComponent arr={headers} />
+              {getTableHeaderComponent(headers, data)}
               <TableBodyComponent arr={slice} />
             </>
           ) : (
@@ -139,6 +197,10 @@ Table.propTypes = {
 };
 
 TableHeadersComponent.propTypes = {
+  arr: PropTypes.any,
+};
+
+TableHeadersLineChartComponent.propTypes = {
   arr: PropTypes.any,
 };
 

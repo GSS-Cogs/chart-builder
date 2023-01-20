@@ -204,7 +204,7 @@ function confidenceInterval(
     fill: string;
     fillcolor: string;
     line: { color: string };
-    // name: string;
+    name: string;
     showlegend: boolean;
     type: string;
   } = {
@@ -213,7 +213,7 @@ function confidenceInterval(
     fill: "tozerox",
     fillcolor: newColor,
     line: { color: "transparent" },
-    // name: "Fair",
+    name: "confidence level: " + level * 100 + "%",
     showlegend: false,
     type: "scatter",
   };
@@ -222,20 +222,20 @@ function confidenceInterval(
     const num = yArr[i];
     const stdDev = Math.sqrt(num);
     const marginOfError = zScore * (stdDev / Math.sqrt(yArr.length));
-    const upper = num + marginOfError;
+    const upper: any = num + marginOfError;
 
     intervals.x.push(xArr[i]);
-    intervals.y.push(upper);
+    intervals.y.push(upper.toFixed(2));
   }
   for (let i = yArr.length - 1; i >= 0; i--) {
     const num = yArr[i];
     const stdDev = Math.sqrt(num);
     const marginOfError = zScore * (stdDev / Math.sqrt(yArr.length));
 
-    const lower = num - marginOfError;
+    const lower: any = num - marginOfError;
 
     intervals.x.push(xArr[i]);
-    intervals.y.push(lower);
+    intervals.y.push(lower.toFixed(2));
   }
   return intervals;
 }
