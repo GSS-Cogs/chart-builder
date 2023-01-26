@@ -136,6 +136,7 @@ const getChartData = (
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: chartProps?.LegendSection?.mode ?? "lines",
+      legendgroup: "group" + seriesIndex,
       hoverinfo: chartProps.Interactivity.interactivity,
       marker: { color: series.color },
       line: {
@@ -157,6 +158,7 @@ const getChartData = (
         series.values,
         confidenceLevel,
         series.color,
+        seriesIndex,
       );
 
       if (chartProps.confidenceIntervalsProperties.displayBars) {
@@ -195,6 +197,7 @@ function confidenceInterval(
   yArr: any,
   level: number,
   color: string,
+  index: any,
 ) {
   const zScore = 1.01 + level;
   const newColor = color.replace(")", ", 0.2)").replace("rgb", "rgba");
@@ -206,6 +209,7 @@ function confidenceInterval(
     line: { color: string };
     name: string;
     showlegend: boolean;
+    legendgroup: string;
     type: string;
   } = {
     x: [],
@@ -215,6 +219,7 @@ function confidenceInterval(
     line: { color: "transparent" },
     name: "confidence level: " + level * 100 + "%",
     showlegend: false,
+    legendgroup: "group" + index,
     type: "scatter",
   };
   // const stdDev = standardDeviationn(yArr)
