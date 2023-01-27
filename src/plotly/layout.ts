@@ -85,7 +85,7 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
     // this is to stop the autorange adding white space to the left and right of line charts
     // when confidence intervals and/or error bars are on
     chartLayout.xaxis.autorange = false;
-    chartLayout.xaxis.range = [0, data[0].x.length - 1];
+    chartLayout.xaxis.range = [-0.1, data[0].x.length - 0.9];
   }
 
   return { ...commonLayout, ...chartLayout };
