@@ -8,6 +8,9 @@ import Tab from "../tabs/Tab";
 import useChartDataToCsv from "../../hooks/useChartDataToCsv";
 import useSaveCsvData from "../../hooks/useSaveCsvData";
 
+import domtoimage from "dom-to-image";
+import { saveAs } from "file-saver";
+
 // @ts-ignore
 const PlotlyBasic = lazy(() => import("./PlotlyBasic"));
 // @ts-ignore
@@ -52,6 +55,42 @@ export const ActualChart = ({
     useSaveCsvData(csv, "chart-data");
   };
 
+  const onFigureDownloadClick = (e: any) => {
+    //TODO rework getting parent node
+    const fullFigureNode =
+      e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+    let figureCloneNode = fullFigureNode.cloneNode(true);
+    let emptyNode = document.createElement("div");
+    emptyNode.setAttribute(
+      "style",
+      "position: absolute; opacity: 0; pointerEvents: none; width: 1280px;",
+    );
+    figureCloneNode.setAttribute("style", "background-color: white;");
+    emptyNode.append(figureCloneNode);
+    fullFigureNode.append(emptyNode);
+    downloadFigure(figureCloneNode);
+  };
+
+  const downloadFigure = (node: any) => {
+    // temporarily add 32px padding either side of the figure to give the downloaded image space around it
+    node.classList.add("pad-for-download");
+    // hide any elements that should not be included in the image (e.g. the Download button)
+    toggleDisplay("non-content", "none", node);
+    domtoimage.toBlob(node).then(function (blob) {
+      saveAs(blob, `${"chart-figure"}.png`);
+      toggleDisplay("non-content", "initial", node);
+      node.remove();
+    });
+  };
+
+  function toggleDisplay(className: string, displayState: string, node: any) {
+    let elements = node.querySelectorAll("." + className);
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.display = displayState;
+    }
+  }
+
   return (
     <div id="chart">
       {chartType !== "table" ? (
@@ -80,14 +119,27 @@ export const ActualChart = ({
           selectedColumns={selectedColumns}
         />
       )}
-      <button
-        className="govuk-button govuk-button--secondary non-content cb-download-button"
-        data-module="govuk-button"
-        style={{ marginTop: "32px", marginBottom: "32px" }}
-        onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
-      >
-        Download Data
-      </button>
+      <div className="non-content">
+        <h3 className="govuk-heading-s govuk-!-margin-bottom-2 non-content cb-download">
+          Download
+        </h3>
+        <div id="chart-download" className="">
+          <button
+            className="govuk-button govuk-button--secondary non-content govuk-!-margin-right-3 cb-download-button"
+            data-module="govuk-button"
+            onClick={(e) => onFigureDownloadClick(e)}
+          >
+            Visualisation
+          </button>
+          <button
+            className="govuk-button govuk-button--secondary non-content cb-download-button"
+            data-module="govuk-button"
+            onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
+          >
+            Data
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
