@@ -12,7 +12,7 @@ const PublishButton = (props: any): JSX.Element => {
   };
 
   return (
-    <button className="cb-download-button" onClick={onPublishClick}>
+    <button className="cb-download-button non-content" onClick={onPublishClick}>
       Publish Chart
     </button>
   );
