@@ -55,8 +55,8 @@ export const ActualChart = ({
     useSaveCsvData(csv, "chart-data");
   };
 
-  const getFullFigureNode = (e: any) => {
-    let fullFigureNode = e;
+  const getFullFigureNode = (baseNode: any) => {
+    let fullFigureNode = baseNode;
     for (let i = 0; i < 6; i++) {
       const tempParentNode = fullFigureNode.parentNode;
       if (tempParentNode.id === "chart") {
