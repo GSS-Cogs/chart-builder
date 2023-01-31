@@ -55,10 +55,22 @@ export const ActualChart = ({
     useSaveCsvData(csv, "chart-data");
   };
 
+  const getFullFigureNode = (e: any) => {
+    let fullFigureNode = e;
+    for (let i = 0; i < 6; i++) {
+      const tempParentNode = fullFigureNode.parentNode;
+      if (tempParentNode.id === "chart") {
+        fullFigureNode = tempParentNode.parentNode.parentNode;
+        break;
+      }
+      fullFigureNode = tempParentNode;
+    }
+
+    return fullFigureNode;
+  };
+
   const onFigureDownloadClick = (e: any) => {
-    //TODO rework getting parent node
-    const fullFigureNode =
-      e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+    const fullFigureNode = getFullFigureNode(e.target);
 
     let figureCloneNode = fullFigureNode.cloneNode(true);
     let emptyNode = document.createElement("div");
@@ -69,6 +81,7 @@ export const ActualChart = ({
     figureCloneNode.setAttribute("style", "background-color: white;");
     emptyNode.append(figureCloneNode);
     fullFigureNode.append(emptyNode);
+
     downloadFigure(figureCloneNode);
   };
 
