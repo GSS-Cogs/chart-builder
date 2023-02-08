@@ -51,7 +51,6 @@ const ConfidenceSelector: React.FC = () => {
           <option
             key={index}
             value={series.name}
-            //selected={series.name === activeSeries}
             className="series-option"
             onClick={() => setActiveSeries(series.name)}
           >

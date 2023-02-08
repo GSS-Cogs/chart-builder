@@ -64,7 +64,6 @@ const getChartData = (
   };
 
   const isAStackedBar = chartType === "stacked bar";
-  const isLineChart = chartType === "line";
   const xValues = chartData?.xValues;
   const allYSeries = chartData?.yValues;
   // Get the unique X values
@@ -86,7 +85,7 @@ const getChartData = (
     // If it's a stacked bar chart then calculate the cross-series totals
     if (isAStackedBar) {
       const currentXValues = xValues[seriesIndex].values;
-      // // Iterate through each of the X values in the current (potentially sparse) series
+      // Iterate through each of the X values in the current (potentially sparse) series
       for (let i = 0; i < currentXValues.length; i++) {
         // Get the current X and Y values in the (potentially sparse) series
         const xValue = currentXValues[i];
@@ -138,7 +137,6 @@ const getChartData = (
         ...trace,
         stackgroup: chartType === "stacked filled area" ? "one" : undefined,
         name: series.name,
-        // type: "scatter",
         mode: chartProps?.LegendSection?.mode ?? "lines",
         legendgroup: "group" + (seriesIndex - 1),
         showlegend: false,
@@ -186,9 +184,6 @@ const getChartData = (
 function calculateErrorBars(yArr: number[], currArr: number[]) {
   let arr: any[] = [];
   for (let i = 0; i < yArr.length / 2; i++) {
-    // const diff = currArr[i] - (yArr[yArr.length - 1 - i] + yArr[i]) / 2;
-    // const diff = yArr[yArr.length - 1 - i] - yArr[i]
-    // const diff = yArr[yArr.length - 1 - i] - currArr[i] - (currArr[i] - yArr[i]);
     const diff = currArr[i] - yArr[i];
     arr.push(diff);
   }
@@ -201,58 +196,6 @@ function calculateErrorBars(yArr: number[], currArr: number[]) {
     },
   };
   return err;
-}
-function confidenceInterval(
-  xArr: any,
-  yArr: any,
-  level: number,
-  color: string,
-  index: any,
-) {
-  const zScore = 1.01 + level;
-  const newColor = color.replace(")", ", 0.2)").replace("rgb", "rgba");
-  const intervals: {
-    x: Array<number>;
-    y: Array<number>;
-    fill: string;
-    fillcolor: string;
-    line: { color: string };
-    name: string;
-    showlegend: boolean;
-    legendgroup: string;
-    type: string;
-  } = {
-    x: [],
-    y: [],
-    fill: "tozerox",
-    fillcolor: newColor,
-    line: { color: "transparent" },
-    name: "confidence level: " + level * 100 + "%",
-    showlegend: false,
-    legendgroup: "group" + index,
-    type: "scatter",
-  };
-  // const stdDev = standardDeviationn(yArr)
-  for (let i = 0; i < yArr.length; i++) {
-    const num = yArr[i];
-    const stdDev = Math.sqrt(num);
-    const marginOfError = zScore * (stdDev / Math.sqrt(yArr.length));
-    const upper: any = num + marginOfError;
-
-    intervals.x.push(xArr[i]);
-    intervals.y.push(upper.toFixed(2));
-  }
-  for (let i = yArr.length - 1; i >= 0; i--) {
-    const num = yArr[i];
-    const stdDev = Math.sqrt(num);
-    const marginOfError = zScore * (stdDev / Math.sqrt(yArr.length));
-
-    const lower: any = num - marginOfError;
-
-    intervals.x.push(xArr[i]);
-    intervals.y.push(lower.toFixed(2));
-  }
-  return intervals;
 }
 
 const getMapData = (

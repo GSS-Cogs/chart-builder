@@ -66,10 +66,6 @@ export function useChartContextState(): ChartContextState {
     DataSelection | undefined
   >();
 
-  // const [confidenceDataSelections, setConfidenceDataSelections] = useState<
-  //   ConfidenceDataSelection[]
-  // >([]);
-
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 
   const [selectedDimensions, setSelectedDimensions] = useState<
@@ -207,7 +203,7 @@ function useTidyDataToChartContext(
         newChartData.xValues.push(xValues);
         newChartData.yValues.push(yValues);
 
-        // Push the X and Y values objects to the chart data
+        // Push the confidence X and Y values objects to the chart data
         newChartData.xValues.push(xConfidenceValues);
         newChartData.yValues.push(yConfidenceValues);
       } else {

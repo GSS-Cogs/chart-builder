@@ -25,12 +25,6 @@ interface DataSelection {
   yValues: SelectedDimension[];
 }
 
-// interface ConfidenceDataSelection {
-//   seriesName: string;
-//   lowerBoundSeries: string;
-//   upperBoundSeries: string;
-// }
-
 type TidyData = object[];
 
 interface EeaData {

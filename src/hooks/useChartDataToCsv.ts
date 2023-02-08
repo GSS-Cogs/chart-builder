@@ -80,8 +80,8 @@ const getLineChartDataRows = (
         let value = yValues[index];
         dataRow.push(value);
         if (series[j]?.confidence) {
-          // if j is even, it means its the lower/upper column, and this needs to be split out into two columns
-          // reverse the order to get lower bounds first, then add as normal
+          // if confidence is true, it means its the lower/upper column, and this needs to be split out into two columns
+          // reverse the order to get upper bounds
           yValues.reverse();
           // get the index of the category in the current series
           let index = xValues.indexOf(category);
