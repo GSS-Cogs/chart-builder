@@ -102,7 +102,6 @@ const SidePanel = ({
 
   const isACompactBar =
     chartProperties?.chartTypes?.chartType === "Compact Bar";
-  const isLineChart = chartProperties?.chartTypes?.chartType === "Line";
   const isAutoXTickMode =
     chartProperties.xAxisProperties.xAxisTickMode === "auto";
 
@@ -145,14 +144,6 @@ const SidePanel = ({
       return name === "chartDimensionProperties" ||
         name === "chartTypes" ||
         name === "compactBarChartProperties"
-        ? true
-        : false;
-    }
-
-    if (isLineChart) {
-      return name === "chartDimensionProperties" ||
-        name === "chartTypes" ||
-        name === "confidenceIntervalsProperties"
         ? true
         : false;
     }
