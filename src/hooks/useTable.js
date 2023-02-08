@@ -59,7 +59,6 @@ const configureData = (data, selectedColumns, chartType) => {
   const altChartType = data[0].type; // temp fix for missing chartType
   let jarray = [];
   let headers = [];
-  console.log(data);
   if (altChartType === "choropleth") {
     if (data[0].z.length > 0) {
       const prepArray = data[0].text.map((item) => [item]);
@@ -80,7 +79,6 @@ const configureData = (data, selectedColumns, chartType) => {
     } else {
       const prepXValuesArray = allXValues.map((item) => [item]);
       jarray = prepXValuesArray;
-      console.log(data);
       for (let i = 0; i < data.length; i++) {
         if (data[i]?.confidence === true) {
           const half = Math.ceil(data[i][seriesColumns].length / 2);

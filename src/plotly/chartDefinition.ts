@@ -133,8 +133,6 @@ const getChartData = (
       };
     }
     let newSeries = {};
-    console.log("--------");
-    console.log(series.intervalType + " " + seriesIndex + " : " + series.name);
     if (series.intervalType === "intervals") {
       newSeries = {
         ...trace,
