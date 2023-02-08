@@ -20,7 +20,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   }: ChartContextProps = useContext(ChartContext);
 
   const createDimensionList = () => {
-    const nonSelectedAvailableDimensions: string[] = getNonSelectedAvailableDimensions();
+    const nonSelectedAvailableDimensions: string[] =
+      getNonSelectedAvailableDimensions();
     return selectedDimensions.map((dimension, index) => {
       return (
         <div key={index}>
@@ -77,10 +78,14 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
           displayName: titleCase(defaultSelectedDimension),
           color: colors[selectedDimensions.length],
           dashStyle: "none",
+          intervalType: "---",
+          lowerBoundSeries: "",
+          upperBoundSeries: "",
         },
       ]);
     } else {
-      const nonSelectedAvailableDimensions = getNonSelectedAvailableDimensions();
+      const nonSelectedAvailableDimensions =
+        getNonSelectedAvailableDimensions();
       setSelectedDimensions([
         ...selectedDimensions,
         {
@@ -88,6 +93,9 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
           displayName: titleCase(nonSelectedAvailableDimensions[0]),
           color: colors[selectedDimensions.length],
           dashStyle: "none",
+          intervalType: "---",
+          lowerBoundSeries: "",
+          upperBoundSeries: "",
         },
       ]);
     }
@@ -110,6 +118,9 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
       displayName: e.target.value,
       color: colors[selectedDimensions.length],
       dashStyle: "none",
+      intervalType: "---",
+      lowerBoundSeries: "",
+      upperBoundSeries: "",
     };
 
     const updatedDimensions = selectedDimensions.map((item) => {
@@ -126,6 +137,9 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
       displayName: value,
       color: colors[selectedDimensions.length],
       dashStyle: "none",
+      intervalType: "---",
+      lowerBoundSeries: "",
+      upperBoundSeries: "",
     };
     const updatedDimensions = newDimensions.map((item) => {
       return item.name === name ? dimension : item;
