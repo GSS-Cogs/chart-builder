@@ -13,6 +13,9 @@ interface SelectedDimension {
   displayName: string;
   color: string;
   dashStyle: "none" | "dash" | "dot";
+  intervalType: "---" | "intervals" | "error bars";
+  lowerBoundSeries: string;
+  upperBoundSeries: string;
 }
 
 interface DataSelection {
@@ -21,6 +24,12 @@ interface DataSelection {
   dimension: string;
   yValues: SelectedDimension[];
 }
+
+// interface ConfidenceDataSelection {
+//   seriesName: string;
+//   lowerBoundSeries: string;
+//   upperBoundSeries: string;
+// }
 
 type TidyData = object[];
 
