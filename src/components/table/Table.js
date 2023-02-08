@@ -53,7 +53,8 @@ const getTableHeaderComponent = (arr, data) => {
     // return basic header if the chart isn't a line chart
     return <TableHeadersComponent arr={arr} />;
   }
-  if (data.length === 1 || data[1].type !== "scatter") {
+  console.log(data[1]?.confidence);
+  if (data.length === 1 || data[1]?.confidence !== true) {
     // return basic header component if there's no interval data
     // interval data is set to type scatter
     return <TableHeadersComponent arr={arr} />;
