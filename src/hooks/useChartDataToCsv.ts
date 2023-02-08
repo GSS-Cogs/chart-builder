@@ -74,7 +74,12 @@ const getLineChartDataRows = (
 
       // if the current series has a value for the current category
       if (xValues.includes(category)) {
-        if ((j - 1) % 2 === 0) {
+        // get the index of the category in the current series
+        let index = xValues.indexOf(category);
+        // get the value for the current category
+        let value = yValues[index];
+        dataRow.push(value);
+        if (series[j]?.confidence) {
           // if j is even, it means its the lower/upper column, and this needs to be split out into two columns
           // reverse the order to get lower bounds first, then add as normal
           yValues.reverse();
@@ -86,11 +91,6 @@ const getLineChartDataRows = (
           // reverse column again
           yValues.reverse();
         }
-        // get the index of the category in the current series
-        let index = xValues.indexOf(category);
-        // get the value for the current category
-        let value = yValues[index];
-        dataRow.push(value);
       } else {
         // where no value (i.e. sparse data) then output an empty string
         dataRow.push(null);
@@ -111,19 +111,17 @@ const getMapCsv = (series: any) => {
   return [headers, dataRows];
 };
 
-const getIsIntervalData = (series: any, chartType: any) => {
-  if (chartType !== "line" || series.length === 1) {
-    return false;
-  }
-  if (series[1].type !== "scatter") {
-    return false;
-  }
-  return true;
+const getIsIntervalData = (series: any) => {
+  return (
+    series.filter((x: { confidence: boolean }) => x?.confidence === true)
+      .length > 0
+  );
 };
 
 const getChartCsv = (series: any, category: string, chartType: any) => {
   const isCompactBarData = chartType === "compact bar";
-  const isIntervalData = getIsIntervalData(series, chartType);
+  const isIntervalData = getIsIntervalData(series);
+
   const seriesNames = series.map((s: any) => s.name);
 
   const verticalChart = series[0].orientation === "v";
