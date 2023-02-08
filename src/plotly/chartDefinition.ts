@@ -67,7 +67,6 @@ const getChartData = (
   const isLineChart = chartType === "line";
   const xValues = chartData?.xValues;
   const allYSeries = chartData?.yValues;
-
   // Get the unique X values
   const allXValues = xValues.map((obj: any) => obj.values);
   const uniqueXValues = Array.from(new Set(allXValues.flat()));
@@ -80,6 +79,10 @@ const getChartData = (
 
   // Iterate the available series and create a trace for each
   allYSeries.map((series: any, seriesIndex: number) => {
+    if (series.intervalType === "error-skip") {
+      return;
+    }
+
     // If it's a stacked bar chart then calculate the cross-series totals
     if (isAStackedBar) {
       const currentXValues = xValues[seriesIndex].values;
@@ -129,60 +132,69 @@ const getChartData = (
         ),
       };
     }
-
-    let newSeries = {
-      ...trace,
-      stackgroup: chartType === "stacked filled area" ? "one" : undefined,
-      name: series.name,
-      type: chartType === "stacked bar" ? "bar" : chartType,
-      mode: chartProps?.LegendSection?.mode ?? "lines",
-      legendgroup: "group" + seriesIndex,
-      hoverinfo: chartProps.Interactivity.interactivity,
-      marker: { color: series.color },
-      line: {
-        color: series.color,
-        dash: series.dashStyle,
-      },
-      fill:
-        chartType === "filled area" || chartType === "stacked filled area"
-          ? "tonexty"
-          : "none",
-    };
-
-    if (isLineChart) {
-      const confidenceLevel = parseFloat(
-        chartProps.confidenceIntervalsProperties.confidenceLevel.toString(),
-      );
-      const confid = confidenceInterval(
-        xValues[seriesIndex].values,
-        series.values,
-        confidenceLevel,
-        series.color,
-        seriesIndex,
-      );
-
-      if (chartProps.confidenceIntervalsProperties.displayBars) {
-        newSeries = { ...newSeries, ...calculateErrorBars(confid.y) };
-      }
-
+    let newSeries = {};
+    console.log("--------");
+    console.log(series.intervalType + " " + seriesIndex + " : " + series.name);
+    if (series.intervalType === "intervals") {
+      newSeries = {
+        ...trace,
+        stackgroup: chartType === "stacked filled area" ? "one" : undefined,
+        name: series.name,
+        // type: "scatter",
+        mode: chartProps?.LegendSection?.mode ?? "lines",
+        legendgroup: "group" + (seriesIndex - 1),
+        showlegend: false,
+        hoverinfo: chartProps.Interactivity.interactivity,
+        marker: { color: series.color },
+        line: { color: "transparent" },
+        fill: "tozerox",
+        fillcolor: series.color,
+        confidence: true,
+      };
       isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
-
-      if (chartProps.confidenceIntervalsProperties.displayIntervals) {
-        traces.push(confid);
-      }
     } else {
+      newSeries = {
+        ...trace,
+        stackgroup: chartType === "stacked filled area" ? "one" : undefined,
+        name: series.name,
+        type: chartType === "stacked bar" ? "bar" : chartType,
+        mode: chartProps?.LegendSection?.mode ?? "lines",
+        legendgroup: "group" + seriesIndex,
+        hoverinfo: chartProps.Interactivity.interactivity,
+        marker: { color: series.color },
+        line: {
+          color: series.color,
+          dash: series.dashStyle,
+        },
+        fill:
+          chartType === "filled area" || chartType === "stacked filled area"
+            ? "tonexty"
+            : "none",
+      };
+      if (series.intervalType === "error bars" && allYSeries.length > 1) {
+        newSeries = {
+          ...newSeries,
+          ...calculateErrorBars(
+            allYSeries[seriesIndex + 1].values,
+            series.values,
+          ),
+        };
+      }
       isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
     }
   });
-
   return traces;
 };
-function calculateErrorBars(yArr: number[]) {
+function calculateErrorBars(yArr: number[], currArr: number[]) {
   let arr: any[] = [];
   for (let i = 0; i < yArr.length / 2; i++) {
-    const diff = yArr[i] - yArr[yArr.length - 1 - i];
+    // const diff = currArr[i] - (yArr[yArr.length - 1 - i] + yArr[i]) / 2;
+    // const diff = yArr[yArr.length - 1 - i] - yArr[i]
+    // const diff = yArr[yArr.length - 1 - i] - currArr[i] - (currArr[i] - yArr[i]);
+    const diff = currArr[i] - yArr[i];
     arr.push(diff);
   }
+
   const err = {
     error_y: {
       type: "data",
