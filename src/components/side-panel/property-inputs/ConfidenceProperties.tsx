@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../side-panel/side-panel.css";
 import CustomSelect, { CustomSelectProps } from "../../select/CustomSelect";
 import ChartContext from "../../../context/ChartContext";
@@ -12,8 +12,18 @@ const ConfidenceProperties = ({
   activeSeries,
   columnNames,
 }: Props): JSX.Element => {
-  const { selectedDimensions, setSelectedDimensions } =
+  const { selectedDimensions, setSelectedDimensions, chartProperties } =
     useContext(ChartContext);
+  const [prevChartType, setPreviousChartType] = useState<any>("Line");
+  const [intervalType, setIntervalType] = useState("---");
+  const chartType = chartProperties?.chartTypes?.chartType;
+
+  useEffect(() => {
+    if (prevChartType === "Line" && intervalType === "intervals") {
+      updateDimension("intervalType", "---");
+    }
+    setPreviousChartType(chartType);
+  }, [chartType]);
 
   // Get the selected dimension based on the active series prop
   const selectedDimension = selectedDimensions.find(
@@ -22,6 +32,11 @@ const ConfidenceProperties = ({
 
   // Shared updater for updating the color and dashStyle properties on the selected dimension
   const updateDimension = (property: string, value: any) => {
+    if (chartType !== "Line" && value === "intervals") {
+      alert("Confidence intervals are only available on line charts");
+      return;
+    }
+    setIntervalType(value);
     setSelectedDimensions((prev) =>
       prev.map((d) =>
         d.name === activeSeries ? { ...d, [property]: value } : d,
