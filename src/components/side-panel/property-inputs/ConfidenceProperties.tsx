@@ -20,7 +20,7 @@ const ConfidenceProperties = ({
 
   useEffect(() => {
     if (prevChartType === "Line" && intervalType === "intervals") {
-      updateDimension("intervalType", "---");
+      updateAllDimensions("intervalType", "---");
     }
     setPreviousChartType(chartType);
   }, [chartType]);
@@ -30,13 +30,19 @@ const ConfidenceProperties = ({
     (d) => d.name === activeSeries,
   );
 
+  const updateAllDimensions = (property: string, value: any) => {
+    setIntervalType(value);
+    setSelectedDimensions((prev) =>
+      prev.map((d) => ({ ...d, [property]: value })),
+    );
+  };
+
   // Shared updater for updating the color and dashStyle properties on the selected dimension
   const updateDimension = (property: string, value: any) => {
     if (chartType !== "Line" && value === "intervals") {
       alert("Confidence intervals are only available on line charts");
       return;
     }
-    setIntervalType(value);
     setSelectedDimensions((prev) =>
       prev.map((d) =>
         d.name === activeSeries ? { ...d, [property]: value } : d,
@@ -62,7 +68,9 @@ const ConfidenceProperties = ({
     selectedValue: selectedDimension!.intervalType,
     options: ["---", "intervals", "error bars"],
     optionComponent: (value) => <div>{value}</div>,
-    onChange: (value) => updateDimension("intervalType", value),
+    onChange: (value) => (
+      updateDimension("intervalType", value), setIntervalType(value)
+    ),
   };
 
   return (
