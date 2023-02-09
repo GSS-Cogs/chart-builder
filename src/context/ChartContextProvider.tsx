@@ -183,7 +183,7 @@ function useTidyDataToChartContext(
         };
 
         // The Y values object also passes through the user specified series properies from dataSelection
-        const newColor = series.color
+        const newColor = series.intervalColor
           .replace(")", ", 0.2)")
           .replace("rgb", "rgba");
         const yConfidenceValues = {

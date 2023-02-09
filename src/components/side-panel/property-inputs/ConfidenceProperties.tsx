@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import "../../side-panel/side-panel.css";
+import { colors, dashStyles } from "../../../helper-functions/chart-helpers";
 import CustomSelect, { CustomSelectProps } from "../../select/CustomSelect";
 import ChartContext from "../../../context/ChartContext";
+import ColorOption from "../../select/ColorOption";
 
 interface Props {
   activeSeries: string;
@@ -64,6 +66,13 @@ const ConfidenceProperties = ({
     onChange: (value) => updateDimension("upperBoundSeries", value),
   };
 
+  const selectColorProps: CustomSelectProps = {
+    selectedValue: selectedDimension!.intervalColor,
+    options: colors,
+    optionComponent: (value) => <ColorOption color={value} />,
+    onChange: (value) => updateDimension("intervalColor", value),
+  };
+
   const selectIntervalProps: CustomSelectProps = {
     selectedValue: selectedDimension!.intervalType,
     options: ["---", "intervals", "error bars"],
@@ -80,6 +89,12 @@ const ConfidenceProperties = ({
           Type:
         </label>
         <CustomSelect {...selectIntervalProps} />
+      </div>
+      <div className="chart-property">
+        <label className="chart-property-label" htmlFor="series-color">
+          Color:
+        </label>
+        <CustomSelect {...selectColorProps} />
       </div>
       <div className="chart-property">
         <label className="chart-property-label" htmlFor="series-color">

@@ -12,6 +12,7 @@ interface SelectedDimension {
   name: string;
   displayName: string;
   color: string;
+  intervalColor: string;
   dashStyle: "none" | "dash" | "dot";
   intervalType: "---" | "intervals" | "error bars";
   lowerBoundSeries: string;
