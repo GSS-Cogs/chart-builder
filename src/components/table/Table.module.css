@@ -42,10 +42,6 @@
   border-bottom: 1px solid #b1b4b6;
 }
 
-.tableHeader__lineChart:nth-child(odd) {
-  text-align: center;
-}
-
 .tableHeader__lineChart:first-child {
   text-align: left;
 }

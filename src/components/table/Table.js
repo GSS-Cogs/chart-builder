@@ -53,13 +53,17 @@ const getTableHeaderComponent = (arr, data) => {
     // return basic header if the chart isn't a line chart
     return <TableHeadersComponent arr={arr} />;
   }
-  if (data.length === 1 || data[1]?.confidence !== true) {
+  if (data.length === 1 || getIsIntervalData(data) !== true) {
     // return basic header component if there's no interval data
     // interval data is set to type scatter
     return <TableHeadersComponent arr={arr} />;
   }
   // if the chart type is line and confidence intervals are displayed then return alternative header component
-  return <TableHeadersLineChartComponent arr={arr} />;
+  return <TableHeadersLineChartComponent arr={arr} data={data} />;
+};
+
+const getIsIntervalData = (series) => {
+  return series.filter((x) => x?.confidence === true).length > 0;
 };
 
 const TableHeadersComponent = ({ arr }) => {
@@ -83,9 +87,9 @@ const TableHeadersComponent = ({ arr }) => {
   );
 };
 
-const TableHeadersLineChartComponent = ({ arr }) => {
+const TableHeadersLineChartComponent = ({ arr, data }) => {
   const [head, setHead] = useState(null);
-
+  const tempData = [{}].concat(data);
   useEffect(() => {
     const temp =
       arr.length > 1
@@ -93,7 +97,10 @@ const TableHeadersLineChartComponent = ({ arr }) => {
             <th
               className={styles.tableHeader__lineChart}
               key={index}
-              colSpan={index > 1 && index % 2 === 0 ? "2" : "1"}
+              colSpan={tempData[index]?.confidence ? "2" : "1"}
+              style={{
+                textAlign: tempData[index]?.confidence ? "center" : "",
+              }}
             >
               {head}
             </th>
@@ -106,9 +113,8 @@ const TableHeadersLineChartComponent = ({ arr }) => {
     <thead className={styles.tableRowHeader}>
       <tr>{head}</tr>
       <tr>
-        <th className={styles.tableSubHeader} colSpan="1"></th>
-        {arr.slice(1).map((h, i) => {
-          if ((i + 1) % 2 === 0) {
+        {arr.map((h, i) => {
+          if (tempData[i]?.confidence === true) {
             return (
               <>
                 <th className={styles.tableSubHeader} colSpan="1">
@@ -202,6 +208,7 @@ TableHeadersComponent.propTypes = {
 
 TableHeadersLineChartComponent.propTypes = {
   arr: PropTypes.any,
+  data: PropTypes.any,
 };
 
 TableBodyComponent.propTypes = {
