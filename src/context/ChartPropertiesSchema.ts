@@ -41,6 +41,20 @@ const GridlinesSection: ChartPropertySchemaSection = {
   ],
 };
 
+const exploreDataSection: ChartPropertySchemaSection = {
+  name: "exploreDataProperties",
+  displayName: "Explore data",
+  sectionFor: "charts",
+  properties: [
+    {
+      name: "exploreDataLink",
+      displayName: "Link",
+      type: "text",
+      defaultValue: "",
+    },
+  ],
+};
+
 const chartTypesSection: ChartPropertySchemaSection = {
   name: "chartTypes",
   displayName: "Chart type",
@@ -59,7 +73,7 @@ const chartTypesSection: ChartPropertySchemaSection = {
         "Map",
         "Filled Area",
         "Stacked Filled Area",
-        "Table"
+        "Table",
       ],
       defaultValue: "Line",
     },
@@ -362,6 +376,7 @@ const compactBarChartSection: ChartPropertySchemaSection = {
 };
 
 const chartPropertiesSchema: ChartPropertySchemaSection[] = [
+  exploreDataSection,
   chartTypesSection,
   orientationSection,
   chartDimensionsSection,
