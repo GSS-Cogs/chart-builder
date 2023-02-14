@@ -43,7 +43,7 @@ const DataLink: React.FC<Props> = ({ link, text }) => {
           rel="noopener noreferrer"
           href={link}
         >
-          {text} &#8594;
+          {text}
         </a>
       ) : (
         <div
@@ -54,7 +54,7 @@ const DataLink: React.FC<Props> = ({ link, text }) => {
             ...linkStyle,
           }}
         >
-          {text} &#8594;
+          {text}
         </div>
       )}
     </div>
