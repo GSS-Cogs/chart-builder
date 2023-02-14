@@ -43,7 +43,8 @@ export const ActualChart = ({
       </div>
     );
 
-  const { chartType, layout } = chartDefinition;
+  const { chartType, layout, exploreDataLink } = chartDefinition;
+
   // Incrementing the datarevision forces plotly to update the chart.
   // This is a workaround for an issue where plotly loses its
   // autorange calculations on component re-render.
@@ -107,7 +108,7 @@ export const ActualChart = ({
   return (
     <div id="chart">
       {chartType !== "table" ? (
-        <Tabs>
+        <Tabs link={exploreDataLink}>
           <Tab title="Visualisation">
             <Suspense fallback={<div />}>
               {isClientSideRender ? (
