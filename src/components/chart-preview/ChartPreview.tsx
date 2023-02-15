@@ -43,7 +43,9 @@ export const ActualChart = ({
       </div>
     );
 
-  const { chartType, layout } = chartDefinition;
+  const { data, chartType, layout } = chartDefinition;
+  const altChartType = data?.[0]?.type;
+
   // Incrementing the datarevision forces plotly to update the chart.
   // This is a workaround for an issue where plotly loses its
   // autorange calculations on component re-render.
@@ -111,7 +113,7 @@ export const ActualChart = ({
           <Tab title="Visualisation">
             <Suspense fallback={<div />}>
               {isClientSideRender ? (
-                chartType === "map" ? (
+                chartType === "map" || altChartType === "choropleth" ? (
                   <PlotlyGeo chartDefinition={chartDefinition} />
                 ) : (
                   <PlotlyBasic chartDefinition={chartDefinition} />
