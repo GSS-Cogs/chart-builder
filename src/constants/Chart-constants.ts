@@ -1,1 +1,1 @@
-export const INTERVAL_STYLES = ["--", "intervals", "error bars"] as const;
+export const INTERVAL_STYLES = ["--", "Intervals", "Error bars"] as const;
