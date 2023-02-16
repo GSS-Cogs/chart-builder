@@ -69,38 +69,28 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         "Series limit reached. We recommend reducing the visual complexity of the chart by showing fewer series.",
       );
     }
+    let dimension = {
+      name: "",
+      displayName: "",
+      color: colors[selectedDimensions.length],
+      intervalColor: colors[selectedDimensions.length],
+      dashStyle: "none",
+      intervalStyle: INTERVAL_STYLES[0],
+      lowerBoundSeries: "",
+      upperBoundSeries: "",
+    } as SelectedDimension;
+
     if (selectedDimensions.length === 0) {
       const defaultSelectedDimension = availableDimensions[0];
-      setSelectedDimensions([
-        ...selectedDimensions,
-        {
-          name: defaultSelectedDimension,
-          displayName: titleCase(defaultSelectedDimension),
-          color: colors[selectedDimensions.length],
-          intervalColor: colors[selectedDimensions.length],
-          dashStyle: "none",
-          intervalStyle: INTERVAL_STYLES[0],
-          lowerBoundSeries: "",
-          upperBoundSeries: "",
-        },
-      ]);
+      dimension.name = defaultSelectedDimension;
+      dimension.displayName = titleCase(defaultSelectedDimension);
     } else {
       const nonSelectedAvailableDimensions =
         getNonSelectedAvailableDimensions();
-      setSelectedDimensions([
-        ...selectedDimensions,
-        {
-          name: nonSelectedAvailableDimensions[0],
-          displayName: titleCase(nonSelectedAvailableDimensions[0]),
-          color: colors[selectedDimensions.length],
-          intervalColor: colors[selectedDimensions.length],
-          dashStyle: "none",
-          intervalStyle: INTERVAL_STYLES[0],
-          lowerBoundSeries: "",
-          upperBoundSeries: "",
-        },
-      ]);
+      dimension.name = nonSelectedAvailableDimensions[0];
+      dimension.displayName = titleCase(nonSelectedAvailableDimensions[0]);
     }
+    setSelectedDimensions([...selectedDimensions, dimension]);
   };
 
   const getNonSelectedAvailableDimensions = () => {
