@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import useTable from "../../hooks/useTable";
 import styles from "./Table.module.css";
 import TableFooter from "./TableFooter";
+import { getIsIntervalData } from "../../helper-functions/chart-helpers";
 
 const FakeTable = () => (
   <tbody>
@@ -60,10 +61,6 @@ const getTableHeaderComponent = (arr, data) => {
   }
   // if the chart type is line and confidence intervals are displayed then return alternative header component
   return <TableHeadersLineChartComponent arr={arr} data={data} />;
-};
-
-const getIsIntervalData = (series) => {
-  return series.filter((x) => x?.confidence === true).length > 0;
 };
 
 const TableHeadersComponent = ({ arr }) => {

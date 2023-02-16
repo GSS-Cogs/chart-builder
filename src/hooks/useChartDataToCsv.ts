@@ -1,5 +1,6 @@
 import Papa from "papaparse";
 import { getMapColorBarTitle } from "./utils";
+import { getIsIntervalData } from "../helper-functions/chart-helpers";
 
 const getUniqueXValues = (series: any, verticalChart: boolean) => {
   let xValues: any = [];
@@ -109,13 +110,6 @@ const getMapCsv = (series: any) => {
     series[0].z[index],
   ]);
   return [headers, dataRows];
-};
-
-const getIsIntervalData = (series: any) => {
-  return (
-    series.filter((x: { confidence: boolean }) => x?.confidence === true)
-      .length > 0
-  );
 };
 
 const getChartCsv = (series: any, category: string, chartType: any) => {
