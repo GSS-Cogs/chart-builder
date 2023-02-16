@@ -4,7 +4,7 @@ import ConfidenceProperties from "./ConfidenceProperties";
 import ChartContext from "../../../context/ChartContext";
 import { useContext, useEffect, useState } from "react";
 
-const ConfidenceSelector: React.FC = () => {
+const ConfidenceIntervalSelector: React.FC = () => {
   const { selectedDimensions: selectedSeries, columnNames: columnNames } =
     useContext(ChartContext);
   const [activeSeries, setActiveSeries] = useState("");
@@ -68,4 +68,4 @@ const ConfidenceSelector: React.FC = () => {
   );
 };
 
-export default ConfidenceSelector;
+export default ConfidenceIntervalSelector;

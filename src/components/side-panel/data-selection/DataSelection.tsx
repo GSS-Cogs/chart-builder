@@ -3,7 +3,7 @@ import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
 import DimensionSelection from "./dimension-selection/DimensionSelection";
 import "./data-selection.css";
 import SeriesSelector from "../property-inputs/SeriesSelector";
-import ConfidenceSelector from "../property-inputs/ConfidenceSelector";
+import ConfidenceIntervalSelector from "../property-inputs/ConfidenceIntervalSelector";
 
 const options = [
   {
@@ -111,7 +111,7 @@ const DataSelection = (): JSX.Element => {
       </div>
       <DimensionSelection availableDimensions={availableDimensions} />
       <SeriesSelector />
-      <ConfidenceSelector />
+      <ConfidenceIntervalSelector />
     </>
   );
 };
