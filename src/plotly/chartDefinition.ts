@@ -79,7 +79,7 @@ const getChartData = (
 
   // Iterate the available series and create a trace for each
   allYSeries.map((series: any, seriesIndex: number) => {
-    if (series.intervalType === "error-skip") {
+    if (series.intervalStyle === "error-skip") {
       return;
     }
 
@@ -133,7 +133,7 @@ const getChartData = (
       };
     }
     let newSeries = {};
-    if (series.intervalType === INTERVAL_STYLES[1]) {
+    if (series.intervalStyle === INTERVAL_STYLES[1]) {
       newSeries = {
         ...trace,
         stackgroup: chartType === "stacked filled area" ? "one" : undefined,
@@ -168,7 +168,10 @@ const getChartData = (
             ? "tonexty"
             : "none",
       };
-      if (series.intervalType === INTERVAL_STYLES[2] && allYSeries.length > 1) {
+      if (
+        series.intervalStyle === INTERVAL_STYLES[2] &&
+        allYSeries.length > 1
+      ) {
         newSeries = {
           ...newSeries,
           ...calculateErrorBars(

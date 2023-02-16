@@ -158,12 +158,12 @@ function useTidyDataToChartContext(
         name: series.displayName,
         color: series.color,
         dashStyle: series.dashStyle,
-        intervalType: INTERVAL_STYLES[0].toString(),
+        intervalStyle: INTERVAL_STYLES[0].toString(),
         values: yArray,
       };
 
       if (
-        series.intervalType !== INTERVAL_STYLES[0] &&
+        series.intervalStyle !== INTERVAL_STYLES[0] &&
         series.lowerBoundSeries !== "" &&
         series.upperBoundSeries !== ""
       ) {
@@ -191,15 +191,15 @@ function useTidyDataToChartContext(
           name: "Confidence Intervals",
           color: newColor,
           dashStyle: series.dashStyle,
-          intervalType:
-            series.intervalType === INTERVAL_STYLES[2]
+          intervalStyle:
+            series.intervalStyle === INTERVAL_STYLES[2]
               ? "error-skip"
-              : series.intervalType,
+              : series.intervalStyle,
           values: yLowerArray.concat(yUpperArray),
         };
 
-        yValues.intervalType =
-          series.intervalType === INTERVAL_STYLES[2]
+        yValues.intervalStyle =
+          series.intervalStyle === INTERVAL_STYLES[2]
             ? INTERVAL_STYLES[2]
             : INTERVAL_STYLES[0];
         // Push the X and Y values objects to the chart data

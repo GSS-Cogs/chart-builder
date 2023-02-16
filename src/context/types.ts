@@ -16,7 +16,7 @@ interface SelectedDimension {
   color: string;
   intervalColor: string;
   dashStyle: "none" | "dash" | "dot";
-  intervalType: typeof INTERVAL_STYLES[number];
+  intervalStyle: typeof INTERVAL_STYLES[number];
   lowerBoundSeries: string;
   upperBoundSeries: string;
 }

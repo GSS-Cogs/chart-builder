@@ -17,14 +17,14 @@ const ConfidenceProperties = ({
   const { selectedDimensions, setSelectedDimensions, chartProperties } =
     useContext(ChartContext);
   const [prevChartType, setPreviousChartType] = useState<any>("Line");
-  const [intervalType, setIntervalType] = useState(
+  const [intervalStyle, setintervalStyle] = useState(
     INTERVAL_STYLES[0].toString(),
   );
   const chartType = chartProperties?.chartTypes?.chartType;
 
   useEffect(() => {
-    if (prevChartType === "Line" && intervalType === INTERVAL_STYLES[1]) {
-      updateAllDimensions("intervalType", INTERVAL_STYLES[0]);
+    if (prevChartType === "Line" && intervalStyle === INTERVAL_STYLES[1]) {
+      updateAllDimensions("intervalStyle", INTERVAL_STYLES[0]);
     }
     setPreviousChartType(chartType);
   }, [chartType]);
@@ -35,7 +35,7 @@ const ConfidenceProperties = ({
   );
 
   const updateAllDimensions = (property: string, value: any) => {
-    setIntervalType(value);
+    setintervalStyle(value);
     setSelectedDimensions((prev) =>
       prev.map((d) => ({ ...d, [property]: value })),
     );
@@ -76,11 +76,11 @@ const ConfidenceProperties = ({
   };
 
   const selectIntervalProps: CustomSelectProps = {
-    selectedValue: selectedDimension!.intervalType,
+    selectedValue: selectedDimension!.intervalStyle,
     options: INTERVAL_STYLES,
     optionComponent: (value) => <div>{value}</div>,
     onChange: (value) => (
-      updateDimension("intervalType", value), setIntervalType(value)
+      updateDimension("intervalStyle", value), setintervalStyle(value)
     ),
   };
 
