@@ -133,6 +133,11 @@ const getChartData = (
       };
     }
     let newSeries = {};
+
+    // if intervalStyle has been set to 'Intervals' create to different newSeries to the regular one
+    // unlike error bars which can be set as Plotly properties, intervals need to be in their own series
+    // this series is double the length of a regular one, made up of upper and lower values
+    // these points are plotted and a tozerox fill is used to colour between them to get confidence intervals
     if (series.intervalStyle === INTERVAL_STYLES[1]) {
       newSeries = {
         ...trace,
@@ -168,6 +173,7 @@ const getChartData = (
             ? "tonexty"
             : "none",
       };
+
       if (
         series.intervalStyle === INTERVAL_STYLES[2] &&
         allYSeries.length > 1
