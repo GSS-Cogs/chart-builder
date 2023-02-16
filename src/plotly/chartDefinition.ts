@@ -4,6 +4,7 @@ import { divergingColorScale, sequentialColorScale } from "./colorScales";
 import { GeoJSON } from "geojson";
 import { ChartPropertyValues } from "../context/ChartContext";
 import { getCompactBarTraces, getCompactBarLayout } from "./compactBarChart";
+import { INTERVAL_STYLES } from "../constants/Chart-constants";
 
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
@@ -132,7 +133,7 @@ const getChartData = (
       };
     }
     let newSeries = {};
-    if (series.intervalType === "intervals") {
+    if (series.intervalType === INTERVAL_STYLES[1]) {
       newSeries = {
         ...trace,
         stackgroup: chartType === "stacked filled area" ? "one" : undefined,
@@ -167,7 +168,7 @@ const getChartData = (
             ? "tonexty"
             : "none",
       };
-      if (series.intervalType === "error bars" && allYSeries.length > 1) {
+      if (series.intervalType === INTERVAL_STYLES[2] && allYSeries.length > 1) {
         newSeries = {
           ...newSeries,
           ...calculateErrorBars(

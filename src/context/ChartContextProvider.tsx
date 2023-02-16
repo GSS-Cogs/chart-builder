@@ -28,7 +28,8 @@ import {
   getDistinctValues,
 } from "../helper-functions/array-helpers";
 
-import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
+import { NO_FILE_SELECTED_TEXT } from "../constants/Common-constants";
+import { INTERVAL_STYLES } from "../constants/Chart-constants";
 import updateChartDefinition from "../plotly/chartDefinition";
 
 interface Props {
@@ -157,12 +158,12 @@ function useTidyDataToChartContext(
         name: series.displayName,
         color: series.color,
         dashStyle: series.dashStyle,
-        intervalType: "---",
+        intervalType: INTERVAL_STYLES[0].toString(),
         values: yArray,
       };
 
       if (
-        series.intervalType !== "---" &&
+        series.intervalType !== INTERVAL_STYLES[0] &&
         series.lowerBoundSeries !== "" &&
         series.upperBoundSeries !== ""
       ) {
@@ -191,14 +192,16 @@ function useTidyDataToChartContext(
           color: newColor,
           dashStyle: series.dashStyle,
           intervalType:
-            series.intervalType === "error bars"
+            series.intervalType === INTERVAL_STYLES[2]
               ? "error-skip"
               : series.intervalType,
           values: yLowerArray.concat(yUpperArray),
         };
 
         yValues.intervalType =
-          series.intervalType === "error bars" ? "error bars" : "---";
+          series.intervalType === INTERVAL_STYLES[2]
+            ? INTERVAL_STYLES[2]
+            : INTERVAL_STYLES[0];
         // Push the X and Y values objects to the chart data
         newChartData.xValues.push(xValues);
         newChartData.yValues.push(yValues);

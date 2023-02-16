@@ -7,7 +7,7 @@ import "./dimension-selection.css";
 import { titleCase } from "../../../../helper-functions/string-helpers";
 
 import { colors } from "../../../../helper-functions/chart-helpers";
-
+import { INTERVAL_STYLES } from "../../../../constants/Chart-constants";
 export interface Props {
   availableDimensions: string[];
 }
@@ -79,7 +79,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
           color: colors[selectedDimensions.length],
           intervalColor: colors[selectedDimensions.length],
           dashStyle: "none",
-          intervalType: "---",
+          intervalType: INTERVAL_STYLES[0],
           lowerBoundSeries: "",
           upperBoundSeries: "",
         },
@@ -95,7 +95,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
           color: colors[selectedDimensions.length],
           intervalColor: colors[selectedDimensions.length],
           dashStyle: "none",
-          intervalType: "---",
+          intervalType: INTERVAL_STYLES[0],
           lowerBoundSeries: "",
           upperBoundSeries: "",
         },
@@ -121,7 +121,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
       color: colors[selectedDimensions.length],
       intervalColor: colors[selectedDimensions.length],
       dashStyle: "none",
-      intervalType: "---",
+      intervalType: INTERVAL_STYLES[0],
       lowerBoundSeries: "",
       upperBoundSeries: "",
     };
@@ -141,7 +141,7 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
       color: colors[selectedDimensions.length],
       intervalColor: colors[selectedDimensions.length],
       dashStyle: "none",
-      intervalType: "---",
+      intervalType: INTERVAL_STYLES[0],
       lowerBoundSeries: "",
       upperBoundSeries: "",
     };

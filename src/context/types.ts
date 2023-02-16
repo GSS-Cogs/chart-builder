@@ -1,3 +1,5 @@
+import { INTERVAL_STYLES } from "../constants/Chart-constants";
+
 interface DataColumn {
   name: string;
   values: string[] | number[];
@@ -14,7 +16,7 @@ interface SelectedDimension {
   color: string;
   intervalColor: string;
   dashStyle: "none" | "dash" | "dot";
-  intervalType: "---" | "intervals" | "error bars";
+  intervalType: typeof INTERVAL_STYLES[number];
   lowerBoundSeries: string;
   upperBoundSeries: string;
 }

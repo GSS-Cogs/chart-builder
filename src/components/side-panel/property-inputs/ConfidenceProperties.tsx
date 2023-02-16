@@ -4,7 +4,7 @@ import { colors, dashStyles } from "../../../helper-functions/chart-helpers";
 import CustomSelect, { CustomSelectProps } from "../../select/CustomSelect";
 import ChartContext from "../../../context/ChartContext";
 import ColorOption from "../../select/ColorOption";
-
+import { INTERVAL_STYLES } from "../../../constants/Chart-constants";
 interface Props {
   activeSeries: string;
   columnNames: string[];
@@ -17,12 +17,14 @@ const ConfidenceProperties = ({
   const { selectedDimensions, setSelectedDimensions, chartProperties } =
     useContext(ChartContext);
   const [prevChartType, setPreviousChartType] = useState<any>("Line");
-  const [intervalType, setIntervalType] = useState("---");
+  const [intervalType, setIntervalType] = useState(
+    INTERVAL_STYLES[0].toString(),
+  );
   const chartType = chartProperties?.chartTypes?.chartType;
 
   useEffect(() => {
-    if (prevChartType === "Line" && intervalType === "intervals") {
-      updateAllDimensions("intervalType", "---");
+    if (prevChartType === "Line" && intervalType === INTERVAL_STYLES[1]) {
+      updateAllDimensions("intervalType", INTERVAL_STYLES[0]);
     }
     setPreviousChartType(chartType);
   }, [chartType]);
@@ -41,7 +43,7 @@ const ConfidenceProperties = ({
 
   // Shared updater for updating the color and dashStyle properties on the selected dimension
   const updateDimension = (property: string, value: any) => {
-    if (chartType !== "Line" && value === "intervals") {
+    if (chartType !== "Line" && value === INTERVAL_STYLES[1]) {
       alert("Confidence intervals are only available on line charts");
       return;
     }
@@ -75,7 +77,7 @@ const ConfidenceProperties = ({
 
   const selectIntervalProps: CustomSelectProps = {
     selectedValue: selectedDimension!.intervalType,
-    options: ["---", "intervals", "error bars"],
+    options: INTERVAL_STYLES,
     optionComponent: (value) => <div>{value}</div>,
     onChange: (value) => (
       updateDimension("intervalType", value), setIntervalType(value)
