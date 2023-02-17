@@ -17,7 +17,7 @@ const ConfidenceProperties = ({
   const { selectedDimensions, setSelectedDimensions, chartProperties } =
     useContext(ChartContext);
   const [prevChartType, setPreviousChartType] = useState<any>("Line");
-  const [intervalStyle, setintervalStyle] = useState(
+  const [intervalStyle, setIntervalStyle] = useState(
     INTERVAL_STYLES[0].toString(),
   );
   const chartType = chartProperties?.chartTypes?.chartType;
@@ -35,7 +35,7 @@ const ConfidenceProperties = ({
   );
 
   const updateAllDimensions = (property: string, value: any) => {
-    setintervalStyle(value);
+    setIntervalStyle(value);
     setSelectedDimensions((prev) =>
       prev.map((d) => ({ ...d, [property]: value })),
     );
@@ -80,7 +80,7 @@ const ConfidenceProperties = ({
     options: INTERVAL_STYLES,
     optionComponent: (value) => <div>{value}</div>,
     onChange: (value) => (
-      updateDimension("intervalStyle", value), setintervalStyle(value)
+      updateDimension("intervalStyle", value), setIntervalStyle(value)
     ),
   };
 
