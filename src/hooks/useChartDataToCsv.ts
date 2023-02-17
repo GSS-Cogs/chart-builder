@@ -131,27 +131,28 @@ const getChartCsv = (series: any, category: string, chartType: any) => {
   let headers: any[] = [];
   if (isCompactBarData) {
     headers = [category, seriesNames[0]];
-  } else if (isIntervalData) {
-    // if confidence interevals are on add extra blank column header after each confidence interval
-    // along with adding a sub header of blanks and lower/upper columns
-    headers = [category];
-    let subHeader: any[] = [""];
-    seriesNames.forEach((x: any, index: number) => {
-      if ((index + 1) % 2 === 0) {
-        headers.push(x);
-        headers.push("");
-        subHeader = subHeader.concat(["Lower", "Upper"]);
-      } else {
-        headers.push(x);
-        subHeader.push("");
-      }
-    });
-
-    dataRows = [subHeader].concat(dataRows);
-  } else {
-    headers = [category, ...seriesNames];
+    return [headers, dataRows];
   }
+  if (!isIntervalData) {
+    headers = [category, ...seriesNames];
+    return [headers, dataRows];
+  }
+  // if confidence interevals are on add extra blank column header after each confidence interval
+  // along with adding a sub header of blanks and lower/upper columns
+  headers = [category];
+  let subHeader: any[] = [""];
+  seriesNames.forEach((x: any, index: number) => {
+    if ((index + 1) % 2 === 0) {
+      headers.push(x);
+      headers.push("");
+      subHeader = subHeader.concat(["Lower", "Upper"]);
+    } else {
+      headers.push(x);
+      subHeader.push("");
+    }
+  });
 
+  dataRows = [subHeader].concat(dataRows);
   return [headers, dataRows];
 };
 
