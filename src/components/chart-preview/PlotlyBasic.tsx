@@ -4,7 +4,7 @@ import createPlotlyComponent from "react-plotly.js/factory";
 
 const Plot: any = createPlotlyComponent(Plotly);
 
-const PlotlyBasic = ({ chartDefinition }: any) => {
+const PlotlyBasic = ({ chartDefinition, onLegendClick }: any) => {
   let { data, layout, config } = chartDefinition;
 
   return (
@@ -14,6 +14,7 @@ const PlotlyBasic = ({ chartDefinition }: any) => {
       config={config}
       useResizeHandler={true}
       style={{ width: "100%" }}
+      onLegendClick={onLegendClick}
     />
   );
 };

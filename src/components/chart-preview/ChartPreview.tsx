@@ -1,4 +1,4 @@
-import { lazy, Suspense, useContext } from "react";
+import { lazy, Suspense, useContext, useState, useEffect } from "react";
 import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
@@ -32,6 +32,12 @@ export const ActualChart = ({
   chartDefinition,
   selectedColumns,
 }: any): JSX.Element => {
+  const [tableChartDefinition, setTableChartDefinititon] = useState({});
+
+  useEffect(() => {
+    setTableChartDefinititon(chartDefinition);
+  }, [chartDefinition]);
+
   const emptyDataState = Object.keys(chartDefinition).length === 0;
 
   if (emptyDataState)
@@ -69,6 +75,31 @@ export const ActualChart = ({
     }
 
     return fullFigureNode;
+  };
+
+  const onLegendClick = (e: any) => {
+    let tempChartDefinition = { ...chartDefinition };
+    tempChartDefinition.data = e.data.map((element: any, index: number) => {
+      if (index !== e.curveNumber) {
+        if (element?.visible === "legendonly") {
+          console.log("returning null: " + element?.visible);
+          return null;
+        }
+        console.log("returning non active");
+        return element;
+      }
+      if (element?.visible === "legendonly") {
+        console.log("returning visible: " + element?.visible);
+        return element;
+      }
+      return null;
+    });
+    tempChartDefinition.data = tempChartDefinition.data.filter(
+      (element: any) => element !== null,
+    );
+
+    console.log(tempChartDefinition);
+    setTableChartDefinititon(tempChartDefinition);
   };
 
   const onFigureDownloadClick = (e: any) => {
@@ -116,14 +147,17 @@ export const ActualChart = ({
                 chartType === "map" || altChartType === "choropleth" ? (
                   <PlotlyGeo chartDefinition={chartDefinition} />
                 ) : (
-                  <PlotlyBasic chartDefinition={chartDefinition} />
+                  <PlotlyBasic
+                    chartDefinition={chartDefinition}
+                    onLegendClick={onLegendClick}
+                  />
                 )
               ) : null}
             </Suspense>
           </Tab>
           <Tab title="Chart Data">
             <TabularData
-              chartDefinition={chartDefinition}
+              chartDefinition={tableChartDefinition}
               selectedColumns={selectedColumns}
             />
           </Tab>
