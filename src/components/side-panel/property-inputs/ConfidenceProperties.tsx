@@ -34,54 +34,57 @@ const ConfidenceProperties = ({
     (d) => d.name === activeSeries,
   );
 
-  const updateAllDimensions = (property: string, value: any) => {
-    setIntervalStyle(value);
-    setSelectedDimensions((prev) =>
-      prev.map((d) => ({ ...d, [property]: value })),
-    );
-  };
-
-  // Shared updater for updating the color and dashStyle properties on the selected dimension
-  const updateDimension = (property: string, value: any) => {
+  const updateDimensions = (
+    property: string,
+    value: any,
+    filterFn?: (d: any) => boolean,
+  ) => {
     if (chartType !== "Line" && value === INTERVAL_STYLES[1]) {
       alert("Confidence intervals are only available on line charts");
       return;
     }
+    setIntervalStyle(value);
     setSelectedDimensions((prev) =>
       prev.map((d) =>
-        d.name === activeSeries ? { ...d, [property]: value } : d,
+        filterFn && !filterFn(d) ? d : { ...d, [property]: value },
       ),
     );
+  };
+
+  const updateAllDimensions = (property: string, value: any) => {
+    updateDimensions(property, value);
+  };
+
+  const updateSelectedDimension = (property: string, value: any) => {
+    updateDimensions(property, value, (d) => d.name === activeSeries);
   };
 
   const selectLowerProps: CustomSelectProps = {
     selectedValue: selectedDimension!.lowerBoundSeries,
     options: columnNames,
     optionComponent: (value) => <div>{value}</div>,
-    onChange: (value) => updateDimension("lowerBoundSeries", value),
+    onChange: (value) => updateSelectedDimension("lowerBoundSeries", value),
   };
 
   const selectUpperProps: CustomSelectProps = {
     selectedValue: selectedDimension!.upperBoundSeries,
     options: columnNames,
     optionComponent: (value) => <div>{value}</div>,
-    onChange: (value) => updateDimension("upperBoundSeries", value),
+    onChange: (value) => updateSelectedDimension("upperBoundSeries", value),
   };
 
   const selectColorProps: CustomSelectProps = {
     selectedValue: selectedDimension!.intervalColor,
     options: colors,
     optionComponent: (value) => <ColorOption color={value} />,
-    onChange: (value) => updateDimension("intervalColor", value),
+    onChange: (value) => updateSelectedDimension("intervalColor", value),
   };
 
   const selectIntervalProps: CustomSelectProps = {
     selectedValue: selectedDimension!.intervalStyle,
     options: INTERVAL_STYLES,
     optionComponent: (value) => <div>{value}</div>,
-    onChange: (value) => (
-      updateDimension("intervalStyle", value), setIntervalStyle(value)
-    ),
+    onChange: (value) => updateSelectedDimension("intervalStyle", value),
   };
 
   return (
