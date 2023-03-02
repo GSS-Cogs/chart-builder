@@ -24,7 +24,7 @@ const ConfidenceProperties = ({
 
   useEffect(() => {
     if (prevChartType === "Line" && intervalStyle === INTERVAL_STYLES[1]) {
-      updateAllDimensions("intervalStyle", INTERVAL_STYLES[0]);
+      updateDimensions("intervalStyle", INTERVAL_STYLES[0]);
     }
     setPreviousChartType(chartType);
   }, [chartType]);
