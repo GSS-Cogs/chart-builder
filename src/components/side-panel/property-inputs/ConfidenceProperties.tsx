@@ -51,10 +51,6 @@ const ConfidenceProperties = ({
     );
   };
 
-  const updateAllDimensions = (property: string, value: any) => {
-    updateDimensions(property, value);
-  };
-
   const updateSelectedDimension = (property: string, value: any) => {
     updateDimensions(property, value, (d) => d.name === activeSeries);
   };
