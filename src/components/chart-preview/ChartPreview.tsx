@@ -1,12 +1,4 @@
-import {
-  lazy,
-  Suspense,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  useReducer,
-} from "react";
+import { lazy, Suspense, useContext, useState, useEffect } from "react";
 import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
@@ -40,9 +32,15 @@ export const ActualChart = ({
   selectedColumns,
 }: any): JSX.Element => {
   const [tableChartDefinition, setTableChartDefinititon] = useState({});
-  const [filtersIndex, setFiltersIndex] = useState<number[]>([]);
-
-  let filteredColumnIndexes: number[] = filtersIndex;
+  const [filteredIndexesState, setFilteredIndexesState] = useState<number[]>(
+    [],
+  );
+  let filteredColumnIndexes: number[] = filteredIndexesState;
+  // filteredColumnIndexes allows us to change the data without a rerender
+  // but also a by product of clicking the plotly legend doesn't set state
+  // filteredIndexesState is used to keep state when switching tabs
+  // filteredIndexesState is also set when switching to tabular view
+  // and will be set with the latest filteredColumnIndexes
 
   useEffect(() => {
     setTableChartDefinititon(chartDefinition);
@@ -88,6 +86,15 @@ export const ActualChart = ({
   };
 
   const onLegendClick = (e: any) => {
+    // check if the passed 'e.curveNumber' is in filteredColumnIndexes
+    // if it is, that means its filter is on and should be turned off
+    // if it isn't it means its filter should be turned on
+
+    // e.data shows what filters are applied BUT it is showing the state at time before
+    // the clicking so can't be used for current filters applied
+    // this causes more problems with onLegendDoubleClick where multiple filters can be applied
+    // and turned off on a single trigger
+
     console.log("single 0", filteredColumnIndexes);
     if (filteredColumnIndexes.includes(e.curveNumber)) {
       const index = filteredColumnIndexes.indexOf(e.curveNumber);
@@ -108,6 +115,9 @@ export const ActualChart = ({
     // when two or fewer filters are not on, and the one clicked is no on it'll turn all filters on except the clicked one
     // when two or fewer filters are not on, and the one clicked is on, it'll turn all filters off
 
+    // to keep track of what filters are applied we have an array filteredColumnIndexes
+    // this has the 'curveNumber' of each data series
+
     let numberedArray = e.data.map((_elem: any, index: any) => index);
     console.log("tempFilteredIndexes -1", filteredColumnIndexes);
     if (filteredColumnIndexes.includes(e.curveNumber)) {
@@ -124,19 +134,14 @@ export const ActualChart = ({
   };
 
   const filterData = (data: any[], indexes: number[]) => {
-    let tempChartDefinition = { ...chartDefinition };
-    tempChartDefinition.data = data.map((element: any, index: number) => {
-      if (indexes.includes(index)) {
-        return null;
-      }
-      return element;
-    });
-    tempChartDefinition.data = tempChartDefinition.data.filter(
-      (element: any) => element !== null,
+    const filteredData = data.filter(
+      (_element: any, index: number) => !indexes.includes(index),
     );
-    filteredColumnIndexes = indexes;
-    setFiltersIndex(filteredColumnIndexes);
-    setTableChartDefinititon(tempChartDefinition);
+    // this setting of filteredColumnIndex is here because onLegendClick fires twice when
+    // onLegendDoubleClick is trigged, it is to make sure the correct indexes are assigned
+    filteredColumnIndexes = [...indexes];
+    setFilteredIndexesState(filteredColumnIndexes);
+    setTableChartDefinititon({ ...chartDefinition, data: filteredData });
   };
 
   const onFigureDownloadClick = (e: any) => {
@@ -176,7 +181,6 @@ export const ActualChart = ({
 
   return (
     <div id="chart">
-      {/* {filtersIndex.toString()} */}
       {chartType !== "table" ? (
         <Tabs>
           <Tab title="Visualisation">
@@ -222,7 +226,9 @@ export const ActualChart = ({
           <button
             className="govuk-button govuk-button--secondary non-content cb-download-button"
             data-module="govuk-button"
-            onClick={() => onDownloadClick(chartDefinition, selectedColumns)}
+            onClick={() =>
+              onDownloadClick(tableChartDefinition, selectedColumns)
+            }
           >
             Data
           </button>
