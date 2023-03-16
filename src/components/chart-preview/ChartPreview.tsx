@@ -95,7 +95,6 @@ export const ActualChart = ({
     // this causes more problems with onLegendDoubleClick where multiple filters can be applied
     // and turned off on a single trigger
 
-    console.log("single 0", filteredColumnIndexes);
     if (filteredColumnIndexes.includes(e.curveNumber)) {
       const index = filteredColumnIndexes.indexOf(e.curveNumber);
       if (index > -1) {
@@ -104,7 +103,6 @@ export const ActualChart = ({
     } else {
       filteredColumnIndexes.push(e.curveNumber);
     }
-    console.log("single 1", filteredColumnIndexes);
     filterData(e.data, filteredColumnIndexes);
   };
 
@@ -119,16 +117,12 @@ export const ActualChart = ({
     // this has the 'curveNumber' of each data series
 
     let numberedArray = e.data.map((_elem: any, index: any) => index);
-    console.log("tempFilteredIndexes -1", filteredColumnIndexes);
     if (filteredColumnIndexes.includes(e.curveNumber)) {
-      console.log("tempFilteredIndexes 0", []);
       filterData(e.data, []);
     } else if (filteredColumnIndexes.length < e.data.length - 1) {
       const temp = numberedArray.filter((x: any) => x !== e.curveNumber);
-      console.log("tempFilteredIndexes 1", temp);
       filterData(e.data, temp);
     } else {
-      console.log("tempFilteredIndexes 3", []);
       filterData(e.data, []);
     }
   };
