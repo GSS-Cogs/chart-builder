@@ -1,4 +1,12 @@
-import { lazy, Suspense, useContext, useState, useEffect } from "react";
+import {
+  lazy,
+  Suspense,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useReducer,
+} from "react";
 import ChartContext from "../../context/ChartContext";
 import ChartPlaceholderIcon from "../../assets/icons/chart-preview/ChartPlaceholderIcon";
 import "./chart-preview.css";
@@ -7,7 +15,6 @@ import Tabs from "../tabs/Tabs";
 import Tab from "../tabs/Tab";
 import useChartDataToCsv from "../../hooks/useChartDataToCsv";
 import useSaveCsvData from "../../hooks/useSaveCsvData";
-
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 
@@ -33,6 +40,9 @@ export const ActualChart = ({
   selectedColumns,
 }: any): JSX.Element => {
   const [tableChartDefinition, setTableChartDefinititon] = useState({});
+  const [filtersIndex, setFiltersIndex] = useState<number[]>([]);
+
+  let filteredColumnIndexes: number[] = filtersIndex;
 
   useEffect(() => {
     setTableChartDefinititon(chartDefinition);
@@ -78,27 +88,54 @@ export const ActualChart = ({
   };
 
   const onLegendClick = (e: any) => {
+    console.log("single 0", filteredColumnIndexes);
+    if (filteredColumnIndexes.includes(e.curveNumber)) {
+      const index = filteredColumnIndexes.indexOf(e.curveNumber);
+      if (index > -1) {
+        filteredColumnIndexes.splice(index, 1);
+      }
+    } else {
+      filteredColumnIndexes.push(e.curveNumber);
+    }
+    console.log("single 1", filteredColumnIndexes);
+    filterData(e.data, filteredColumnIndexes);
+  };
+
+  const onLegendDoubleClick = (e: any) => {
+    // a note on how plotly legend double click works
+    // when no filters are on, it'll turn all filters on except the clicked one
+    // when only one filter is not on, and any are clicked, it'll turn all filters off
+    // when two or fewer filters are not on, and the one clicked is no on it'll turn all filters on except the clicked one
+    // when two or fewer filters are not on, and the one clicked is on, it'll turn all filters off
+
+    let numberedArray = e.data.map((_elem: any, index: any) => index);
+    console.log("tempFilteredIndexes -1", filteredColumnIndexes);
+    if (filteredColumnIndexes.includes(e.curveNumber)) {
+      console.log("tempFilteredIndexes 0", []);
+      filterData(e.data, []);
+    } else if (filteredColumnIndexes.length < e.data.length - 1) {
+      const temp = numberedArray.filter((x: any) => x !== e.curveNumber);
+      console.log("tempFilteredIndexes 1", temp);
+      filterData(e.data, temp);
+    } else {
+      console.log("tempFilteredIndexes 3", []);
+      filterData(e.data, []);
+    }
+  };
+
+  const filterData = (data: any[], indexes: number[]) => {
     let tempChartDefinition = { ...chartDefinition };
-    tempChartDefinition.data = e.data.map((element: any, index: number) => {
-      if (index !== e.curveNumber) {
-        if (element?.visible === "legendonly") {
-          console.log("returning null: " + element?.visible);
-          return null;
-        }
-        console.log("returning non active");
-        return element;
+    tempChartDefinition.data = data.map((element: any, index: number) => {
+      if (indexes.includes(index)) {
+        return null;
       }
-      if (element?.visible === "legendonly") {
-        console.log("returning visible: " + element?.visible);
-        return element;
-      }
-      return null;
+      return element;
     });
     tempChartDefinition.data = tempChartDefinition.data.filter(
       (element: any) => element !== null,
     );
-
-    console.log(tempChartDefinition);
+    filteredColumnIndexes = indexes;
+    setFiltersIndex(filteredColumnIndexes);
     setTableChartDefinititon(tempChartDefinition);
   };
 
@@ -139,6 +176,7 @@ export const ActualChart = ({
 
   return (
     <div id="chart">
+      {/* {filtersIndex.toString()} */}
       {chartType !== "table" ? (
         <Tabs>
           <Tab title="Visualisation">
@@ -150,6 +188,7 @@ export const ActualChart = ({
                   <PlotlyBasic
                     chartDefinition={chartDefinition}
                     onLegendClick={onLegendClick}
+                    onLegendDoubleClick={onLegendDoubleClick}
                   />
                 )
               ) : null}
