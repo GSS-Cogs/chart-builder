@@ -135,9 +135,9 @@ export const ActualChart = ({
         />
       )}
       <div className="non-content">
-        <h3 className="govuk-heading-s govuk-!-margin-bottom-2 non-content cb-download">
+        <h4 className="govuk-heading-s govuk-!-margin-bottom-2 non-content cb-download">
           Download
-        </h3>
+        </h4>
         <div id="chart-download" className="">
           <button
             className="govuk-button govuk-button--secondary non-content govuk-!-margin-right-3 cb-download-button"
