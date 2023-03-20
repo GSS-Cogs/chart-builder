@@ -52,14 +52,16 @@ const getChartData = (
     categoryValue: string,
     precision: number,
     isAStackedBar: boolean,
+    hoverInfoUnit: any,
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
     console.log(precision);
-    if (isAStackedBar) template += `Total: %{customdata:.${precision}f}<br>`;
+    if (isAStackedBar)
+      template += `Total: %{customdata:.${precision}f}${hoverInfoUnit}<br>`;
 
     return (
       template +
-      `${series.name}: %{${seriesValue}:.${precision}f}<extra></extra>`
+      `${series.name}: %{${seriesValue}:.${precision}f}${hoverInfoUnit}<extra></extra>`
     );
   };
 
@@ -126,6 +128,7 @@ const getChartData = (
         isHorizontal ? "y" : "x",
         yHoverInfoPrecision,
         isAStackedBar,
+        chartProps.Interactivity.hoverInfoUnit,
       );
       trace = { ...trace, hovertemplate };
     }
