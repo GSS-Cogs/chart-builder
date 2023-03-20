@@ -55,7 +55,6 @@ const getChartData = (
     hoverInfoUnit: any,
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
-    console.log(precision);
     if (isAStackedBar)
       template += `Total: %{customdata:.${precision}f}${hoverInfoUnit}<br>`;
 
@@ -80,7 +79,6 @@ const getChartData = (
     chartProps.orientationProperties.orientation === "horizontal";
 
   // Iterate the available series and create a trace for each
-  console.log("allYSeries", allYSeries);
   allYSeries.map((series: any, seriesIndex: number) => {
     // If it's a stacked bar chart then calculate the cross-series totals
     if (isAStackedBar) {
@@ -103,7 +101,6 @@ const getChartData = (
     const yHoverInfoPrecision = parseInt(
       chartProps.yAxisProperties.yHoverInfoPrecision as string,
     );
-    console.log(totals);
     if (isHorizontal) {
       trace = {
         x: series.values,
@@ -153,7 +150,6 @@ const getChartData = (
     };
     isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });
-  console.log("traces", traces);
   return traces;
 };
 
