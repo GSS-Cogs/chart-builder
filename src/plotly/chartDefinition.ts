@@ -35,7 +35,7 @@ const updateChartDefinition = (
     layout = { ...commonLayout, ...compactBarLayout };
   }
 
-  return { data, layout, config , chartType};
+  return { data, layout, config, chartType };
 };
 
 const getChartData = (
@@ -54,7 +54,7 @@ const getChartData = (
     isAStackedBar: boolean,
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
-
+    console.log(precision);
     if (isAStackedBar) template += `Total: %{customdata:.${precision}f} <br>`;
 
     return (
@@ -78,6 +78,7 @@ const getChartData = (
     chartProps.orientationProperties.orientation === "horizontal";
 
   // Iterate the available series and create a trace for each
+  console.log("allYSeries", allYSeries);
   allYSeries.map((series: any, seriesIndex: number) => {
     // If it's a stacked bar chart then calculate the cross-series totals
     if (isAStackedBar) {
@@ -87,10 +88,12 @@ const getChartData = (
         // Get the current X and Y values in the (potentially sparse) series
         const xValue = currentXValues[i];
         const yValue = series.values[i];
-
         // Find which index to update in the (non sparse) totals array.
         const indexToUpdate = uniqueXValues.indexOf(xValue);
-        totals[indexToUpdate] += parseFloat(yValue);
+
+        // yValue over 3 digits will be a string and need to have their ','s removed
+        const formattedYValue = yValue.toString().replace(/,/g, "");
+        totals[indexToUpdate] += parseFloat(formattedYValue);
       }
     }
     let trace: {};
@@ -98,7 +101,7 @@ const getChartData = (
     const yHoverInfoPrecision = parseInt(
       chartProps.yAxisProperties.yHoverInfoPrecision as string,
     );
-
+    console.log(totals);
     if (isHorizontal) {
       trace = {
         x: series.values,
