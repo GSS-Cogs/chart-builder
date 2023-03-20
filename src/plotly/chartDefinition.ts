@@ -136,8 +136,7 @@ const getChartData = (
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: chartProps?.LegendSection?.mode ?? "lines",
-      hoverinfo: "none",
-      hoverlabel: { bgcolor: "#01454c" },
+      hoverinfo: chartProps.Interactivity.interactivity,
       marker: { color: series.color },
       line: {
         color: series.color,
