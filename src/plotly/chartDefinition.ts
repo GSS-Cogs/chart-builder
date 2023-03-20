@@ -55,7 +55,7 @@ const getChartData = (
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
     console.log(precision);
-    if (isAStackedBar) template += `Total: %{customdata:.${precision}f} <br>`;
+    if (isAStackedBar) template += `Total: %{customdata:.${precision}f}<br>`;
 
     return (
       template +
@@ -108,13 +108,6 @@ const getChartData = (
         y: xValues[seriesIndex].values,
         orientation: "h",
         customdata: totals,
-        hovertemplate: getHoverTemplate(
-          series,
-          "x",
-          "y",
-          yHoverInfoPrecision,
-          isAStackedBar,
-        ),
       };
     } else {
       trace = {
@@ -122,14 +115,19 @@ const getChartData = (
         y: series.values,
         orientation: "v",
         customdata: totals,
-        hovertemplate: getHoverTemplate(
-          series,
-          "y",
-          "x",
-          yHoverInfoPrecision,
-          isAStackedBar,
-        ),
       };
+    }
+
+    // if interactivity is enabled show hover text over chart
+    if (chartProps.Interactivity.interactivity === "x+y") {
+      const hovertemplate = getHoverTemplate(
+        series,
+        isHorizontal ? "x" : "y",
+        isHorizontal ? "y" : "x",
+        yHoverInfoPrecision,
+        isAStackedBar,
+      );
+      trace = { ...trace, hovertemplate };
     }
 
     const newSeries = {
@@ -138,7 +136,8 @@ const getChartData = (
       name: series.name,
       type: chartType === "stacked bar" ? "bar" : chartType,
       mode: chartProps?.LegendSection?.mode ?? "lines",
-      hoverinfo: chartProps.Interactivity.interactivity,
+      hoverinfo: "none",
+      hoverlabel: { bgcolor: "#01454c" },
       marker: { color: series.color },
       line: {
         color: series.color,
@@ -151,6 +150,7 @@ const getChartData = (
     };
     isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
   });
+  console.log("traces", traces);
   return traces;
 };
 
