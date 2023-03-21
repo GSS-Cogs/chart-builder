@@ -32,15 +32,13 @@ export const ActualChart = ({
   selectedColumns,
 }: any): JSX.Element => {
   const [tableChartDefinition, setTableChartDefinititon] = useState({});
-  const [filteredIndexesState, setFilteredIndexesState] = useState<number[]>(
-    [],
-  );
-  let filteredColumnIndexes: number[] = filteredIndexesState;
-  // filteredColumnIndexes allows us to change the data without a rerender
+  const [hiddenIndexesState, setHiddenIndexesState] = useState<number[]>([]);
+  let hiddenColumnIndexes: number[] = hiddenIndexesState;
+  // hiddenColumnIndexes allows us to change the data without a rerender
   // but also a by product of clicking the plotly legend doesn't set state
-  // filteredIndexesState is used to keep state when switching tabs
-  // filteredIndexesState is also set when switching to tabular view
-  // and will be set with the latest filteredColumnIndexes
+  // hiddenIndexesState is used to keep state when switching tabs
+  // hiddenIndexesState is also set when switching to tabular view
+  // and will be set with the latest hiddenColumnIndexes
 
   useEffect(() => {
     setTableChartDefinititon(chartDefinition);
@@ -86,40 +84,40 @@ export const ActualChart = ({
   };
 
   const onLegendClick = (e: any) => {
-    // check if the passed 'e.curveNumber' is in filteredColumnIndexes
-    // if it is, that means its filter is on and should be turned off
-    // if it isn't it means its filter should be turned on
+    // check if 'e.curveNumber' is in hiddenColumnIndexes
+    // if it is, that means its currently hidden and needs to be removed and made visible
+    // if it isn't, that means its currently visible and needs to be added and hidden
 
-    // e.data shows what filters are applied BUT it is showing the state at time before
-    // the clicking so can't be used for current filters applied
-    // this causes more problems with onLegendDoubleClick where multiple filters can be applied
-    // and turned off on a single trigger
+    // e.data shows what series are visible BUT it is showing the state at the time before
+    // the clicking so can't be used for current hidden/visible series
+    // this causes more problems with onLegendDoubleClick where multiple series can be
+    // made hidden/visible in one trigger
 
-    if (filteredColumnIndexes.includes(e.curveNumber)) {
-      const index = filteredColumnIndexes.indexOf(e.curveNumber);
+    if (hiddenColumnIndexes.includes(e.curveNumber)) {
+      const index = hiddenColumnIndexes.indexOf(e.curveNumber);
       if (index > -1) {
-        filteredColumnIndexes.splice(index, 1);
+        hiddenColumnIndexes.splice(index, 1);
       }
     } else {
-      filteredColumnIndexes.push(e.curveNumber);
+      hiddenColumnIndexes.push(e.curveNumber);
     }
-    filterData(e.data, filteredColumnIndexes);
+    filterData(e.data, hiddenColumnIndexes);
   };
 
   const onLegendDoubleClick = (e: any) => {
     // a note on how plotly legend double click works
-    // when no filters are on, it'll turn all filters on except the clicked one
-    // when only one filter is not on, and any are clicked, it'll turn all filters off
-    // when two or fewer filters are not on, and the one clicked is no on it'll turn all filters on except the clicked one
-    // when two or fewer filters are not on, and the one clicked is on, it'll turn all filters off
+    // when all series are visible, it will hide all series except the one clicked on
+    // when only one series is visible, and any are clicked, it will make all series visible
+    // when two or fewer series are hidden, and the one clicked is visible, it will hide all series except the one clicked on
+    // when two or fewer series are hidden, and the one clicked is hidden, it will make all series visible
 
-    // to keep track of what filters are applied we have an array filteredColumnIndexes
+    // to keep track of what series are hidden we have an array hiddenColumnIndexes
     // this has the 'curveNumber' of each data series
 
     let numberedArray = e.data.map((_elem: any, index: any) => index);
-    if (filteredColumnIndexes.includes(e.curveNumber)) {
+    if (hiddenColumnIndexes.includes(e.curveNumber)) {
       filterData(e.data, []);
-    } else if (filteredColumnIndexes.length < e.data.length - 1) {
+    } else if (hiddenColumnIndexes.length < e.data.length - 1) {
       const temp = numberedArray.filter((x: any) => x !== e.curveNumber);
       filterData(e.data, temp);
     } else {
@@ -131,10 +129,10 @@ export const ActualChart = ({
     const filteredData = data.filter(
       (_element: any, index: number) => !indexes.includes(index),
     );
-    // this setting of filteredColumnIndex is here because onLegendClick fires twice when
+    // this setting of hiddenColumnIndexes is here because onLegendClick fires twice when
     // onLegendDoubleClick is trigged, it is to make sure the correct indexes are assigned
-    filteredColumnIndexes = [...indexes];
-    setFilteredIndexesState(filteredColumnIndexes);
+    hiddenColumnIndexes = [...indexes];
+    setHiddenIndexesState(hiddenColumnIndexes);
     setTableChartDefinititon({ ...chartDefinition, data: filteredData });
   };
 
