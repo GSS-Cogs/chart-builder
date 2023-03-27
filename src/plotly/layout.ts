@@ -77,7 +77,16 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
       },
       ...yAxisTickConfig,
     },
-    legend: { orientation: "h", y: chartProps.LegendSection.xAxisOffset },
+    legend: {
+      orientation: "h",
+      xanchor: "center",
+      x: 0.48,
+      y: chartProps.LegendSection.xAxisOffset,
+      font: {
+        family: "GDSTransportWebsite",
+        size: 16,
+      },
+    },
     showlegend: chartProps.LegendSection.showLegend,
   };
 

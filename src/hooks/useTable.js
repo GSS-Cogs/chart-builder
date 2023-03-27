@@ -56,7 +56,11 @@ function sortFunction(a, b) {
 }
 
 const configureData = (data, selectedColumns, chartType) => {
-  const altChartType = data[0].type; // temp fix for missing chartType
+  if (data.length === 0) {
+    return [[], []];
+  }
+
+  const altChartType = data?.[0].type; // temp fix for missing chartType
   let jarray = [];
   let headers = [];
   if (altChartType === "choropleth") {

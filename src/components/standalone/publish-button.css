@@ -9,3 +9,8 @@
   border-style: none;
   cursor: pointer;
 }
+
+.cb-download {
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+}

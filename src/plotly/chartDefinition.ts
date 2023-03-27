@@ -35,8 +35,9 @@ const updateChartDefinition = (
     const commonLayout = getCommonLayout(chartProps);
     layout = { ...commonLayout, ...compactBarLayout };
   }
+  const exploreDataLink = chartProps.exploreDataProperties.exploreDataLink;
 
-  return { data, layout, config, chartType };
+  return { data, layout, config, chartType, exploreDataLink };
 };
 
 const getChartData = (

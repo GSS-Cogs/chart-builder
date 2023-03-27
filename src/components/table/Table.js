@@ -164,6 +164,19 @@ const Table = ({ data, selectedColumns, rowsPerPage, chartType }) => {
 
   useEffect(() => {}, []);
 
+  if (data.length === 0) {
+    return (
+      <div className={styles.tableWrapper}>
+        <div className={styles.table}>
+          <div className={styles.emptyTableText}>No chart data selected</div>
+          <div className={styles.emptyTableSubText}>
+            Have you got all filters turned on?
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className={styles.tableWrapper}>
