@@ -26,3 +26,15 @@ ul {
   margin-left: 20px;
   cursor: pointer;
 }
+
+.prompt-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.prompt-text {
+  color: #b1b4b6;
+  font-size: 16px;
+}
