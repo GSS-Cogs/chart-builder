@@ -1,11 +1,13 @@
 import React, { ReactElement, useState } from "react";
 import TabTitle from "./TabTitle";
+import DataLink from "../button/DataLink";
 
 type Props = {
+  link: string;
   children: ReactElement[];
 };
 
-const Tabs: React.FC<Props> = ({ children }) => {
+const Tabs: React.FC<Props> = ({ link, children }) => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   return (
@@ -14,6 +16,7 @@ const Tabs: React.FC<Props> = ({ children }) => {
         style={{
           marginBottom: 40,
           display: "flex",
+          flexDirection: "row",
           listStyle: "none",
         }}
       >
@@ -26,6 +29,7 @@ const Tabs: React.FC<Props> = ({ children }) => {
             setSelectedTab={setSelectedTab}
           />
         ))}
+        <DataLink text={"Explore the data"} link={link} />
       </ul>
       {children[selectedTab]}
     </div>

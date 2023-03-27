@@ -1,3 +1,5 @@
+import { INTERVAL_STYLES } from "../constants/Chart-constants";
+
 interface DataColumn {
   name: string;
   values: string[] | number[];
@@ -12,7 +14,11 @@ interface SelectedDimension {
   name: string;
   displayName: string;
   color: string;
+  intervalColor: string;
   dashStyle: "none" | "dash" | "dot";
+  intervalStyle: typeof INTERVAL_STYLES[number];
+  lowerBoundSeries: string;
+  upperBoundSeries: string;
 }
 
 interface DataSelection {
@@ -47,6 +53,13 @@ export interface ChartPropertyRadio<Value> extends ChartProperty<Value> {
   options: string[];
 }
 
+export interface ChartPropertyRange<Value> extends ChartProperty<Value> {
+  type: "range";
+  min: number;
+  max: number;
+  step: number;
+}
+
 export interface ChartPropertyCheckbox extends ChartProperty<boolean> {
   type: "checkbox";
 }
@@ -58,7 +71,8 @@ export interface ChartPropertyText<Value> extends ChartProperty<Value> {
 export type ChartPropertySchema =
   | ChartPropertyRadio<number | string>
   | ChartPropertyCheckbox
-  | ChartPropertyText<number | string>;
+  | ChartPropertyText<number | string>
+  | ChartPropertyRange<string>;
 
 interface ChartPropertySchemaSection {
   name: string;

@@ -1,0 +1,17 @@
+.data-link {
+  color: #1d70b8;
+  font-size: 19px;
+  font-weight: bold;
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.data-link-wrapper {
+  width: 70%;
+  align-items: center;
+  justify-content: end;
+  display: flex;
+}

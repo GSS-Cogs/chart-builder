@@ -56,10 +56,13 @@ function sortFunction(a, b) {
 }
 
 const configureData = (data, selectedColumns, chartType) => {
-  const altChartType = data[0].type; // temp fix for missing chartType
+  if (data.length === 0) {
+    return [[], []];
+  }
+
+  const altChartType = data?.[0].type; // temp fix for missing chartType
   let jarray = [];
   let headers = [];
-
   if (altChartType === "choropleth") {
     if (data[0].z.length > 0) {
       const prepArray = data[0].text.map((item) => [item]);
@@ -80,13 +83,25 @@ const configureData = (data, selectedColumns, chartType) => {
     } else {
       const prepXValuesArray = allXValues.map((item) => [item]);
       jarray = prepXValuesArray;
-
       for (let i = 0; i < data.length; i++) {
-        jarray = combineSparseDataArrays(
-          jarray,
-          data[i][firstColumn],
-          data[i][seriesColumns],
-        );
+        if (data[i]?.confidence === true) {
+          const half = Math.ceil(data[i][seriesColumns].length / 2);
+
+          const firstHalfY = data[i][seriesColumns].slice(0, half);
+          const secondHalfY = data[i][seriesColumns].slice(half);
+
+          const firstHalfX = data[i][firstColumn].slice(0, half);
+          const secondHalfX = data[i][firstColumn].slice(half);
+
+          jarray = combineSparseDataArrays(jarray, firstHalfX, firstHalfY);
+          jarray = combineSparseDataArrays(jarray, secondHalfX, secondHalfY);
+        } else {
+          jarray = combineSparseDataArrays(
+            jarray,
+            data[i][firstColumn],
+            data[i][seriesColumns],
+          );
+        }
       }
 
       headers = [selectedColumns?.[0]].concat(

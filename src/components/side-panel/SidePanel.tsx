@@ -2,6 +2,7 @@ import { useContext } from "react";
 import ChartContext, { ChartContextProps } from "../../context/ChartContext";
 import "./side-panel.css";
 import Checkbox from "./property-inputs/Checkbox";
+import Range from "./property-inputs/Range";
 import RadioButtonGroup from "./property-inputs/RadioButtonGroup";
 import Textbox from "./property-inputs/Textbox";
 import TextArea from "./property-inputs/TextArea";
@@ -21,6 +22,13 @@ interface ChartPropertyComponentProps {
   // value according to property.type.
   value: any;
 }
+const componentMap = {
+  range: Range,
+  radio: RadioButtonGroup,
+  checkbox: Checkbox,
+  text: Textbox,
+  "text-multi": TextArea,
+} as unknown as ChartPropertySchema;
 
 function ChartPropertyComponent({
   sectionName,
@@ -28,50 +36,24 @@ function ChartPropertyComponent({
   updateProperty,
   value,
 }: ChartPropertyComponentProps): JSX.Element {
-  switch (property.type) {
-    case "checkbox":
+  for (const [key, comp] of Object.entries(componentMap)) {
+    if (key === property.type) {
+      const PropertyComponent = comp;
       return (
-        <Checkbox
+        <PropertyComponent
           property={property}
           sectionName={sectionName}
           updateProperty={updateProperty}
           value={value}
         />
       );
-    case "radio":
-      return (
-        <RadioButtonGroup
-          property={property}
-          sectionName={sectionName}
-          updateProperty={updateProperty}
-          value={value}
-        />
-      );
-    case "text":
-      return (
-        <Textbox
-          property={property}
-          sectionName={sectionName}
-          updateProperty={updateProperty}
-          value={value}
-        />
-      );
-    case "text-multi":
-      return (
-        <TextArea
-          property={property}
-          sectionName={sectionName}
-          updateProperty={updateProperty}
-          value={value}
-        />
-      );
-    default:
-      // noinspection TypeScriptUnresolvedVariable
-      return (
-        // @ts-ignore
-        <div>No control registered for properties of type {property.type}</div>
-      );
+    }
   }
+  return (
+    // noinspection TypeScriptUnresolvedVariable
+    // @ts-ignore
+    <div>No control registered for properties of type {property.type}</div>
+  );
 }
 
 interface SidePanelProps {
@@ -92,7 +74,6 @@ const SidePanel = ({
 
   const isACompactBar =
     chartProperties?.chartTypes?.chartType === "Compact Bar";
-
   const isAutoXTickMode =
     chartProperties.xAxisProperties.xAxisTickMode === "auto";
 

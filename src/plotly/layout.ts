@@ -48,11 +48,11 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
     chartProps,
     data,
   );
-
-  const chartLayout = {
+  let chartLayout = {
     barmode,
     xaxis: {
       autorange: true,
+      range: [0, 10],
       type: xAxisType,
       rangemode: chartProps.xAxisProperties.xAxisRangeMode,
       fixedrange: true, // prevents the user from zooming in/out
@@ -77,9 +77,26 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
       },
       ...yAxisTickConfig,
     },
-    legend: { orientation: "h", y: chartProps.LegendSection.xAxisOffset },
+    legend: {
+      orientation: "h",
+      xanchor: "center",
+      x: 0.48,
+      y: chartProps.LegendSection.xAxisOffset,
+      font: {
+        family: "GDSTransportWebsite",
+        size: 16,
+      },
+    },
     showlegend: chartProps.LegendSection.showLegend,
   };
+
+  if (chartProps.chartTypes.chartType === "Line") {
+    // this is to stop the autorange adding white space to the left and right of line charts
+    // when confidence intervals and/or error bars are on
+    chartLayout.xaxis.autorange = false;
+    chartLayout.xaxis.range = [-0.1, data[0].x.length - 0.9];
+  }
+
   return { ...commonLayout, ...chartLayout };
 };
 
