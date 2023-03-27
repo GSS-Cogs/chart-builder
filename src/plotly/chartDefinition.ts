@@ -5,6 +5,8 @@ import { GeoJSON } from "geojson";
 import { ChartPropertyValues } from "../context/ChartContext";
 import { getCompactBarTraces, getCompactBarLayout } from "./compactBarChart";
 
+const NONE_INTERACTIVITY_MODE = "none";
+
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
   chartData: any,
@@ -118,7 +120,8 @@ const getChartData = (
     }
 
     // if interactivity is enabled show hover text over chart
-    if (chartProps.Interactivity.interactivity === "x+y") {
+    console.log("interactivity", chartProps.Interactivity.interactivity);
+    if (chartProps.Interactivity.interactivity !== NONE_INTERACTIVITY_MODE) {
       const hovertemplate = getHoverTemplate(
         series,
         isHorizontal ? "x" : "y",
@@ -187,7 +190,8 @@ const getMapData = (
 
   // if interactivity is enabled show hover text over map regions
   // we use a custom hover template so that the geography_uri doesn't show up in the hover text
-  if (chartProps.Interactivity.interactivity === "x+y") {
+
+  if (chartProps.Interactivity.interactivity !== NONE_INTERACTIVITY_MODE) {
     const hovertemplate = {
       hovertemplate: ` %{text} <br> %{z}${chartProps.Interactivity.hoverInfoUnit} <extra></extra> `,
     };
