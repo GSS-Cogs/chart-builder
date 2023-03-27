@@ -12,4 +12,11 @@ const colors = [
 
 const dashStyles = ["none", "dot", "dash"];
 
-export { colors, dashStyles };
+const getIsIntervalData = (series: any) => {
+  return (
+    series.filter((x: { confidence: boolean }) => x?.confidence === true)
+      .length > 0
+  );
+};
+
+export { colors, dashStyles, getIsIntervalData };

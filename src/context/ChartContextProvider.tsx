@@ -28,7 +28,8 @@ import {
   getDistinctValues,
 } from "../helper-functions/array-helpers";
 
-import { NO_FILE_SELECTED_TEXT } from "../components/constants/Common-constants";
+import { NO_FILE_SELECTED_TEXT } from "../constants/Common-constants";
+import { INTERVAL_STYLES } from "../constants/Chart-constants";
 import updateChartDefinition from "../plotly/chartDefinition";
 
 interface Props {
@@ -138,12 +139,10 @@ function useTidyDataToChartContext(
     // and extract from the source tidy data the sparse X and Y values for each series
     for (let i = 0; i < allSeries.length; i++) {
       const series = allSeries[i];
-
       // Filter the tidyData to get the current series
       const currentSeries = tidyData.filter(
         (row: any) => row[dimension] === series.name,
       );
-
       // Extract the X and Y values from columns into arrays
       const xArray = arrayColumn(currentSeries, category);
       const yArray = arrayColumn(currentSeries, measure);
@@ -155,16 +154,66 @@ function useTidyDataToChartContext(
       };
 
       // The Y values object also passes through the user specified series properies from dataSelection
-      const yValues = {
+      let yValues = {
         name: series.displayName,
         color: series.color,
         dashStyle: series.dashStyle,
+        intervalStyle: INTERVAL_STYLES[0].toString(),
         values: yArray,
       };
 
-      // Push the X and Y values objects to the chart data
-      newChartData.xValues.push(xValues);
-      newChartData.yValues.push(yValues);
+      if (
+        series.intervalStyle !== INTERVAL_STYLES[0] &&
+        series.lowerBoundSeries !== "" &&
+        series.upperBoundSeries !== ""
+      ) {
+        // Extract the X and Y values from columns into arrays
+        const xLowerArray = arrayColumn(currentSeries, category);
+        const yLowerArray = arrayColumn(currentSeries, series.lowerBoundSeries);
+
+        const xUpperArray = arrayColumn(currentSeries, category).reverse();
+        const yUpperArray = arrayColumn(
+          currentSeries,
+          series.upperBoundSeries,
+        ).reverse();
+
+        // Create X and Y values objects for the current series
+        const xConfidenceValues = {
+          name: category,
+          values: xLowerArray.concat(xUpperArray),
+        };
+
+        // The Y values object also passes through the user specified series properies from dataSelection
+        const newColor = series.intervalColor
+          .replace(")", ", 0.2)")
+          .replace("rgb", "rgba");
+        const yConfidenceValues = {
+          name: "Confidence Intervals",
+          color: newColor,
+          dashStyle: series.dashStyle,
+          intervalStyle:
+            series.intervalStyle === INTERVAL_STYLES[2]
+              ? "error-skip"
+              : series.intervalStyle,
+          values: yLowerArray.concat(yUpperArray),
+        };
+
+        yValues.intervalStyle =
+          series.intervalStyle === INTERVAL_STYLES[2]
+            ? INTERVAL_STYLES[2]
+            : INTERVAL_STYLES[0];
+        // Push the X and Y values objects to the chart data
+        newChartData.xValues.push(xValues);
+        newChartData.yValues.push(yValues);
+
+        // Push the confidence X and Y values objects to the chart data
+        newChartData.xValues.push(xConfidenceValues);
+        newChartData.yValues.push(yConfidenceValues);
+      } else {
+        // Push the X and Y values objects to the chart data
+        newChartData.xValues.push(xValues);
+        newChartData.yValues.push(yValues);
+      }
     }
 
     return newChartData;
@@ -342,6 +391,7 @@ export function useChartContext(state: ChartContextState): ChartContextProps {
       mapData,
       geoJson,
     );
+
     setChartDefinition(chartDefinition);
   }, [chartData, mapData, geoJson, chartProperties]);
 

@@ -3,7 +3,7 @@ import ChartContext, { ChartContextProps } from "../../../context/ChartContext";
 import StandaloneContext, {
   StandaloneContextProps,
 } from "../../../context/StandaloneContext";
-import { NO_FILE_SELECTED_TEXT } from "../../constants/Common-constants";
+import { NO_FILE_SELECTED_TEXT } from "../../../constants/Common-constants";
 
 const DataSource = () => {
   const {
