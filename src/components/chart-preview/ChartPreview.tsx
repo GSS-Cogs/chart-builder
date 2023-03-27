@@ -57,7 +57,7 @@ export const ActualChart = ({
       </div>
     );
 
-  const { data, chartType, layout } = chartDefinition;
+  const { data, chartType, layout, exploreDataLink } = chartDefinition;
   const altChartType = data?.[0]?.type;
 
   // Incrementing the datarevision forces plotly to update the chart.
@@ -176,7 +176,7 @@ export const ActualChart = ({
   return (
     <div id="chart">
       {chartType !== "table" ? (
-        <Tabs>
+        <Tabs link={exploreDataLink}>
           <Tab title="Visualisation">
             <Suspense fallback={<div />}>
               {isClientSideRender ? (
