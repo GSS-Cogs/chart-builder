@@ -6,6 +6,8 @@ import { ChartPropertyValues } from "../context/ChartContext";
 import { getCompactBarTraces, getCompactBarLayout } from "./compactBarChart";
 import { INTERVAL_STYLES } from "../constants/Chart-constants";
 
+const NONE_INTERACTIVITY_MODE = "none";
+
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
   chartData: any,
@@ -54,14 +56,15 @@ const getChartData = (
     categoryValue: string,
     precision: number,
     isAStackedBar: boolean,
+    hoverInfoUnit: any,
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
-
-    if (isAStackedBar) template += `Total: %{customdata:.${precision}f} <br>`;
+    if (isAStackedBar)
+      template += `Total: %{customdata:.${precision}f}${hoverInfoUnit}<br>`;
 
     return (
       template +
-      `${series.name}: %{${seriesValue}:.${precision}f}<extra></extra>`
+      `${series.name}: %{${seriesValue}:.${precision}f}${hoverInfoUnit}<extra></extra>`
     );
   };
 
@@ -92,10 +95,12 @@ const getChartData = (
         // Get the current X and Y values in the (potentially sparse) series
         const xValue = currentXValues[i];
         const yValue = series.values[i];
-
         // Find which index to update in the (non sparse) totals array.
         const indexToUpdate = uniqueXValues.indexOf(xValue);
-        totals[indexToUpdate] += parseFloat(yValue);
+
+        // yValue over 3 digits will be a string and need to have their ','s removed
+        const formattedYValue = yValue.toString().replace(/,/g, "");
+        totals[indexToUpdate] += parseFloat(formattedYValue);
       }
     }
     let trace: {};
@@ -103,20 +108,12 @@ const getChartData = (
     const yHoverInfoPrecision = parseInt(
       chartProps.yAxisProperties.yHoverInfoPrecision as string,
     );
-
     if (isHorizontal) {
       trace = {
         x: series.values,
         y: xValues[seriesIndex].values,
         orientation: "h",
         customdata: totals,
-        hovertemplate: getHoverTemplate(
-          series,
-          "x",
-          "y",
-          yHoverInfoPrecision,
-          isAStackedBar,
-        ),
       };
     } else {
       trace = {
@@ -124,16 +121,22 @@ const getChartData = (
         y: series.values,
         orientation: "v",
         customdata: totals,
-        hovertemplate: getHoverTemplate(
-          series,
-          "y",
-          "x",
-          yHoverInfoPrecision,
-          isAStackedBar,
-        ),
       };
     }
     let newSeries = {};
+
+    // if interactivity is enabled show hover text over chart
+    if (chartProps.Interactivity.interactivity !== NONE_INTERACTIVITY_MODE) {
+      const hovertemplate = getHoverTemplate(
+        series,
+        isHorizontal ? "x" : "y",
+        isHorizontal ? "y" : "x",
+        yHoverInfoPrecision,
+        isAStackedBar,
+        chartProps.Interactivity.hoverInfoUnit,
+      );
+      trace = { ...trace, hovertemplate };
+    }
 
     // if intervalStyle has been set to 'Intervals' create to different newSeries to the regular one
     // unlike error bars which can be set as Plotly properties, intervals need to be in their own series
@@ -244,7 +247,8 @@ const getMapData = (
 
   // if interactivity is enabled show hover text over map regions
   // we use a custom hover template so that the geography_uri doesn't show up in the hover text
-  if (chartProps.Interactivity.interactivity === "x+y") {
+
+  if (chartProps.Interactivity.interactivity !== NONE_INTERACTIVITY_MODE) {
     const hovertemplate = {
       hovertemplate: ` %{text} <br> %{z}${chartProps.Interactivity.hoverInfoUnit} <extra></extra> `,
     };
