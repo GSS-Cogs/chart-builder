@@ -4,6 +4,9 @@ import { divergingColorScale, sequentialColorScale } from "./colorScales";
 import { GeoJSON } from "geojson";
 import { ChartPropertyValues } from "../context/ChartContext";
 import { getCompactBarTraces, getCompactBarLayout } from "./compactBarChart";
+import { INTERVAL_STYLES } from "../constants/Chart-constants";
+
+const NONE_INTERACTIVITY_MODE = "none";
 
 const updateChartDefinition = (
   chartProps: ChartPropertyValues,
@@ -34,8 +37,9 @@ const updateChartDefinition = (
     const commonLayout = getCommonLayout(chartProps);
     layout = { ...commonLayout, ...compactBarLayout };
   }
+  const exploreDataLink = chartProps.exploreDataProperties.exploreDataLink;
 
-  return { data, layout, config , chartType};
+  return { data, layout, config, chartType, exploreDataLink };
 };
 
 const getChartData = (
@@ -52,21 +56,21 @@ const getChartData = (
     categoryValue: string,
     precision: number,
     isAStackedBar: boolean,
+    hoverInfoUnit: any,
   ) => {
     let template = `<b>%{${categoryValue}}</b> <br>`;
-
-    if (isAStackedBar) template += `Total: %{customdata:.${precision}f} <br>`;
+    if (isAStackedBar)
+      template += `Total: %{customdata:.${precision}f}${hoverInfoUnit}<br>`;
 
     return (
       template +
-      `${series.name}: %{${seriesValue}:.${precision}f}<extra></extra>`
+      `${series.name}: %{${seriesValue}:.${precision}f}${hoverInfoUnit}<extra></extra>`
     );
   };
 
   const isAStackedBar = chartType === "stacked bar";
   const xValues = chartData?.xValues;
   const allYSeries = chartData?.yValues;
-
   // Get the unique X values
   const allXValues = xValues.map((obj: any) => obj.values);
   const uniqueXValues = Array.from(new Set(allXValues.flat()));
@@ -79,18 +83,24 @@ const getChartData = (
 
   // Iterate the available series and create a trace for each
   allYSeries.map((series: any, seriesIndex: number) => {
+    if (series.intervalStyle === "error-skip") {
+      return;
+    }
+
     // If it's a stacked bar chart then calculate the cross-series totals
     if (isAStackedBar) {
       const currentXValues = xValues[seriesIndex].values;
-      // // Iterate through each of the X values in the current (potentially sparse) series
+      // Iterate through each of the X values in the current (potentially sparse) series
       for (let i = 0; i < currentXValues.length; i++) {
         // Get the current X and Y values in the (potentially sparse) series
         const xValue = currentXValues[i];
         const yValue = series.values[i];
-
         // Find which index to update in the (non sparse) totals array.
         const indexToUpdate = uniqueXValues.indexOf(xValue);
-        totals[indexToUpdate] += parseFloat(yValue);
+
+        // yValue over 3 digits will be a string and need to have their ','s removed
+        const formattedYValue = yValue.toString().replace(/,/g, "");
+        totals[indexToUpdate] += parseFloat(formattedYValue);
       }
     }
     let trace: {};
@@ -98,20 +108,12 @@ const getChartData = (
     const yHoverInfoPrecision = parseInt(
       chartProps.yAxisProperties.yHoverInfoPrecision as string,
     );
-
     if (isHorizontal) {
       trace = {
         x: series.values,
         y: xValues[seriesIndex].values,
         orientation: "h",
         customdata: totals,
-        hovertemplate: getHoverTemplate(
-          series,
-          "x",
-          "y",
-          yHoverInfoPrecision,
-          isAStackedBar,
-        ),
       };
     } else {
       trace = {
@@ -119,37 +121,96 @@ const getChartData = (
         y: series.values,
         orientation: "v",
         customdata: totals,
-        hovertemplate: getHoverTemplate(
-          series,
-          "y",
-          "x",
-          yHoverInfoPrecision,
-          isAStackedBar,
-        ),
       };
     }
+    let newSeries = {};
 
-    const newSeries = {
-      ...trace,
-      stackgroup: chartType === "stacked filled area" ? "one" : undefined,
-      name: series.name,
-      type: chartType === "stacked bar" ? "bar" : chartType,
-      mode: chartProps?.LegendSection?.mode ?? "lines",
-      hoverinfo: chartProps.Interactivity.interactivity,
-      marker: { color: series.color },
-      line: {
-        color: series.color,
-        dash: series.dashStyle,
-      },
-      fill:
-        chartType === "filled area" || chartType === "stacked filled area"
-          ? "tonexty"
-          : "none",
-    };
-    isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
+    // if interactivity is enabled show hover text over chart
+    if (chartProps.Interactivity.interactivity !== NONE_INTERACTIVITY_MODE) {
+      const hovertemplate = getHoverTemplate(
+        series,
+        isHorizontal ? "x" : "y",
+        isHorizontal ? "y" : "x",
+        yHoverInfoPrecision,
+        isAStackedBar,
+        chartProps.Interactivity.hoverInfoUnit,
+      );
+      trace = { ...trace, hovertemplate };
+    }
+
+    // if intervalStyle has been set to 'Intervals' create to different newSeries to the regular one
+    // unlike error bars which can be set as Plotly properties, intervals need to be in their own series
+    // this series is double the length of a regular one, made up of upper and lower values
+    // these points are plotted and a tozerox fill is used to colour between them to get confidence intervals
+    if (series.intervalStyle === INTERVAL_STYLES[1]) {
+      newSeries = {
+        ...trace,
+        stackgroup: chartType === "stacked filled area" ? "one" : undefined,
+        name: series.name,
+        mode: chartProps?.LegendSection?.mode ?? "lines",
+        legendgroup: "group" + (seriesIndex - 1),
+        showlegend: false,
+        hoverinfo: chartProps.Interactivity.interactivity,
+        marker: { color: series.color },
+        line: { color: "transparent" },
+        fill: "tozerox",
+        fillcolor: series.color,
+        confidence: true,
+      };
+      isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
+    } else {
+      newSeries = {
+        ...trace,
+        stackgroup: chartType === "stacked filled area" ? "one" : undefined,
+        name: series.name,
+        type: chartType === "stacked bar" ? "bar" : chartType,
+        mode: chartProps?.LegendSection?.mode ?? "lines",
+        legendgroup: "group" + seriesIndex,
+        hoverinfo: chartProps.Interactivity.interactivity,
+        marker: { color: series.color },
+        line: {
+          color: series.color,
+          dash: series.dashStyle,
+        },
+        fill:
+          chartType === "filled area" || chartType === "stacked filled area"
+            ? "tonexty"
+            : "none",
+      };
+
+      if (
+        series.intervalStyle === INTERVAL_STYLES[2] &&
+        allYSeries.length > 1
+      ) {
+        newSeries = {
+          ...newSeries,
+          ...calculateErrorBars(
+            allYSeries[seriesIndex + 1].values,
+            series.values,
+          ),
+        };
+      }
+      isAStackedBar ? traces.unshift(newSeries) : traces.push(newSeries);
+    }
   });
   return traces;
 };
+function calculateErrorBars(yArr: number[], currArr: number[]) {
+  let arr: any[] = [];
+  for (let i = 0; i < yArr.length / 2; i++) {
+    const diff = currArr[i] - yArr[i];
+    arr.push(diff);
+  }
+
+  const err = {
+    error_y: {
+      type: "data",
+      array: arr,
+      visible: true,
+    },
+  };
+  return err;
+}
 
 const getMapData = (
   chartProps: ChartPropertyValues,
@@ -186,7 +247,8 @@ const getMapData = (
 
   // if interactivity is enabled show hover text over map regions
   // we use a custom hover template so that the geography_uri doesn't show up in the hover text
-  if (chartProps.Interactivity.interactivity === "x+y") {
+
+  if (chartProps.Interactivity.interactivity !== NONE_INTERACTIVITY_MODE) {
     const hovertemplate = {
       hovertemplate: ` %{text} <br> %{z}${chartProps.Interactivity.hoverInfoUnit} <extra></extra> `,
     };

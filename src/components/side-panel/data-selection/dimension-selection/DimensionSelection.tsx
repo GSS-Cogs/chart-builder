@@ -7,7 +7,7 @@ import "./dimension-selection.css";
 import { titleCase } from "../../../../helper-functions/string-helpers";
 
 import { colors } from "../../../../helper-functions/chart-helpers";
-
+import { INTERVAL_STYLES } from "../../../../constants/Chart-constants";
 export interface Props {
   availableDimensions: string[];
 }
@@ -20,7 +20,8 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
   }: ChartContextProps = useContext(ChartContext);
 
   const createDimensionList = () => {
-    const nonSelectedAvailableDimensions: string[] = getNonSelectedAvailableDimensions();
+    const nonSelectedAvailableDimensions: string[] =
+      getNonSelectedAvailableDimensions();
     return selectedDimensions.map((dimension, index) => {
       return (
         <div key={index}>
@@ -68,29 +69,28 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
         "Series limit reached. We recommend reducing the visual complexity of the chart by showing fewer series.",
       );
     }
+    let dimension = {
+      name: "",
+      displayName: "",
+      color: colors[selectedDimensions.length],
+      intervalColor: colors[selectedDimensions.length],
+      dashStyle: "none",
+      intervalStyle: INTERVAL_STYLES[0],
+      lowerBoundSeries: "",
+      upperBoundSeries: "",
+    } as SelectedDimension;
+
     if (selectedDimensions.length === 0) {
       const defaultSelectedDimension = availableDimensions[0];
-      setSelectedDimensions([
-        ...selectedDimensions,
-        {
-          name: defaultSelectedDimension,
-          displayName: titleCase(defaultSelectedDimension),
-          color: colors[selectedDimensions.length],
-          dashStyle: "none",
-        },
-      ]);
+      dimension.name = defaultSelectedDimension;
+      dimension.displayName = titleCase(defaultSelectedDimension);
     } else {
-      const nonSelectedAvailableDimensions = getNonSelectedAvailableDimensions();
-      setSelectedDimensions([
-        ...selectedDimensions,
-        {
-          name: nonSelectedAvailableDimensions[0],
-          displayName: titleCase(nonSelectedAvailableDimensions[0]),
-          color: colors[selectedDimensions.length],
-          dashStyle: "none",
-        },
-      ]);
+      const nonSelectedAvailableDimensions =
+        getNonSelectedAvailableDimensions();
+      dimension.name = nonSelectedAvailableDimensions[0];
+      dimension.displayName = titleCase(nonSelectedAvailableDimensions[0]);
     }
+    setSelectedDimensions([...selectedDimensions, dimension]);
   };
 
   const getNonSelectedAvailableDimensions = () => {
@@ -109,7 +109,11 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
       name: e.target.value,
       displayName: e.target.value,
       color: colors[selectedDimensions.length],
+      intervalColor: colors[selectedDimensions.length],
       dashStyle: "none",
+      intervalStyle: INTERVAL_STYLES[0],
+      lowerBoundSeries: "",
+      upperBoundSeries: "",
     };
 
     const updatedDimensions = selectedDimensions.map((item) => {
@@ -125,7 +129,11 @@ const DimensionSelection = ({ availableDimensions }: Props): JSX.Element => {
       name: name,
       displayName: value,
       color: colors[selectedDimensions.length],
+      intervalColor: colors[selectedDimensions.length],
       dashStyle: "none",
+      intervalStyle: INTERVAL_STYLES[0],
+      lowerBoundSeries: "",
+      upperBoundSeries: "",
     };
     const updatedDimensions = newDimensions.map((item) => {
       return item.name === name ? dimension : item;

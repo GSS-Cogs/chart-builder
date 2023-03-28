@@ -26,11 +26,34 @@
 }
 
 .tableHeader:empty::after {
-  content: "\00a0";
+  content: \00a0;
 }
 
 .tableHeader:first-child {
   text-align: left;
+}
+
+.tableHeader__lineChart {
+  padding: 8px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 19px;
+  color: #0b0c0c;
+  border-bottom: 1px solid #b1b4b6;
+}
+
+.tableHeader__lineChart:first-child {
+  text-align: left;
+}
+
+.tableSubHeader {
+  padding: 8px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 19px;
+  color: #0b0c0c;
+  border-bottom: 2px solid #b1b4b6;
+  border-top: 2px solid #b1b4b6;
 }
 
 .tableRowItems {
@@ -50,5 +73,19 @@
 }
 
 .tableCell:empty::after {
-  content: "\00a0";
+  content: \00a0;
+}
+
+.emptyTableText {
+  text-align: center;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 19px;
+  color: #0b0c0c;
+}
+.emptyTableSubText {
+  text-align: center;
+  padding: 8px;
+  font-size: 19px;
+  color: #0b0c0c;
 }
