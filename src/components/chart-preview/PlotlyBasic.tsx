@@ -2,18 +2,9 @@
 import Plotly from "plotly.js-basic-dist-min";
 import createPlotlyComponent from "react-plotly.js/factory";
 import React, { useEffect, useState } from "react";
+import LegendPrompt from "../misc/LegendPrompt";
 
 const Plot: any = createPlotlyComponent(Plotly);
-
-const useFilters = (data: any) => {
-  const [filtersIndex, setFiltersIndex] = useState<number[]>([]);
-
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-
-  return { filtersIndex };
-};
 
 const PlotlyBasic = ({
   chartDefinition,
@@ -33,6 +24,7 @@ const PlotlyBasic = ({
         onLegendClick={(e: any) => onLegendClick(e)}
         onLegendDoubleClick={(e: any) => onLegendDoubleClick(e)}
       />
+      <LegendPrompt />
     </>
   );
 };
