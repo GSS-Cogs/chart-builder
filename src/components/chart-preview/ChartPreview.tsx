@@ -8,7 +8,6 @@ import Tab from "../tabs/Tab";
 import useChartDataToCsv from "../../hooks/useChartDataToCsv";
 import useSaveCsvData from "../../hooks/useSaveCsvData";
 
-import tap from "../../assets/icons/click-tap.svg";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 
@@ -206,12 +205,6 @@ export const ActualChart = ({
         />
       )}
       <div className="non-content">
-        <div className="prompt-wrapper">
-          <img src={tap} />
-          <div className="prompt-text">
-            Click or tap on legend items to toggle visibility
-          </div>
-        </div>
         <h3 className="govuk-heading-s govuk-!-margin-bottom-2 non-content cb-download">
           Download
         </h3>
