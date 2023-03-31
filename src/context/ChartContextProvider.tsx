@@ -163,6 +163,7 @@ function useTidyDataToChartContext(
       };
 
       if (
+        series.intervalStyle !== undefined &&
         series.intervalStyle !== INTERVAL_STYLES[0] &&
         series.lowerBoundSeries !== "" &&
         series.upperBoundSeries !== ""
