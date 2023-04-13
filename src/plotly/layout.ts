@@ -83,7 +83,7 @@ const getChartLayout = (chartProps: ChartPropertyValues, data: any) => {
       x: 0.48,
       y: chartProps.LegendSection.xAxisOffset,
       font: {
-        family: "GDSTransportWebsite",
+        family: "GDS Transport",
         size: 16,
       },
     },
