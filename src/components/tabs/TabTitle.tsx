@@ -20,7 +20,7 @@ const TabTitle: React.FC<Props> = ({
 
   return (
     <li style={{ width: 180 }} className="non-content">
-      <div
+      <button
         onClick={() => setSelectedTab(index)}
         style={{
           textAlign: "center",
@@ -30,7 +30,7 @@ const TabTitle: React.FC<Props> = ({
         className="tab-button"
       >
         {title}
-      </div>
+      </button>
     </li>
   );
 };
