@@ -6,6 +6,9 @@ import LegendPrompt from "../misc/LegendPrompt";
 const Plot: any = createPlotlyComponent(Plotly);
 
 const createNewLayout = (layout: { legend: { font: any } }) => {
+  // this function is a work around for having to force updated legend fonts
+  // rather than having to resave each chart manually
+
   const newFont = {
     ...layout.legend.font,
     size: 16,
