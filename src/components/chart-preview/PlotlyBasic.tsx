@@ -5,6 +5,26 @@ import LegendPrompt from "../misc/LegendPrompt";
 
 const Plot: any = createPlotlyComponent(Plotly);
 
+const createNewLayout = (layout: { legend: { font: any } }) => {
+  const newFont = {
+    ...layout.legend.font,
+    size: 16,
+    family: "GDS Transport",
+  };
+
+  const newLayout = {
+    ...layout,
+    legend: {
+      ...layout.legend,
+      font: newFont,
+      xanchor: "center",
+      x: 0.48,
+    },
+  };
+
+  return newLayout;
+};
+
 const PlotlyBasic = ({
   chartDefinition,
   onLegendClick,
