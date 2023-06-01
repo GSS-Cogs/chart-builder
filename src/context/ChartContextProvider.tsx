@@ -284,7 +284,7 @@ function useEeaConnectorData(
 
       // Filter the measure column to get the (Y) values for the current series
       const yArray = (toFilter as any[]).filter<string | number>(
-        (_, index): _ is any => data[dimension][index] === series.name,
+        (_, index): _ is any => data[dimension]?.[index] === series.name,
       );
 
       // Build the X and Y values objects for the current series
