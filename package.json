@@ -30,9 +30,7 @@
     "prelibrary": "rimraf dist",
     "prelibrary-dev": "rimraf dist",
     "library": "CHART_BUILDER_ENV=prod webpack --config webpack.library.config.js",
-    "library-dev": "CHART_BUILDER_ENV=dev webpack --watch --config webpack.library.config.js",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "library-dev": "CHART_BUILDER_ENV=dev webpack --watch --config webpack.library.config.js"
   },
   "eslintConfig": {
     "extends": [
@@ -63,16 +61,6 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.4.22",
-    "@storybook/addon-essentials": "^6.4.22",
-    "@storybook/addon-interactions": "^6.4.22",
-    "@storybook/addon-links": "^6.4.22",
-    "@storybook/builder-webpack5": "^6.4.22",
-    "@storybook/manager-webpack5": "^6.4.22",
-    "@storybook/node-logger": "^6.4.22",
-    "@storybook/preset-create-react-app": "^4.0.0",
-    "@storybook/react": "^6.4.22",
-    "@storybook/testing-library": "^0.0.11",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^8.0.0",
@@ -91,7 +79,6 @@
     "copy-webpack-plugin": "^10.2.4",
     "eslint": "^8.6.0",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-storybook": "^0.5.11",
     "ignore-loader": "^0.1.2",
     "mini-css-extract-plugin": "^2.6.0",
     "prettier": "2.5.1",
