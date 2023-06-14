@@ -48,8 +48,7 @@ const getAxisTickConfig = (
 
     return {
       tickmode: "array",
-      tickvals: values,
-      ticktext: tickLabels,
+      tickvals: tickLabels,
       tickangle,
     };
   }
