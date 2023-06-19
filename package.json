@@ -61,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.22.5",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^8.0.0",
