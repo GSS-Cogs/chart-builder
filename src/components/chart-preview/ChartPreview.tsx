@@ -177,9 +177,9 @@ export const ActualChart = ({
       {chartType !== "table" ? (
         <Tabs link={exploreDataLink}>
           <Tab title="Visualisation">
-            <Suspense fallback={<div />}>
-              {isClientSideRender ? (
-                chartType === "map" || altChartType === "choropleth" ? (
+            {isClientSideRender ? (
+              <Suspense fallback={<div />}>
+                {chartType === "map" || altChartType === "choropleth" ? (
                   <PlotlyGeo chartDefinition={chartDefinition} />
                 ) : (
                   <PlotlyBasic
@@ -187,9 +187,9 @@ export const ActualChart = ({
                     onLegendClick={onLegendClick}
                     onLegendDoubleClick={onLegendDoubleClick}
                   />
-                )
-              ) : null}
-            </Suspense>
+                )}
+              </Suspense>
+            ) : null}
           </Tab>
           <Tab title="Chart Data">
             <TabularData
