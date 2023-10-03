@@ -54,30 +54,19 @@ const DataSelection = (): JSX.Element => {
       return;
     }
 
-    let previousValue = "";
+    let newSelectedColumnNames = [...selectedColumns];
     switch (name) {
       case "xValues":
-        previousValue = dataSelection!.xValues;
+        newSelectedColumnNames[0] = value;
         break;
       case "measure":
-        previousValue = dataSelection!.measure;
+        newSelectedColumnNames[1] = value;
         break;
       case "dimension":
-        previousValue = dataSelection!.dimension;
+        newSelectedColumnNames[2] = value;
         break;
     }
-
-    if (previousValue) {
-      let newSelectedColumnNames = [];
-      const alreadySelectedColumnNames = selectedColumns.filter(
-        (item) => item !== previousValue,
-      );
-      newSelectedColumnNames.push(...alreadySelectedColumnNames);
-      newSelectedColumnNames.push(value);
-      setSelectedColumns(newSelectedColumnNames);
-    } else {
-      setSelectedColumns([...selectedColumns, value]);
-    }
+    setSelectedColumns(newSelectedColumnNames);
     setDataSelection((prevState: any) => ({
       ...prevState,
       [name]: value,
