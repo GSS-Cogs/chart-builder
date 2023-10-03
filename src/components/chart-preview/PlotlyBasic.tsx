@@ -10,7 +10,7 @@ const createNewLayout = (layout: { legend: { font: any } }) => {
   // rather than having to resave each chart manually
 
   const newFont = {
-    ...layout.legend.font,
+    ...layout.legend?.font,
     size: 16,
     family: "GDS Transport",
   };
